@@ -1,0 +1,5 @@
+name "sqld"
+description "SQL query construction and relational algebra."
+authors "Mihail K"
+copyright "Copyright © 2017, Mihail K"
+license "MIT"
