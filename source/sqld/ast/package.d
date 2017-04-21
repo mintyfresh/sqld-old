@@ -1,6 +1,7 @@
 
 module sqld.ast;
 
+public import sqld.ast.as_node;
 public import sqld.ast.binary_node;
 public import sqld.ast.direction_node;
 public import sqld.ast.expression_list_node;

@@ -5,6 +5,8 @@ import sqld.ast;
 
 interface Visitor
 {
+    void visit(AsNode node);
+
     void visit(BinaryNode node);
 
     void visit(DirectionNode node);
