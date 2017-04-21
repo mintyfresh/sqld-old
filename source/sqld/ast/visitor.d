@@ -44,7 +44,7 @@ interface Visitor
 
 mixin template Visitable()
 {
-    void accept(Visitor visitor)
+    override void accept(Visitor visitor)
     {
         visitor.visit(this);
     }

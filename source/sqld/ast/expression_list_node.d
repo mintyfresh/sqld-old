@@ -2,12 +2,15 @@
 module sqld.ast.expression_list_node;
 
 import sqld.ast.expression_node;
+import sqld.ast.visitor;
 
 import std.algorithm;
 import std.array;
 
 class ExpressionListNode : ExpressionNode
 {
+    mixin Visitable;
+
 private:
     ExpressionNode[] _nodes;
 

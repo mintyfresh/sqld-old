@@ -10,12 +10,15 @@ import sqld.ast.offset_node;
 import sqld.ast.order_by_node;
 import sqld.ast.projection_node;
 import sqld.ast.query_node;
+import sqld.ast.visitor;
 import sqld.ast.where_node;
 
 import std.meta;
 
 class SelectNode : QueryNode
 {
+    mixin Visitable;
+
 private:
     ProjectionNode _projection;
     FromNode       _from;

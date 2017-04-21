@@ -2,9 +2,12 @@
 module sqld.ast.offset_node;
 
 import sqld.ast.node;
+import sqld.ast.visitor;
 
 class OffsetNode : Node
 {
+    mixin Visitable;
+
 private:
     ulong _offset;
 

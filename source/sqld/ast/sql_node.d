@@ -1,10 +1,13 @@
 
-module sqld.ast.sql;
+module sqld.ast.sql_node;
 
 import sqld.ast.expression_node;
+import sqld.ast.visitor;
 
 class SQLNode : ExpressionNode
 {
+    mixin Visitable;
+
 private:
     string _sql;
 

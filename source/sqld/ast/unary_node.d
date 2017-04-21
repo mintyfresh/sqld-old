@@ -2,9 +2,12 @@
 module sqld.ast.unary_node;
 
 import sqld.ast.expression_node;
+import sqld.ast.visitor;
 
 class UnaryNode : ExpressionNode
 {
+    mixin Visitable;
+
 private:
     string         _operator;
     ExpressionNode _operand;

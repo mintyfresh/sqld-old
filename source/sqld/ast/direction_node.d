@@ -2,6 +2,7 @@
 module sqld.ast.direction_node;
 
 import sqld.ast.expression_node;
+import sqld.ast.visitor;
 
 enum Direction : string
 {
@@ -11,6 +12,8 @@ enum Direction : string
 
 class DirectionNode : ExpressionNode
 {
+    mixin Visitable;
+
 private:
     ExpressionNode _node;
     Direction      _direction;

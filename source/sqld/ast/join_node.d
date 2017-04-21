@@ -3,6 +3,7 @@ module sqld.ast.join_node;
 
 import sqld.ast.expression_node;
 import sqld.ast.node;
+import sqld.ast.visitor;
 
 enum JoinType : string
 {
@@ -15,6 +16,8 @@ enum JoinType : string
 
 class JoinNode : Node
 {
+    mixin Visitable;
+
 private:
     JoinType       _type;
     ExpressionNode _source;

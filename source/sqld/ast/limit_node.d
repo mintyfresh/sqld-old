@@ -2,9 +2,12 @@
 module sqld.ast.limit_node;
 
 import sqld.ast.node;
+import sqld.ast.visitor;
 
 class LimitNode : Node
 {
+    mixin Visitable;
+
 private:
     ulong _limit;
 

@@ -1,11 +1,14 @@
 
-module sqld.ast.group_by_node;
+module sqld.ast.order_by_node;
 
 import sqld.ast.expression_node;
 import sqld.ast.node;
+import sqld.ast.visitor;
 
 class OrderByNode : Node
 {
+    mixin Visitable;
+
 private:
     ExpressionNode _directions;
 
