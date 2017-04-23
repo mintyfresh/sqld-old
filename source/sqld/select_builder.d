@@ -11,13 +11,18 @@ private:
     ExpressionNode _source;
 
 public:
-    alias _builder this;
+    alias builder this;
 
     this(SelectBuilder builder, JoinType joinType, ExpressionNode source)
     {
         _builder  = builder;
         _joinType = joinType;
         _source   = source;
+    }
+
+    SelectBuilder builder()
+    {
+        return _builder.join(_joinType, _source);
     }
 
     SelectBuilder on(ExpressionNode condition)
