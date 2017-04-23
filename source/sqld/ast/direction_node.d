@@ -19,20 +19,20 @@ private:
     Direction      _direction;
 
 public:
-    this(const(ExpressionNode) node, Direction direction) const
+    this(immutable(ExpressionNode) node, Direction direction) immutable
     {
         _node      = node;
         _direction = direction;
     }
 
     @property
-    const(ExpressionNode) node() const
+    immutable(ExpressionNode) node() immutable
     {
         return _node;
     }
 
     @property
-    Direction direction() const
+    Direction direction() immutable
     {
         return _direction;
     }

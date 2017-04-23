@@ -24,7 +24,7 @@ private:
     ExpressionNode _condition;
 
 public:
-    this(JoinType type, const(ExpressionNode) source, const(ExpressionNode) condition) const
+    this(JoinType type, immutable(ExpressionNode) source, immutable(ExpressionNode) condition) immutable
     {
         _type      = type;
         _source    = source;
@@ -32,19 +32,19 @@ public:
     }
 
     @property
-    JoinType type() const
+    JoinType type() immutable
     {
         return _type;
     }
 
     @property
-    const(ExpressionNode) source() const
+    immutable(ExpressionNode) source() immutable
     {
         return _source;
     }
 
     @property
-    const(ExpressionNode) condition() const
+    immutable(ExpressionNode) condition() immutable
     {
         return _condition;
     }

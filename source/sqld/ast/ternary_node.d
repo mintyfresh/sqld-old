@@ -14,7 +14,7 @@ private:
     ExpressionNode _third;
 
 public:
-    this(const(ExpressionNode) first, const(ExpressionNode) second, const(ExpressionNode) third) const
+    this(immutable(ExpressionNode) first, immutable(ExpressionNode) second, immutable(ExpressionNode) third) immutable
     {
         _first  = first;
         _second = second;
@@ -22,19 +22,19 @@ public:
     }
 
     @property
-    const(ExpressionNode) first() const
+    immutable(ExpressionNode) first() immutable
     {
         return _first;
     }
 
     @property
-    const(ExpressionNode) second() const
+    immutable(ExpressionNode) second() immutable
     {
         return _second;
     }
 
     @property
-    const(ExpressionNode) third() const
+    immutable(ExpressionNode) third() immutable
     {
         return _third;
     }

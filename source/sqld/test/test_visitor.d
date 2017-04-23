@@ -21,20 +21,20 @@ public:
     }
 
 override:
-    void visit(const(AsNode) node)
+    void visit(immutable(AsNode) node)
     {
         node.node.accept(this);
         _buffer ~= " AS " ~ node.name;
     }
 
-    void visit(const(BinaryNode) node)
+    void visit(immutable(BinaryNode) node)
     {
         node.left.accept(this);
         _buffer ~= " " ~ node.operator ~ " ";
         node.right.accept(this);
     }
 
-    void visit(const(ColumnNode) node)
+    void visit(immutable(ColumnNode) node)
     {
         if(node.table !is null)
         {
@@ -45,13 +45,13 @@ override:
         _buffer ~= node.name;
     }
 
-    void visit(const(DirectionNode) node)
+    void visit(immutable(DirectionNode) node)
     {
         node.node.accept(this);
         _buffer ~= " " ~ node.direction;
     }
 
-    void visit(const(ExpressionListNode) node)
+    void visit(immutable(ExpressionListNode) node)
     {
         foreach(index, child; node.nodes)
         {
@@ -64,35 +64,35 @@ override:
         }
     }
 
-    void visit(const(ExpressionNode) node)
+    void visit(immutable(ExpressionNode) node)
     {
         assert(0, node.classinfo.name);
     }
 
-    void visit(const(FromNode) node)
+    void visit(immutable(FromNode) node)
     {
         _buffer ~= " FROM ";
         node.sources.accept(this);
     }
 
-    void visit(const(FunctionNode) node)
+    void visit(immutable(FunctionNode) node)
     {
         _buffer ~= node.name;
     }
 
-    void visit(const(GroupByNode) node)
+    void visit(immutable(GroupByNode) node)
     {
         _buffer ~= " GROUP BY ";
         node.groupings.accept(this);
     }
 
-    void visit(const(HavingNode) node)
+    void visit(immutable(HavingNode) node)
     {
         _buffer ~= " HAVING ";
         node.clause.accept(this);
     }
 
-    void visit(const(InvocationNode) node)
+    void visit(immutable(InvocationNode) node)
     {
         node.callable.accept(this);
         _buffer ~= "(";
@@ -105,7 +105,7 @@ override:
         _buffer ~= ")";
     }
 
-    void visit(const(JoinNode) node)
+    void visit(immutable(JoinNode) node)
     {
         _buffer ~= " " ~ node.type ~ " ";
         node.source.accept(this);
@@ -117,43 +117,43 @@ override:
         }
     }
 
-    void visit(const(LimitNode) node)
+    void visit(immutable(LimitNode) node)
     {
         _buffer ~= " LIMIT " ~ node.limit.to!(string);
     }
 
-    void visit(const(LiteralNode) node)
+    void visit(immutable(LiteralNode) node)
     {
         _buffer ~= node.value.coerce!(string);
     }
 
-    void visit(const(Node) node)
+    void visit(immutable(Node) node)
     {
         assert(0, node.classinfo.name);
     }
 
-    void visit(const(OffsetNode) node)
+    void visit(immutable(OffsetNode) node)
     {
         _buffer ~= " OFFSET " ~ node.offset.to!(string);
     }
 
-    void visit(const(OrderByNode) node)
+    void visit(immutable(OrderByNode) node)
     {
         _buffer ~= " ORDER BY ";
         node.directions.accept(this);
     }
 
-    void visit(const(ProjectionNode) node)
+    void visit(immutable(ProjectionNode) node)
     {
         node.projections.accept(this);
     }
 
-    void visit(const(QueryNode) node)
+    void visit(immutable(QueryNode) node)
     {
         assert(0, node.classinfo.name);
     }
 
-    void visit(const(SelectNode) node)
+    void visit(immutable(SelectNode) node)
     {
         _buffer ~= "SELECT ";
         
@@ -177,19 +177,19 @@ override:
         }
     }
 
-    void visit(const(SQLNode) node)
+    void visit(immutable(SQLNode) node)
     {
         _buffer ~= " " ~ node.sql ~ " ";
     }
 
-    void visit(const(SubqueryNode) node)
+    void visit(immutable(SubqueryNode) node)
     {
         _buffer ~= "( ";
         node.query.accept(this);
         _buffer ~= " )";
     }
 
-    void visit(const(TableNode) node)
+    void visit(immutable(TableNode) node)
     {
         if(node.schema !is null)
         {
@@ -199,20 +199,20 @@ override:
         _buffer ~= node.name;
     }
 
-    void visit(const(TernaryNode) node)
+    void visit(immutable(TernaryNode) node)
     {
         node.first.accept(this);
         node.second.accept(this);
         node.third.accept(this);
     }
 
-    void visit(const(UnaryNode) node)
+    void visit(immutable(UnaryNode) node)
     {
         _buffer ~= node.operator ~ " ";
         node.operand.accept(this);
     }
 
-    void visit(const(WhereNode) node)
+    void visit(immutable(WhereNode) node)
     {
         _buffer ~= " WHERE ";
         node.clause.accept(this);

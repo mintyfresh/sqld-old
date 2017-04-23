@@ -15,56 +15,56 @@ private:
     ExpressionListNode _arguments;
 
 public:
-    this(const(ExpressionNode) callable, const(ExpressionNode)[] arguments) const
+    this(immutable(ExpressionNode) callable, immutable(ExpressionNode)[] arguments) immutable
     {
-        this(callable, new const ExpressionListNode(arguments));
+        this(callable, new immutable ExpressionListNode(arguments));
     }
 
-    this(const(ExpressionNode) callable, const(ExpressionListNode) arguments = null) const
+    this(immutable(ExpressionNode) callable, immutable(ExpressionListNode) arguments = null) immutable
     {
         _callable  = callable;
         _arguments = arguments;
     }
 
     @property
-    const(ExpressionNode) callable() const
+    immutable(ExpressionNode) callable() immutable
     {
         return _callable;
     }
 
     @property
-    const(ExpressionListNode) arguments() const
+    immutable(ExpressionListNode) arguments() immutable
     {
         return _arguments;
     }
 }
 
 @property
-const(InvocationNode) avg(const(ExpressionNode) node)
+immutable(InvocationNode) avg(immutable(ExpressionNode) node)
 {
-    return new const FunctionNode(FunctionName.avg).opCall([node]);
+    return new immutable FunctionNode(FunctionName.avg).opCall([node]);
 }
 
 @property
-const(InvocationNode) count(const(ExpressionNode) node)
+immutable(InvocationNode) count(immutable(ExpressionNode) node)
 {
-    return new const FunctionNode(FunctionName.count).opCall([node]);
+    return new immutable FunctionNode(FunctionName.count).opCall([node]);
 }
 
 @property
-const(InvocationNode) max(const(ExpressionNode) node)
+immutable(InvocationNode) max(immutable(ExpressionNode) node)
 {
-    return new const FunctionNode(FunctionName.max).opCall([node]);
+    return new immutable FunctionNode(FunctionName.max).opCall([node]);
 }
 
 @property
-const(InvocationNode) min(const(ExpressionNode) node)
+immutable(InvocationNode) min(immutable(ExpressionNode) node)
 {
-    return new const FunctionNode(FunctionName.min).opCall([node]);
+    return new immutable FunctionNode(FunctionName.min).opCall([node]);
 }
 
 @property
-const(InvocationNode) sum(const(ExpressionNode) node)
+immutable(InvocationNode) sum(immutable(ExpressionNode) node)
 {
-    return new const FunctionNode(FunctionName.sum).opCall([node]);
+    return new immutable FunctionNode(FunctionName.sum).opCall([node]);
 }

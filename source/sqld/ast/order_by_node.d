@@ -14,18 +14,18 @@ private:
     ExpressionListNode _directions;
 
 public:
-    this(const(ExpressionNode) directions) const
+    this(immutable(ExpressionNode) directions) immutable
     {
-        _directions = new const ExpressionListNode([directions]);
+        _directions = new immutable ExpressionListNode([directions]);
     }
 
-    this(const(ExpressionListNode) directions) const
+    this(immutable(ExpressionListNode) directions) immutable
     {
         _directions = directions;
     }
 
     @property
-    const(ExpressionListNode) directions() const
+    immutable(ExpressionListNode) directions() immutable
     {
         return _directions;
     }

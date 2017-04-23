@@ -14,20 +14,20 @@ private:
     string         _name;
 
 public:
-    this(const(ExpressionNode) node, string name) const
+    this(immutable(ExpressionNode) node, string name) immutable
     {
         _node = node;
         _name = name;
     }
 
     @property
-    const(ExpressionNode) node() const
+    immutable(ExpressionNode) node() immutable
     {
         return _node;
     }
 
     @property
-    string name() const
+    string name() immutable
     {
         return _name;
     }

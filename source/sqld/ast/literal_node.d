@@ -27,13 +27,13 @@ private:
     Algebraic!(LiteralTypes) _value;
 
 public:
-    this(Algebraic!(LiteralTypes) value)
+    this(Algebraic!(LiteralTypes) value) immutable
     {
         _value = value;
     }
 
     @property
-    Algebraic!(LiteralTypes) value() const
+    Algebraic!(LiteralTypes) value() immutable
     {
         return _value;
     }
@@ -45,7 +45,7 @@ template isLiteralType(T)
 }
 
 @property
-LiteralNode literal(T)(T value) if(isLiteralType!(T))
+immutable(LiteralNode) literal(T)(T value) if(isLiteralType!(T))
 {
-    return new LiteralNode(Algebraic!(LiteralTypes)(value));
+    return new immutable LiteralNode(Algebraic!(LiteralTypes)(value));
 }

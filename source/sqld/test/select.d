@@ -8,9 +8,9 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto b = new SelectBuilder;
-    auto u = new const TableNode("users");
-    auto p = new const TableNode("posts");
+    auto b = SelectBuilder.init;
+    auto u = TableNode("users");
+    auto p = TableNode("posts");
 
     b.project(u["*"])
      .from(u)
@@ -39,11 +39,11 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = new const TableNode("users");
-    auto p = new const TableNode("posts");
+    auto u = TableNode("users");
+    auto p = TableNode("posts");
 
-    auto b1 = new SelectBuilder;
-    auto b2 = new SelectBuilder;
+    auto b1 = SelectBuilder.init;
+    auto b2 = SelectBuilder.init;
 
     b2.project(u["*"])
       .from(u)
@@ -51,6 +51,9 @@ import sqld.test.test_visitor;
           b1.project(p["user_id"])
             .from(p)
             .where(p["reported"].eq(true))
+            .group(p["user_id"])
+            .having(p["*"].count.eq(3))
+            .order(p["*"].count)
             .build)
       .limit(10)
       .build
@@ -69,6 +72,12 @@ import sqld.test.test_visitor;
               posts
             WHERE
               posts.reported = true
+            GROUP BY
+              posts.user_id
+            HAVING
+              COUNT(posts.*) = 3
+            ORDER BY
+              COUNT(posts.*)
           )
         LIMIT
           10

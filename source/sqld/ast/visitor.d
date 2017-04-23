@@ -5,62 +5,62 @@ import sqld.ast;
 
 interface Visitor
 {
-    void visit(const(AsNode) node);
+    void visit(immutable(AsNode) node);
 
-    void visit(const(BinaryNode) node);
+    void visit(immutable(BinaryNode) node);
 
-    void visit(const(ColumnNode) node);
+    void visit(immutable(ColumnNode) node);
 
-    void visit(const(DirectionNode) node);
+    void visit(immutable(DirectionNode) node);
 
-    void visit(const(ExpressionListNode) node);
+    void visit(immutable(ExpressionListNode) node);
 
-    void visit(const(ExpressionNode) node);
+    void visit(immutable(ExpressionNode) node);
 
-    void visit(const(FromNode) node);
+    void visit(immutable(FromNode) node);
 
-    void visit(const(FunctionNode) node);
+    void visit(immutable(FunctionNode) node);
 
-    void visit(const(GroupByNode) node);
+    void visit(immutable(GroupByNode) node);
 
-    void visit(const(HavingNode) node);
+    void visit(immutable(HavingNode) node);
 
-    void visit(const(InvocationNode) node);
+    void visit(immutable(InvocationNode) node);
 
-    void visit(const(JoinNode) node);
+    void visit(immutable(JoinNode) node);
 
-    void visit(const(LimitNode) node);
+    void visit(immutable(LimitNode) node);
 
-    void visit(const(LiteralNode) node);
+    void visit(immutable(LiteralNode) node);
 
-    void visit(const(Node) node);
+    void visit(immutable(Node) node);
 
-    void visit(const(OffsetNode) node);
+    void visit(immutable(OffsetNode) node);
 
-    void visit(const(OrderByNode) node);
+    void visit(immutable(OrderByNode) node);
 
-    void visit(const(ProjectionNode) node);
+    void visit(immutable(ProjectionNode) node);
 
-    void visit(const(QueryNode) node);
+    void visit(immutable(QueryNode) node);
 
-    void visit(const(SelectNode) node);
+    void visit(immutable(SelectNode) node);
 
-    void visit(const(SubqueryNode) node);
+    void visit(immutable(SubqueryNode) node);
 
-    void visit(const(SQLNode) node);
+    void visit(immutable(SQLNode) node);
 
-    void visit(const(TableNode) node);
+    void visit(immutable(TableNode) node);
 
-    void visit(const(TernaryNode) node);
+    void visit(immutable(TernaryNode) node);
 
-    void visit(const(UnaryNode) node);
+    void visit(immutable(UnaryNode) node);
 
-    void visit(const(WhereNode) node);
+    void visit(immutable(WhereNode) node);
 }
 
 mixin template Visitable()
 {
-    override void accept(Visitor visitor) const
+    override void accept(Visitor visitor) immutable
     {
         visitor.visit(this);
     }

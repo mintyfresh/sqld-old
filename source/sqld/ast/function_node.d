@@ -21,13 +21,13 @@ private:
     string _name;
 
 public:
-    this(string name) const
+    this(string name) immutable
     {
         _name = name;
     }
 
     @property
-    string name() const
+    string name() immutable
     {
         return _name;
     }

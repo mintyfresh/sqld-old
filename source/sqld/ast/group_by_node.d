@@ -14,18 +14,18 @@ private:
     ExpressionListNode _groupings;
 
 public:
-    this(const(ExpressionNode) groupings) const
+    this(immutable(ExpressionNode) groupings) immutable
     {
-        _groupings = new const ExpressionListNode([groupings]);
+        _groupings = new immutable ExpressionListNode([groupings]);
     }
 
-    this(const(ExpressionListNode) groupings) const
+    this(immutable(ExpressionListNode) groupings) immutable
     {
         _groupings = groupings;
     }
 
     @property
-    const(ExpressionListNode) groupings() const
+    immutable(ExpressionListNode) groupings() immutable
     {
         return _groupings;
     }

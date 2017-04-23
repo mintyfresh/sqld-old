@@ -33,9 +33,9 @@ private:
 public:
     alias toSubquery this;
 
-    this(const(ProjectionNode) projection, const(FromNode) from, const(JoinNode)[] joins,
-         const(WhereNode) where, const(GroupByNode) groupBy, const(HavingNode) having,
-         const(OrderByNode) orderBy, const(LimitNode) limit, const(OffsetNode) offset) const
+    this(immutable(ProjectionNode) projection, immutable(FromNode) from, immutable(JoinNode)[] joins,
+         immutable(WhereNode) where, immutable(GroupByNode) groupBy, immutable(HavingNode) having,
+         immutable(OrderByNode) orderBy, immutable(LimitNode) limit, immutable(OffsetNode) offset) immutable
     {
         foreach(name; AliasSeq!("projection", "from", "joins", "where",
                                 "groupBy", "having", "orderBy", "limit", "offset"))
@@ -45,55 +45,55 @@ public:
     }
 
     @property
-    const(ProjectionNode) projection() const
+    immutable(ProjectionNode) projection() immutable
     {
         return _projection;
     }
 
     @property
-    const(FromNode) from() const
+    immutable(FromNode) from() immutable
     {
         return _from;
     }
 
     @property
-    const(JoinNode)[] joins() const
+    immutable(JoinNode)[] joins() immutable
     {
         return _joins;
     }
 
     @property
-    const(WhereNode) where() const
+    immutable(WhereNode) where() immutable
     {
         return _where;
     }
 
     @property
-    const(GroupByNode) groupBy() const
+    immutable(GroupByNode) groupBy() immutable
     {
         return _groupBy;
     }
 
     @property
-    const(HavingNode) having() const
+    immutable(HavingNode) having() immutable
     {
         return _having;
     }
 
     @property
-    const(OrderByNode) orderBy() const
+    immutable(OrderByNode) orderBy() immutable
     {
         return _orderBy;
     }
 
     @property
-    const(LimitNode) limit() const
+    immutable(LimitNode) limit() immutable
     {
         return _limit;
     }
 
     @property
-    const(OffsetNode) offset() const
+    immutable(OffsetNode) offset() immutable
     {
         return _offset;
     }

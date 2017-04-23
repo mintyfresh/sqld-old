@@ -12,33 +12,33 @@ class ExpressionListNode : ExpressionNode
     mixin Visitable;
 
 private:
-    const(ExpressionNode)[] _nodes;
+    immutable(ExpressionNode)[] _nodes;
 
 public:
-    this(const(ExpressionNode)[] nodes) const
+    this(immutable(ExpressionNode)[] nodes) immutable
     {
         _nodes = nodes.map!(flattenExpressionList).joiner.array;
     }
 
     @property
-    const(ExpressionNode)[] nodes() const
+    immutable(ExpressionNode)[] nodes() immutable
     {
         return _nodes;
     }
 
-    const(ExpressionListNode) opBinary(string op : "~")(const(ExpressionNode) node) const
+    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionNode) node) immutable
     {
-        return new const ExpressionListNode(nodes ~ node);
+        return new immutable ExpressionListNode(nodes ~ node);
     }
 
-    const(ExpressionListNode) opBinary(string op : "~")(const(ExpressionListNode) node) const
+    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionListNode) node) immutable
     {
-        return new const ExpressionListNode(nodes ~ node.nodes);
+        return new immutable ExpressionListNode(nodes ~ node.nodes);
     }
 }
 
-const(ExpressionNode)[] flattenExpressionList(const(ExpressionNode) node)
+immutable(ExpressionNode)[] flattenExpressionList(immutable(ExpressionNode) node)
 {
-    auto list = cast(const(ExpressionListNode)) node;
+    auto list = cast(immutable(ExpressionListNode)) node;
     return list ? list.nodes : [node];
 }

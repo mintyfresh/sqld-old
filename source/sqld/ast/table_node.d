@@ -14,31 +14,36 @@ private:
     string _name;
 
 public:
-    this(string name) const
+    this(string name) immutable
     {
         _name = name;
     }
 
-    this(string schema, string name) const
+    this(string schema, string name) immutable
     {
         _schema = schema;
         _name   = name;
     }
 
+    static immutable(TableNode) opCall(string name)
+    {
+        return new immutable TableNode(name);
+    }
+
     @property
-    string schema() const
+    string schema() immutable
     {
         return _schema;
     }
 
     @property
-    string name() const
+    string name() immutable
     {
         return _name;
     }
 
-    const(ColumnNode) opIndex(string name) const
+    immutable(ColumnNode) opIndex(string name) immutable
     {
-        return new const ColumnNode(this, name);
+        return new immutable ColumnNode(this, name);
     }
 }

@@ -13,13 +13,13 @@ private:
     QueryNode _query;
 
 public:
-    this(const(QueryNode) query) const
+    this(immutable(QueryNode) query) immutable
     {
         _query = query;
     }
 
     @property
-    const(QueryNode) query() const
+    immutable(QueryNode) query() immutable
     {
         return _query;
     }

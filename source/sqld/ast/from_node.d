@@ -14,18 +14,18 @@ private:
     ExpressionListNode _sources;
 
 public:
-    this(const(ExpressionNode) source) const
+    this(immutable(ExpressionNode) source) immutable
     {
-        this(new const ExpressionListNode([source]));
+        this(new immutable ExpressionListNode([source]));
     }
 
-    this(const(ExpressionListNode) sources) const
+    this(immutable(ExpressionListNode) sources) immutable
     {
         _sources = sources;
     }
 
     @property
-    const(ExpressionListNode) sources() const
+    immutable(ExpressionListNode) sources() immutable
     {
         return _sources;
     }

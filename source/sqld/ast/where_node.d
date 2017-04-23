@@ -13,13 +13,13 @@ private:
     ExpressionNode _clause;
 
 public:
-    this(const(ExpressionNode) clause) const
+    this(immutable(ExpressionNode) clause) immutable
     {
         _clause = clause;
     }
 
     @property
-    const(ExpressionNode) clause() const
+    immutable(ExpressionNode) clause() immutable
     {
         return _clause;
     }

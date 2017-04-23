@@ -12,40 +12,40 @@ abstract class ExpressionNode : Node
 {
     mixin Visitable;
 
-    const(BinaryNode) opBinary(string op : "in")(const(ExpressionNode) node) const
+    immutable(BinaryNode) opBinary(string op : "in")(immutable(ExpressionNode) node) immutable
     {
-        return new const BinaryNode(this, BinaryOperator.in_, node);
+        return new immutable BinaryNode(this, BinaryOperator.in_, node);
     }
 
-    const(BinaryNode) opBinary(string op : "!in")(const(ExpressionNode) node) const
+    immutable(BinaryNode) opBinary(string op : "!in")(immutable(ExpressionNode) node) immutable
     {
-        return new const BinaryNode(this, BinaryOperator.notIn, node);
+        return new immutable BinaryNode(this, BinaryOperator.notIn, node);
     }
 
-    const(InvocationNode) opCall(const(ExpressionNode)[] arguments) const
+    immutable(InvocationNode) opCall(immutable(ExpressionNode)[] arguments) immutable
     {
-        return new const InvocationNode(this, arguments);
+        return new immutable InvocationNode(this, arguments);
     }
 
-    const(InvocationNode) opCall(const(ExpressionListNode) arguments) const
+    immutable(InvocationNode) opCall(immutable(ExpressionListNode) arguments) immutable
     {
-        return new const InvocationNode(this, arguments);
+        return new immutable InvocationNode(this, arguments);
     }
 }
 
 template isExpressionType(T)
 {
-    enum isExpressionType = is(T : const(ExpressionNode)) || isLiteralType!(T);
+    enum isExpressionType = is(T : immutable(ExpressionNode)) || isLiteralType!(T);
 }
 
 @property
-const(ExpressionNode) expression(T : const(ExpressionNode))(T node)
+immutable(ExpressionNode) expression(T : immutable(ExpressionNode))(T node)
 {
     return node;
 }
 
 @property
-const(ExpressionNode) expression(T)(T value) if(isLiteralType!(T))
+immutable(ExpressionNode) expression(T)(T value) if(isLiteralType!(T))
 {
     return literal(value);
 }

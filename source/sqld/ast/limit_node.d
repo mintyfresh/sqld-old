@@ -12,13 +12,13 @@ private:
     ulong _limit;
 
 public:
-    this(ulong limit)
+    this(ulong limit) immutable
     {
         _limit = limit;
     }
 
     @property
-    ulong limit() const
+    ulong limit() immutable
     {
         return _limit;
     }

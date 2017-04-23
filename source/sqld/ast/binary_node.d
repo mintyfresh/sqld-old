@@ -30,7 +30,7 @@ private:
     ExpressionNode _right;
 
 public:
-    this(const(ExpressionNode) left, BinaryOperator operator, const(ExpressionNode) right) const
+    this(immutable(ExpressionNode) left, BinaryOperator operator, immutable(ExpressionNode) right) immutable
     {
         _left     = left;
         _operator = operator;
@@ -38,40 +38,40 @@ public:
     }
 
     @property
-    const(ExpressionNode) left() const
+    immutable(ExpressionNode) left() immutable
     {
         return _left;
     }
 
     @property
-    BinaryOperator operator() const
+    BinaryOperator operator() immutable
     {
         return _operator;
     }
 
     @property
-    const(ExpressionNode) right() const
+    immutable(ExpressionNode) right() immutable
     {
         return _right;
     }
 }
 
-const(BinaryNode) and(const(ExpressionNode) left, const(ExpressionNode) right)
+immutable(BinaryNode) and(immutable(ExpressionNode) left, immutable(ExpressionNode) right)
 {
-    return new const BinaryNode(left, BinaryOperator.and, right);
+    return new immutable BinaryNode(left, BinaryOperator.and, right);
 }
 
-const(BinaryNode) or(const(ExpressionNode) left, const(ExpressionNode) right)
+immutable(BinaryNode) or(immutable(ExpressionNode) left, immutable(ExpressionNode) right)
 {
-    return new const BinaryNode(left, BinaryOperator.or, right);
+    return new immutable BinaryNode(left, BinaryOperator.or, right);
 }
 
-const(BinaryNode) eq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
+immutable(BinaryNode) eq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new const BinaryNode(expression(left), BinaryOperator.equal, expression(right));
+    return new immutable BinaryNode(expression(left), BinaryOperator.equal, expression(right));
 }
 
-const(BinaryNode) notEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
+immutable(BinaryNode) notEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new const BinaryNode(expression(left), BinaryOperator.equal, expression(right));
+    return new immutable BinaryNode(expression(left), BinaryOperator.equal, expression(right));
 }

@@ -14,25 +14,25 @@ private:
     string    _name;
 
 public:
-    this(string name) const
+    this(string name) immutable
     {
         this(null, name);
     }
 
-    this(const(TableNode) table, string name) const
+    this(immutable(TableNode) table, string name) immutable
     {
         _table = table;
         _name  = name;
     }
 
     @property
-    const(TableNode) table() const
+    immutable(TableNode) table() immutable
     {
         return _table;
     }
 
     @property
-    string name() const
+    string name() immutable
     {
         return _name;
     }

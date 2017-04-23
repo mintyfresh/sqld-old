@@ -12,13 +12,13 @@ private:
     ulong _offset;
 
 public:
-    this(ulong offset)
+    this(ulong offset) immutable
     {
         _offset = offset;
     }
 
     @property
-    ulong offset() const
+    ulong offset() immutable
     {
         return _offset;
     }

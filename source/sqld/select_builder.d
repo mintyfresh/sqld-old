@@ -6,14 +6,14 @@ import sqld.ast;
 struct JoinBuilder
 {
 private:
-    SelectBuilder         _builder;
-    JoinType              _joinType;
-    const(ExpressionNode) _source;
+    SelectBuilder             _builder;
+    JoinType                  _joinType;
+    immutable(ExpressionNode) _source;
 
 public:
     alias builder this;
 
-    this(SelectBuilder builder, JoinType joinType, const(ExpressionNode) source)
+    this(SelectBuilder builder, JoinType joinType, immutable(ExpressionNode) source)
     {
         _builder  = builder;
         _joinType = joinType;
@@ -25,7 +25,7 @@ public:
         return _builder.join(_joinType, _source);
     }
 
-    SelectBuilder on(const(ExpressionNode) condition)
+    SelectBuilder on(immutable(ExpressionNode) condition)
     {
         return _builder.join(_joinType, _source, condition);
     }
@@ -34,7 +34,7 @@ public:
 struct SelectBuilder
 {
 private:
-    const
+    immutable
     {
         ProjectionNode _projection;
         FromNode       _from;
@@ -49,33 +49,33 @@ private:
 
 public:
     @property
-    const(SelectNode) build()
+    immutable(SelectNode) build()
     {
-        return new const SelectNode(_projection, _from, _joins, _where, _groupBy,
+        return new immutable SelectNode(_projection, _from, _joins, _where, _groupBy,
                                     _having, _orderBy, _limit, _offset);
     }
 
     /+ - Projection - +/
 
-    SelectBuilder projection(const(ProjectionNode) projection)
+    SelectBuilder projection(immutable(ProjectionNode) projection)
     {
         return SelectBuilder(projection, _from, _joins, _where, _groupBy, _having, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder project(const(ExpressionNode)[] projection...)
+    SelectBuilder project(immutable(ExpressionNode)[] projection...)
     {
-        return project(new const ExpressionListNode(projection));
+        return project(new immutable ExpressionListNode(projection));
     }
 
-    SelectBuilder project(const(ExpressionListNode) projections)
+    SelectBuilder project(immutable(ExpressionListNode) projections)
     {
         if(_projection is null)
         {
-            return projection(new const ProjectionNode(projections));
+            return projection(new immutable ProjectionNode(projections));
         }
         else
         {
-            return projection(new const ProjectionNode(_projection.projections ~ projections));
+            return projection(new immutable ProjectionNode(_projection.projections ~ projections));
         }
     }
 
@@ -91,26 +91,26 @@ public:
 
     /+ - From - +/
 
-    SelectBuilder from(const(FromNode) from)
+    SelectBuilder from(immutable(FromNode) from)
     {
         return SelectBuilder(_projection, from, _joins, _where, _groupBy, _having, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder from(const(ExpressionNode) source, string name = null)
+    SelectBuilder from(immutable(ExpressionNode) source, string name = null)
     {
-        auto value = name ? new const AsNode(source, name) : source;
+        auto value = name ? new immutable AsNode(source, name) : source;
 
         if(_from is null)
         {
-            return from(new const FromNode(value));
+            return from(new immutable FromNode(value));
         }
         else
         {
-            return from(new const FromNode(_from.sources ~ value));
+            return from(new immutable FromNode(_from.sources ~ value));
         }
     }
 
-    SelectBuilder refrom(const(ExpressionNode) node, string name = null)
+    SelectBuilder refrom(immutable(ExpressionNode) node, string name = null)
     {
         return unfrom.from(node, name);
     }
@@ -122,27 +122,27 @@ public:
 
     /+ - Join - +/
 
-    SelectBuilder join(const(JoinNode) join)
+    SelectBuilder join(immutable(JoinNode) join)
     {
         return SelectBuilder(_projection, _from, _joins ~ join, _where, _groupBy, _having, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder join(JoinType joinType, const(ExpressionNode) source, const(ExpressionNode) condition)
+    SelectBuilder join(JoinType joinType, immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
     {
-        return join(new const JoinNode(joinType, source, condition));
+        return join(new immutable JoinNode(joinType, source, condition));
     }
 
-    JoinBuilder join(JoinType joinType, const(ExpressionNode) source)
+    JoinBuilder join(JoinType joinType, immutable(ExpressionNode) source)
     {
         return JoinBuilder(this, joinType, source);
     }
 
-    SelectBuilder join(const(ExpressionNode) source, const(ExpressionNode) condition)
+    SelectBuilder join(immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
     {
         return join(JoinType.inner, source, condition);
     }
 
-    JoinBuilder join(const(ExpressionNode) source)
+    JoinBuilder join(immutable(ExpressionNode) source)
     {
         return JoinBuilder(this, JoinType.inner, source);
     }
@@ -159,24 +159,24 @@ public:
 
     /+ - Where - +/
 
-    SelectBuilder where(const(WhereNode) where)
+    SelectBuilder where(immutable(WhereNode) where)
     {
         return SelectBuilder(_projection, _from, _joins, where, _groupBy, _having, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder where(const(ExpressionNode) condition)
+    SelectBuilder where(immutable(ExpressionNode) condition)
     {
         if(_where is null)
         {
-            return where(new const WhereNode(condition));
+            return where(new immutable WhereNode(condition));
         }
         else
         {
-            return where(new const WhereNode(_where.clause.and(condition)));
+            return where(new immutable WhereNode(_where.clause.and(condition)));
         }
     }
 
-    SelectBuilder rewhere(const(ExpressionNode) condition)
+    SelectBuilder rewhere(immutable(ExpressionNode) condition)
     {
         return unwhere.where(condition);
     }
@@ -188,24 +188,24 @@ public:
 
     /+ - Group By - +/
 
-    SelectBuilder groupBy(GroupByNode groupBy)
+    SelectBuilder groupBy(immutable(GroupByNode) groupBy)
     {
         return SelectBuilder(_projection, _from, _joins, _where, groupBy, _having, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder group(T : ExpressionNode)(T groupings)
+    SelectBuilder group(T : immutable(ExpressionNode))(T groupings)
     {
         if(_groupBy is null)
         {
-            return groupBy(new GroupByNode(groupings));
+            return groupBy(new immutable GroupByNode(groupings));
         }
         else
         {
-            return groupBy(new GroupByNode(_groupBy.groupings ~ groupings));
+            return groupBy(new immutable GroupByNode(_groupBy.groupings ~ groupings));
         }
     }
 
-    SelectBuilder regroup(T : ExpressionNode)(T groupings)
+    SelectBuilder regroup(T : immutable(ExpressionNode))(T groupings)
     {
         return ungroup.group(groupings);
     }
@@ -217,24 +217,24 @@ public:
 
     /+ - Having - +/
 
-    SelectBuilder having(const(HavingNode) having)
+    SelectBuilder having(immutable(HavingNode) having)
     {
         return SelectBuilder(_projection, _from, _joins, _where, _groupBy, having, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder having(const(ExpressionNode) condition)
+    SelectBuilder having(immutable(ExpressionNode) condition)
     {
         if(_having is null)
         {
-            return having(new const HavingNode(condition));
+            return having(new immutable HavingNode(condition));
         }
         else
         {
-            return having(new const HavingNode(_having.clause.and(condition)));
+            return having(new immutable HavingNode(_having.clause.and(condition)));
         }
     }
 
-    SelectBuilder rehaving(const(ExpressionNode) condition)
+    SelectBuilder rehaving(immutable(ExpressionNode) condition)
     {
         return unhaving.having(condition);
     }
@@ -246,24 +246,24 @@ public:
 
     /+ - Order By - +/
 
-    SelectBuilder orderBy(const(OrderByNode) orderBy)
+    SelectBuilder orderBy(immutable(OrderByNode) orderBy)
     {
         return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having, orderBy, _limit, _offset);
     }
 
-    SelectBuilder order(T : ExpressionNode)(T directions)
+    SelectBuilder order(T : immutable(ExpressionNode))(T directions)
     {
         if(_orderBy is null)
         {
-            return orderBy(new OrderByNode(directions));
+            return orderBy(new immutable OrderByNode(directions));
         }
         else
         {
-            return orderBy(new OrderByNode(_orderBy.directions ~ directions));
+            return orderBy(new immutable OrderByNode(_orderBy.directions ~ directions));
         }
     }
 
-    SelectBuilder reorder(T : ExpressionNode)(T directions)
+    SelectBuilder reorder(T : immutable(ExpressionNode))(T directions)
     {
         return unorder.order(directions);
     }
@@ -275,14 +275,14 @@ public:
 
     /+ - Limit - +/
 
-    SelectBuilder limit(const(LimitNode) value)
+    SelectBuilder limit(immutable(LimitNode) value)
     {
         return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having, _orderBy, value, _offset);
     }
 
     SelectBuilder limit(ulong value)
     {
-        return limit(new LimitNode(value));
+        return limit(new immutable LimitNode(value));
     }
 
     SelectBuilder unlimit()
@@ -292,14 +292,14 @@ public:
 
     /+ - Offset - +/
 
-    SelectBuilder offset(const(OffsetNode) value)
+    SelectBuilder offset(immutable(OffsetNode) value)
     {
         return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having, _orderBy, _limit, value);
     }
 
     SelectBuilder offset(ulong value)
     {
-        return offset(new OffsetNode(value));
+        return offset(new immutable OffsetNode(value));
     }
 
     SelectBuilder unoffset()
