@@ -53,7 +53,7 @@ import sqld.test.test_visitor;
             .where(p["reported"].eq(true))
             .group(p["user_id"])
             .having(p["*"].count.eq(3))
-            .order(p["*"].count)
+            .order(p["*"].count.desc)
             .build)
       .limit(10)
       .build
@@ -77,7 +77,7 @@ import sqld.test.test_visitor;
             HAVING
               COUNT(posts.*) = 3
             ORDER BY
-              COUNT(posts.*)
+              COUNT(posts.*) DESC
           )
         LIMIT
           10

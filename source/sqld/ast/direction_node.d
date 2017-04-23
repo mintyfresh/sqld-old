@@ -37,3 +37,15 @@ public:
         return _direction;
     }
 }
+
+@property
+immutable(DirectionNode) asc(immutable(ExpressionNode) node)
+{
+    return new immutable DirectionNode(node, Direction.asc);
+}
+
+@property
+immutable(DirectionNode) desc(immutable(ExpressionNode) node)
+{
+    return new immutable DirectionNode(node, Direction.desc);
+}
