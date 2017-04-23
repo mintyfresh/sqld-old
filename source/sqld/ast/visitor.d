@@ -9,6 +9,8 @@ interface Visitor
 
     void visit(BinaryNode node);
 
+    void visit(ColumnNode node);
+
     void visit(DirectionNode node);
 
     void visit(ExpressionListNode node);
@@ -35,7 +37,13 @@ interface Visitor
 
     void visit(QueryNode node);
 
+    void visit(SelectNode node);
+
     void visit(SubqueryNode node);
+
+    void visit(SQLNode node);
+
+    void visit(TableNode node);
 
     void visit(TernaryNode node);
 

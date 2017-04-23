@@ -23,3 +23,9 @@ public:
         return _sql;
     }
 }
+
+@property
+SQLNode sql(string sql)
+{
+    return new SQLNode(sql);
+}
