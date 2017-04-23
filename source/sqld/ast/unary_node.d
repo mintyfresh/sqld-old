@@ -4,23 +4,28 @@ module sqld.ast.unary_node;
 import sqld.ast.expression_node;
 import sqld.ast.visitor;
 
+enum UnaryOperator : string
+{
+    not = "NOT"
+}
+
 class UnaryNode : ExpressionNode
 {
     mixin Visitable;
 
 private:
-    string         _operator;
+    UnaryOperator  _operator;
     ExpressionNode _operand;
 
 public:
-    this(string operator, ExpressionNode operand)
+    this(UnaryOperator operator, ExpressionNode operand)
     {
         _operator = operator;
         _operand  = operand;
     }
 
     @property
-    string operator()
+    UnaryOperator operator()
     {
         return _operator;
     }
@@ -30,4 +35,9 @@ public:
     {
         return _operand;
     }
+}
+
+UnaryNode not(ExpressionNode operand)
+{
+    return new UnaryNode(UnaryOperator.not, operand);
 }

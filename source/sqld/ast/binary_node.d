@@ -46,12 +46,12 @@ public:
     }
 }
 
-ExpressionNode and(ExpressionNode left, ExpressionNode right)
+BinaryNode and(ExpressionNode left, ExpressionNode right)
 {
     return new BinaryNode(left, BinaryOperator.and, right);
 }
 
-ExpressionNode or(ExpressionNode left, ExpressionNode right)
+BinaryNode or(ExpressionNode left, ExpressionNode right)
 {
     return new BinaryNode(left, BinaryOperator.or, right);
 }
