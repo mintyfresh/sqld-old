@@ -26,19 +26,19 @@ public:
     }
 
     @property
-    string schema()
+    string schema() inout
     {
         return _schema;
     }
 
     @property
-    string name()
+    string name() inout
     {
         return _name;
     }
 
-    ColumnNode opIndex(string name)
+    inout(ColumnNode) opIndex(string name) inout
     {
-        return new ColumnNode(this, name);
+        return new inout ColumnNode(this, name);
     }
 }

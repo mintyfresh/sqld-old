@@ -25,7 +25,7 @@ public:
     }
 
     @property
-    ExpressionListNode sources()
+    inout(ExpressionListNode) sources() inout
     {
         return _sources;
     }

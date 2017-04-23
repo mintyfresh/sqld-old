@@ -8,8 +8,8 @@ import sqld.ast.visitor;
 enum JoinType : string
 {
     inner = "INNER JOIN",
-    left  = "LEFT JOIN",
-    right = "RIGHT JOIN",
+    left  = "LEFT OUTER JOIN",
+    right = "RIGHT OUTER JOIN",
     full  = "FULL OUTER JOIN",
     cross = "CROSS JOIN"
 }
@@ -32,19 +32,19 @@ public:
     }
 
     @property
-    JoinType type()
+    JoinType type() inout
     {
         return _type;
     }
 
     @property
-    ExpressionNode source()
+    inout(ExpressionNode) source() inout
     {
         return _source;
     }
 
     @property
-    ExpressionNode condition()
+    inout(ExpressionNode) condition() inout
     {
         return _condition;
     }

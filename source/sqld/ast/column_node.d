@@ -16,7 +16,7 @@ private:
 public:
     this(string name)
     {
-        _name = name;
+        this(null, name);
     }
 
     this(TableNode table, string name)
@@ -25,14 +25,20 @@ public:
         _name  = name;
     }
 
+    this(inout(TableNode) table, string name) inout
+    {
+        _table = table;
+        _name  = name;
+    }
+
     @property
-    TableNode table()
+    inout(TableNode) table() inout
     {
         return _table;
     }
 
     @property
-    string name()
+    string name() inout
     {
         return _name;
     }

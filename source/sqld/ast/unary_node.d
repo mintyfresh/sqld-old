@@ -25,13 +25,13 @@ public:
     }
 
     @property
-    UnaryOperator operator()
+    UnaryOperator operator() inout
     {
         return _operator;
     }
 
     @property
-    ExpressionNode operand()
+    inout(ExpressionNode) operand() inout
     {
         return _operand;
     }

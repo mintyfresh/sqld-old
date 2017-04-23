@@ -25,7 +25,7 @@ public:
     }
 
     @property
-    ExpressionListNode groupings()
+    inout(ExpressionListNode) groupings() inout
     {
         return _groupings;
     }

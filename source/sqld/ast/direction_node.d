@@ -26,13 +26,13 @@ public:
     }
 
     @property
-    ExpressionNode node()
+    inout(ExpressionNode) node() inout
     {
         return _node;
     }
 
     @property
-    Direction direction()
+    Direction direction() inout
     {
         return _direction;
     }

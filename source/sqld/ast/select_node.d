@@ -44,55 +44,55 @@ public:
     }
 
     @property
-    ProjectionNode projection()
+    inout(ProjectionNode) projection() inout
     {
         return _projection;
     }
 
     @property
-    FromNode from()
+    inout(FromNode) from() inout
     {
         return _from;
     }
 
     @property
-    JoinNode[] joins()
+    inout(JoinNode)[] joins() inout
     {
         return _joins;
     }
 
     @property
-    WhereNode where()
+    inout(WhereNode) where() inout
     {
         return _where;
     }
 
     @property
-    GroupByNode groupBy()
+    inout(GroupByNode) groupBy() inout
     {
         return _groupBy;
     }
 
     @property
-    HavingNode having()
+    inout(HavingNode) having() inout
     {
         return _having;
     }
 
     @property
-    OrderByNode orderBy()
+    inout(OrderByNode) orderBy() inout
     {
         return _orderBy;
     }
 
     @property
-    LimitNode limit()
+    inout(LimitNode) limit() inout
     {
         return _limit;
     }
 
     @property
-    OffsetNode offset()
+    inout(OffsetNode) offset() inout
     {
         return _offset;
     }

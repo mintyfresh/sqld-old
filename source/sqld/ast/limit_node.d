@@ -18,7 +18,7 @@ public:
     }
 
     @property
-    ulong limit()
+    ulong limit() inout
     {
         return _limit;
     }

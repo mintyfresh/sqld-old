@@ -28,19 +28,19 @@ public:
     }
 
     @property
-    ExpressionNode left()
+    inout(ExpressionNode) left() inout
     {
         return _left;
     }
 
     @property
-    BinaryOperator operator()
+    BinaryOperator operator() inout
     {
         return _operator;
     }
 
     @property
-    ExpressionNode right()
+    inout(ExpressionNode) right() inout
     {
         return _right;
     }
