@@ -6,8 +6,18 @@ import sqld.ast.visitor;
 
 enum BinaryOperator : string
 {
-    and = "AND",
-    or  = "OR"
+    and               = "AND",
+    or                = "OR",
+    equal             = "=",
+    notEqual          = "!=",
+    lessThan          = "<",
+    lessOrEqual       = "<=",
+    greaterThan       = ">",
+    greaterOrEqual    = ">=",
+    in_               = "IN",
+    notIn             = "NOT IN",
+    isDistinctFrom    = "IS DISTINCT FROM",
+    isNotDistinctFrom = "IS NOT DISTINCT FROM"
 }
 
 class BinaryNode : ExpressionNode
@@ -54,4 +64,14 @@ BinaryNode and(ExpressionNode left, ExpressionNode right)
 BinaryNode or(ExpressionNode left, ExpressionNode right)
 {
     return new BinaryNode(left, BinaryOperator.or, right);
+}
+
+BinaryNode eq(ExpressionNode left, ExpressionNode right)
+{
+    return new BinaryNode(left, BinaryOperator.equal, right);
+}
+
+BinaryNode notEq(ExpressionNode left, ExpressionNode right)
+{
+    return new BinaryNode(left, BinaryOperator.equal, right);
 }
