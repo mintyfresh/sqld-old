@@ -7,12 +7,17 @@ import sqld.ast.visitor;
 import std.meta;
 import std.variant;
 
-alias LiteralTypes = AliasSeq!(
+private template TypeAndTypeArray(T)
+{
+    alias TypeAndTypeArray = AliasSeq!(T, T[]);
+}
+
+alias LiteralTypes = staticMap!(TypeAndTypeArray, AliasSeq!(
     bool,
     ubyte, byte, ushort, short, uint, int, ulong, long,
     float, double, real,
     size_t, ptrdiff_t, hash_t
-);
+));
 
 class LiteralNode : ExpressionNode
 {
