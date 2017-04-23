@@ -19,9 +19,13 @@ interface Visitor
 
     void visit(FromNode node);
 
+    void visit(FunctionNode node);
+
     void visit(GroupByNode node);
 
     void visit(HavingNode node);
+
+    void visit(InvocationNode node);
 
     void visit(JoinNode node);
 

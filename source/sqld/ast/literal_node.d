@@ -33,7 +33,7 @@ public:
     }
 
     @property
-    inout(Algebraic!(LiteralTypes)) value() inout
+    Algebraic!(LiteralTypes) value()
     {
         return _value;
     }

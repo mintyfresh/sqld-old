@@ -21,13 +21,13 @@ public:
     }
 
     @property
-    inout(ExpressionNode) node() inout
+    ExpressionNode node()
     {
         return _node;
     }
 
     @property
-    string name() inout
+    string name()
     {
         return _name;
     }

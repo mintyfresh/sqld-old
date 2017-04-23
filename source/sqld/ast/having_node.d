@@ -19,7 +19,7 @@ public:
     }
 
     @property
-    inout(ExpressionNode) clause() inout
+    ExpressionNode clause()
     {
         return _clause;
     }

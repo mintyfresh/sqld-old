@@ -20,31 +20,25 @@ public:
         _nodes = nodes.map!(flattenExpressionList).joiner.array;
     }
 
-    this(inout(ExpressionNode)[] nodes) inout
-    {
-        auto mutable = cast(ExpressionNode[]) nodes; // HACK : Can't .map!() inout array.
-        _nodes = cast(inout(ExpressionNode)[]) mutable.map!(flattenExpressionList).joiner.array;
-    }
-
     @property
-    inout(ExpressionNode)[] nodes() inout
+    ExpressionNode[] nodes()
     {
         return _nodes;
     }
 
-    inout(ExpressionListNode) opBinary(string op : "~")(inout(ExpressionNode) node) inout
+    ExpressionListNode opBinary(string op : "~")(ExpressionNode node)
     {
-        return new inout ExpressionListNode(nodes ~ node);
+        return new ExpressionListNode(nodes ~ node);
     }
 
-    inout(ExpressionListNode) opBinary(string op : "~")(inout(ExpressionListNode) node) inout
+    ExpressionListNode opBinary(string op : "~")(ExpressionListNode node)
     {
-        return new inout ExpressionListNode(nodes ~ node.nodes);
+        return new ExpressionListNode(nodes ~ node.nodes);
     }
 }
 
-inout(ExpressionNode)[] flattenExpressionList(inout ExpressionNode node)
+ExpressionNode[] flattenExpressionList(ExpressionNode node)
 {
-    auto list = cast(inout ExpressionListNode) node;
+    auto list = cast(ExpressionListNode) node;
     return list ? list.nodes : [node];
 }

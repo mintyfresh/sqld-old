@@ -18,7 +18,7 @@ public:
     }
 
     @property
-    string sql() inout
+    string sql()
     {
         return _sql;
     }

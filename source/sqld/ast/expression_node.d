@@ -2,6 +2,8 @@
 module sqld.ast.expression_node;
 
 import sqld.ast.binary_node;
+import sqld.ast.expression_list_node;
+import sqld.ast.invocation_node;
 import sqld.ast.literal_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
@@ -18,6 +20,16 @@ abstract class ExpressionNode : Node
     BinaryNode opBinary(string op : "!in")(ExpressionNode node)
     {
         return new BinaryNode(this, BinaryOperator.notIn, node);
+    }
+
+    InvocationNode opCall(ExpressionNode[] arguments)
+    {
+        return new InvocationNode(this, arguments);
+    }
+
+    InvocationNode opCall(ExpressionListNode arguments)
+    {
+        return new InvocationNode(this, arguments);
     }
 }
 

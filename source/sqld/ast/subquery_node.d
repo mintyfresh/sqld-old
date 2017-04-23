@@ -18,13 +18,8 @@ public:
         _query = query;
     }
 
-    this(inout(QueryNode) query) inout
-    {
-        _query = query;
-    }
-
     @property
-    inout(QueryNode) query() inout
+    QueryNode query()
     {
         return _query;
     }

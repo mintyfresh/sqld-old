@@ -25,7 +25,7 @@ public:
     }
 
     @property
-    inout(ExpressionListNode) projections() inout
+    ExpressionListNode projections()
     {
         return _projections;
     }

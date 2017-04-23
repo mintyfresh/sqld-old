@@ -25,20 +25,14 @@ public:
         _name  = name;
     }
 
-    this(inout(TableNode) table, string name) inout
-    {
-        _table = table;
-        _name  = name;
-    }
-
     @property
-    inout(TableNode) table() inout
+    TableNode table()
     {
         return _table;
     }
 
     @property
-    string name() inout
+    string name()
     {
         return _name;
     }

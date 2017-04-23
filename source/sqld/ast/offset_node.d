@@ -18,7 +18,7 @@ public:
     }
 
     @property
-    ulong offset() inout
+    ulong offset()
     {
         return _offset;
     }

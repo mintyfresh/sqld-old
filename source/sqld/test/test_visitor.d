@@ -75,6 +75,11 @@ override:
         node.sources.accept(this);
     }
 
+    void visit(FunctionNode node)
+    {
+        _buffer ~= node.name;
+    }
+
     void visit(GroupByNode node)
     {
         _buffer ~= " GROUP BY ";
@@ -85,6 +90,19 @@ override:
     {
         _buffer ~= " HAVING ";
         node.clause.accept(this);
+    }
+
+    void visit(InvocationNode node)
+    {
+        node.callable.accept(this);
+        _buffer ~= "(";
+
+        if(node.arguments !is null)
+        {
+            node.arguments.accept(this);
+        }
+
+        _buffer ~= ")";
     }
 
     void visit(JoinNode node)

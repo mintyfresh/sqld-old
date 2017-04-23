@@ -22,19 +22,19 @@ public:
     }
 
     @property
-    inout(ExpressionNode) first() inout
+    ExpressionNode first()
     {
         return _first;
     }
 
     @property
-    inout(ExpressionNode) second() inout
+    ExpressionNode second()
     {
         return _second;
     }
 
     @property
-    inout(ExpressionNode) third() inout
+    ExpressionNode third()
     {
         return _third;
     }

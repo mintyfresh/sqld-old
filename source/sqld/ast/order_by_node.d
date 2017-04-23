@@ -25,7 +25,7 @@ public:
     }
 
     @property
-    inout(ExpressionListNode) directions() inout
+    ExpressionListNode directions()
     {
         return _directions;
     }

@@ -32,19 +32,19 @@ public:
     }
 
     @property
-    JoinType type() inout
+    JoinType type()
     {
         return _type;
     }
 
     @property
-    inout(ExpressionNode) source() inout
+    ExpressionNode source()
     {
         return _source;
     }
 
     @property
-    inout(ExpressionNode) condition() inout
+    ExpressionNode condition()
     {
         return _condition;
     }
