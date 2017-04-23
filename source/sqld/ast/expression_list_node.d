@@ -27,6 +27,16 @@ public:
     {
         return _nodes;
     }
+
+    ExpressionListNode opBinary(string op : "~")(ExpressionNode node)
+    {
+        return new ExpressionListNode(nodes ~ node);
+    }
+
+    ExpressionListNode opBinary(string op : "~")(ExpressionListNode node)
+    {
+        return new ExpressionListNode(nodes ~ node.nodes);
+    }
 }
 
 ExpressionNode[] flattenExpressionList(ExpressionNode node)
