@@ -5,12 +5,30 @@ import sqld.ast.binary_node;
 import sqld.ast.expression_node;
 import sqld.ast.visitor;
 
-class AsNode : BinaryNode
+class AsNode : ExpressionNode
 {
     mixin Visitable;
 
-    this(ExpressionNode left, ExpressionNode right)
+private:
+    ExpressionNode _node;
+    string         _name;
+
+public:
+    this(ExpressionNode node, string name)
     {
-        super(left, "AS", right);
+        _node = node;
+        _name = name;
+    }
+
+    @property
+    ExpressionNode node()
+    {
+        return _node;
+    }
+
+    @property
+    string name()
+    {
+        return _name;
     }
 }

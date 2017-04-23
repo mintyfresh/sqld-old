@@ -4,17 +4,23 @@ module sqld.ast.binary_node;
 import sqld.ast.expression_node;
 import sqld.ast.visitor;
 
+enum BinaryOperator : string
+{
+    and = "AND",
+    or  = "OR"
+}
+
 class BinaryNode : ExpressionNode
 {
     mixin Visitable;
 
 private:
     ExpressionNode _left;
-    string         _operator;
+    BinaryOperator _operator;
     ExpressionNode _right;
 
 public:
-    this(ExpressionNode left, string operator, ExpressionNode right)
+    this(ExpressionNode left, BinaryOperator operator, ExpressionNode right)
     {
         _left     = left;
         _operator = operator;
@@ -28,7 +34,7 @@ public:
     }
 
     @property
-    string operator()
+    BinaryOperator operator()
     {
         return _operator;
     }
@@ -38,4 +44,14 @@ public:
     {
         return _right;
     }
+}
+
+ExpressionNode and(ExpressionNode left, ExpressionNode right)
+{
+    return new BinaryNode(left, BinaryOperator.and, right);
+}
+
+ExpressionNode or(ExpressionNode left, ExpressionNode right)
+{
+    return new BinaryNode(left, BinaryOperator.or, right);
 }
