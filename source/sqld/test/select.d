@@ -35,3 +35,42 @@ import sqld.test.test_visitor;
           10
     }.squish);
 }
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto u = new TableNode("users");
+    auto p = new TableNode("posts");
+
+    auto b1 = new SelectBuilder;
+    auto b2 = new SelectBuilder;
+
+    b1.project(p["user_id"])
+      .from(p)
+      .where(p["reported"].eq(true));
+
+    b2.project(u["*"])
+      .from(u)
+      .where(u["id"] in b1.build)
+      .limit(10)
+      .build
+      .accept(v);
+
+    assert(v.sql == q{
+        SELECT
+          users.*
+        FROM
+          users
+        WHERE
+          users.id IN (
+            SELECT
+              posts.user_id
+            FROM
+              posts
+            WHERE
+              posts.reported = true
+          )
+        LIMIT
+          10
+    }.squish);
+}

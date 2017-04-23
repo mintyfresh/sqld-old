@@ -1,6 +1,7 @@
 
 module sqld.ast.expression_node;
 
+import sqld.ast.binary_node;
 import sqld.ast.literal_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
@@ -8,6 +9,16 @@ import sqld.ast.visitor;
 abstract class ExpressionNode : Node
 {
     mixin Visitable;
+
+    BinaryNode opBinary(string op : "in")(ExpressionNode node)
+    {
+        return new BinaryNode(this, BinaryOperator.in_, node);
+    }
+
+    BinaryNode opBinary(string op : "!in")(ExpressionNode node)
+    {
+        return new BinaryNode(this, BinaryOperator.notIn, node);
+    }
 }
 
 template isExpressionType(T)

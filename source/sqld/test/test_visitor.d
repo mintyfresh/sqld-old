@@ -166,7 +166,9 @@ override:
 
     void visit(SubqueryNode node)
     {
+        _buffer ~= "( ";
         node.query.accept(this);
+        _buffer ~= " )";
     }
 
     void visit(TableNode node)
