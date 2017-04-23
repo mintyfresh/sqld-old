@@ -39,6 +39,10 @@ interface Visitor
 
     void visit(immutable(OrderByNode) node);
 
+    void visit(immutable(OverNode) node);
+
+    void visit(immutable(PartitionByNode) node);
+
     void visit(immutable(ProjectionNode) node);
 
     void visit(immutable(QueryNode) node);
@@ -56,6 +60,10 @@ interface Visitor
     void visit(immutable(UnaryNode) node);
 
     void visit(immutable(WhereNode) node);
+
+    void visit(immutable(WindowDefinitionNode) node);
+
+    void visit(immutable(WindowNode) node);
 }
 
 mixin template Visitable()

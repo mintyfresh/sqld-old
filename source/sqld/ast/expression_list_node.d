@@ -12,7 +12,7 @@ class ExpressionListNode : ExpressionNode
     mixin Visitable;
 
 private:
-    immutable(ExpressionNode)[] _nodes;
+    ExpressionNode[] _nodes;
 
 public:
     this(immutable(ExpressionNode)[] nodes) immutable

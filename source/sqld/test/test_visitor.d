@@ -143,6 +143,26 @@ override:
         node.directions.accept(this);
     }
 
+    void visit(immutable(OverNode) node)
+    {
+        node.subject.accept(this);
+
+        if(node.window !is null)
+        {
+            node.window.accept(this);
+        }
+        else
+        {
+            _buffer ~= "()";
+        }
+    }
+
+    void visit(immutable(PartitionByNode) node)
+    {
+        _buffer ~= " PARTITION BY ";
+        node.partitions.accept(this);
+    }
+
     void visit(immutable(ProjectionNode) node)
     {
         node.projections.accept(this);
@@ -216,6 +236,32 @@ override:
     {
         _buffer ~= " WHERE ";
         node.clause.accept(this);
+    }
+
+    void visit(immutable(WindowDefinitionNode) node)
+    {
+        _buffer ~= "(";
+        
+        if(node.existingWindow !is null)
+        {
+            _buffer ~= node.existingWindow;
+        }
+        if(node.partitionBy !is null)
+        {
+            node.partitionBy.accept(this);
+        }
+        if(node.orderBy !is null)
+        {
+            node.orderBy.accept(this);
+        }
+
+        _buffer ~= ")";
+    }
+
+    void visit(immutable(WindowNode) node)
+    {
+        _buffer ~= " WINDOW " ~ node.name ~ " AS ";
+        node.definition.accept(this);
     }
 }
 
