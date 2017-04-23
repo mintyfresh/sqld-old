@@ -31,10 +31,6 @@ public:
 
 ExpressionNode[] flattenExpressionList(ExpressionNode node)
 {
-    if(auto list = cast(ExpressionListNode) node)
-    {
-        return list.nodes;
-    }
-    
-    return [node];
+    auto list = cast(ExpressionListNode) node;
+    return list ? list.nodes : [node];
 }
