@@ -45,6 +45,13 @@ private:
     OffsetNode     _offset;
 
 public:
+    @property
+    SelectNode build()
+    {
+        return new SelectNode(_projection, _from, _joins, _where, _groupBy,
+                              _having, _orderBy, _limit, _offset);
+    }
+
     /+ - Projection - +/
 
     SelectBuilder projection(ProjectionNode projection)
