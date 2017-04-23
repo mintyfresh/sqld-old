@@ -14,31 +14,31 @@ private:
     string _name;
 
 public:
-    this(string name)
+    this(string name) const
     {
         _name = name;
     }
 
-    this(string schema, string name)
+    this(string schema, string name) const
     {
         _schema = schema;
         _name   = name;
     }
 
     @property
-    string schema()
+    string schema() const
     {
         return _schema;
     }
 
     @property
-    string name()
+    string name() const
     {
         return _name;
     }
 
-    ColumnNode opIndex(string name)
+    const(ColumnNode) opIndex(string name) const
     {
-        return new ColumnNode(this, name);
+        return new const ColumnNode(this, name);
     }
 }

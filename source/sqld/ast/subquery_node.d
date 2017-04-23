@@ -13,13 +13,13 @@ private:
     QueryNode _query;
 
 public:
-    this(QueryNode query)
+    this(const(QueryNode) query) const
     {
         _query = query;
     }
 
     @property
-    QueryNode query()
+    const(QueryNode) query() const
     {
         return _query;
     }

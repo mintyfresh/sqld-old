@@ -14,20 +14,20 @@ private:
     string         _name;
 
 public:
-    this(ExpressionNode node, string name)
+    this(const(ExpressionNode) node, string name) const
     {
         _node = node;
         _name = name;
     }
 
     @property
-    ExpressionNode node()
+    const(ExpressionNode) node() const
     {
         return _node;
     }
 
     @property
-    string name()
+    string name() const
     {
         return _name;
     }

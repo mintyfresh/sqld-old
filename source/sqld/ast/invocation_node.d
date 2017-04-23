@@ -15,56 +15,56 @@ private:
     ExpressionListNode _arguments;
 
 public:
-    this(ExpressionNode callable, ExpressionNode[] arguments)
+    this(const(ExpressionNode) callable, const(ExpressionNode)[] arguments) const
     {
-        this(callable, new ExpressionListNode(arguments));
+        this(callable, new const ExpressionListNode(arguments));
     }
 
-    this(ExpressionNode callable, ExpressionListNode arguments = null)
+    this(const(ExpressionNode) callable, const(ExpressionListNode) arguments = null) const
     {
         _callable  = callable;
         _arguments = arguments;
     }
 
     @property
-    ExpressionNode callable()
+    const(ExpressionNode) callable() const
     {
         return _callable;
     }
 
     @property
-    ExpressionListNode arguments()
+    const(ExpressionListNode) arguments() const
     {
         return _arguments;
     }
 }
 
 @property
-InvocationNode avg(ExpressionNode node)
+const(InvocationNode) avg(const(ExpressionNode) node)
 {
-    return new FunctionNode(FunctionName.avg).opCall([node]);
+    return new const FunctionNode(FunctionName.avg).opCall([node]);
 }
 
 @property
-InvocationNode count(ExpressionNode node)
+const(InvocationNode) count(const(ExpressionNode) node)
 {
-    return new FunctionNode(FunctionName.count).opCall([node]);
+    return new const FunctionNode(FunctionName.count).opCall([node]);
 }
 
 @property
-InvocationNode max(ExpressionNode node)
+const(InvocationNode) max(const(ExpressionNode) node)
 {
-    return new FunctionNode(FunctionName.max).opCall([node]);
+    return new const FunctionNode(FunctionName.max).opCall([node]);
 }
 
 @property
-InvocationNode min(ExpressionNode node)
+const(InvocationNode) min(const(ExpressionNode) node)
 {
-    return new FunctionNode(FunctionName.min).opCall([node]);
+    return new const FunctionNode(FunctionName.min).opCall([node]);
 }
 
 @property
-InvocationNode sum(ExpressionNode node)
+const(InvocationNode) sum(const(ExpressionNode) node)
 {
-    return new FunctionNode(FunctionName.sum).opCall([node]);
+    return new const FunctionNode(FunctionName.sum).opCall([node]);
 }

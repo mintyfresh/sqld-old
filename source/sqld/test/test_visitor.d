@@ -21,20 +21,20 @@ public:
     }
 
 override:
-    void visit(AsNode node)
+    void visit(const(AsNode) node)
     {
         node.node.accept(this);
         _buffer ~= " AS " ~ node.name;
     }
 
-    void visit(BinaryNode node)
+    void visit(const(BinaryNode) node)
     {
         node.left.accept(this);
         _buffer ~= " " ~ node.operator ~ " ";
         node.right.accept(this);
     }
 
-    void visit(ColumnNode node)
+    void visit(const(ColumnNode) node)
     {
         if(node.table !is null)
         {
@@ -45,13 +45,13 @@ override:
         _buffer ~= node.name;
     }
 
-    void visit(DirectionNode node)
+    void visit(const(DirectionNode) node)
     {
         node.node.accept(this);
         _buffer ~= " " ~ node.direction;
     }
 
-    void visit(ExpressionListNode node)
+    void visit(const(ExpressionListNode) node)
     {
         foreach(index, child; node.nodes)
         {
@@ -64,35 +64,35 @@ override:
         }
     }
 
-    void visit(ExpressionNode node)
+    void visit(const(ExpressionNode) node)
     {
         assert(0, node.classinfo.name);
     }
 
-    void visit(FromNode node)
+    void visit(const(FromNode) node)
     {
         _buffer ~= " FROM ";
         node.sources.accept(this);
     }
 
-    void visit(FunctionNode node)
+    void visit(const(FunctionNode) node)
     {
         _buffer ~= node.name;
     }
 
-    void visit(GroupByNode node)
+    void visit(const(GroupByNode) node)
     {
         _buffer ~= " GROUP BY ";
         node.groupings.accept(this);
     }
 
-    void visit(HavingNode node)
+    void visit(const(HavingNode) node)
     {
         _buffer ~= " HAVING ";
         node.clause.accept(this);
     }
 
-    void visit(InvocationNode node)
+    void visit(const(InvocationNode) node)
     {
         node.callable.accept(this);
         _buffer ~= "(";
@@ -105,7 +105,7 @@ override:
         _buffer ~= ")";
     }
 
-    void visit(JoinNode node)
+    void visit(const(JoinNode) node)
     {
         _buffer ~= " " ~ node.type ~ " ";
         node.source.accept(this);
@@ -117,43 +117,43 @@ override:
         }
     }
 
-    void visit(LimitNode node)
+    void visit(const(LimitNode) node)
     {
         _buffer ~= " LIMIT " ~ node.limit.to!(string);
     }
 
-    void visit(LiteralNode node)
+    void visit(const(LiteralNode) node)
     {
         _buffer ~= node.value.coerce!(string);
     }
 
-    void visit(Node node)
+    void visit(const(Node) node)
     {
         assert(0, node.classinfo.name);
     }
 
-    void visit(OffsetNode node)
+    void visit(const(OffsetNode) node)
     {
         _buffer ~= " OFFSET " ~ node.offset.to!(string);
     }
 
-    void visit(OrderByNode node)
+    void visit(const(OrderByNode) node)
     {
         _buffer ~= " ORDER BY ";
         node.directions.accept(this);
     }
 
-    void visit(ProjectionNode node)
+    void visit(const(ProjectionNode) node)
     {
         node.projections.accept(this);
     }
 
-    void visit(QueryNode node)
+    void visit(const(QueryNode) node)
     {
         assert(0, node.classinfo.name);
     }
 
-    void visit(SelectNode node)
+    void visit(const(SelectNode) node)
     {
         _buffer ~= "SELECT ";
         
@@ -177,19 +177,19 @@ override:
         }
     }
 
-    void visit(SQLNode node)
+    void visit(const(SQLNode) node)
     {
         _buffer ~= " " ~ node.sql ~ " ";
     }
 
-    void visit(SubqueryNode node)
+    void visit(const(SubqueryNode) node)
     {
         _buffer ~= "( ";
         node.query.accept(this);
         _buffer ~= " )";
     }
 
-    void visit(TableNode node)
+    void visit(const(TableNode) node)
     {
         if(node.schema !is null)
         {
@@ -199,20 +199,20 @@ override:
         _buffer ~= node.name;
     }
 
-    void visit(TernaryNode node)
+    void visit(const(TernaryNode) node)
     {
         node.first.accept(this);
         node.second.accept(this);
         node.third.accept(this);
     }
 
-    void visit(UnaryNode node)
+    void visit(const(UnaryNode) node)
     {
         _buffer ~= node.operator ~ " ";
         node.operand.accept(this);
     }
 
-    void visit(WhereNode node)
+    void visit(const(WhereNode) node)
     {
         _buffer ~= " WHERE ";
         node.clause.accept(this);

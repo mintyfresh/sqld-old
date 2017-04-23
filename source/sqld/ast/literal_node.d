@@ -33,7 +33,7 @@ public:
     }
 
     @property
-    Algebraic!(LiteralTypes) value()
+    Algebraic!(LiteralTypes) value() const
     {
         return _value;
     }

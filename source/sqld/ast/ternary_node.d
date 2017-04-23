@@ -14,7 +14,7 @@ private:
     ExpressionNode _third;
 
 public:
-    this(ExpressionNode first, ExpressionNode second, ExpressionNode third)
+    this(const(ExpressionNode) first, const(ExpressionNode) second, const(ExpressionNode) third) const
     {
         _first  = first;
         _second = second;
@@ -22,19 +22,19 @@ public:
     }
 
     @property
-    ExpressionNode first()
+    const(ExpressionNode) first() const
     {
         return _first;
     }
 
     @property
-    ExpressionNode second()
+    const(ExpressionNode) second() const
     {
         return _second;
     }
 
     @property
-    ExpressionNode third()
+    const(ExpressionNode) third() const
     {
         return _third;
     }

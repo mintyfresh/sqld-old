@@ -10,8 +10,8 @@ abstract class QueryNode : Node
 {
     mixin Visitable;
 
-    ExpressionNode toSubquery()
+    const(ExpressionNode) toSubquery() const
     {
-        return new SubqueryNode(this);
+        return new const SubqueryNode(this);
     }
 }

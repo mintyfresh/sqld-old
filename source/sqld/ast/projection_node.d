@@ -14,18 +14,18 @@ private:
     ExpressionListNode _projections;
 
 public:
-    this(ExpressionNode projection)
+    this(const(ExpressionNode) projection) const
     {
-        this(new ExpressionListNode([projection]));
+        this(new const ExpressionListNode([projection]));
     }
 
-    this(ExpressionListNode projections)
+    this(const(ExpressionListNode) projections) const
     {
         _projections = projections;
     }
 
     @property
-    ExpressionListNode projections()
+    const(ExpressionListNode) projections() const
     {
         return _projections;
     }

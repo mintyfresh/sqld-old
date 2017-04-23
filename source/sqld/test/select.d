@@ -9,8 +9,8 @@ import sqld.test.test_visitor;
 {
     auto v = new TestVisitor;
     auto b = new SelectBuilder;
-    auto u = new TableNode("users");
-    auto p = new TableNode("posts");
+    auto u = new const TableNode("users");
+    auto p = new const TableNode("posts");
 
     b.project(u["*"])
      .from(u)
@@ -39,19 +39,19 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = new TableNode("users");
-    auto p = new TableNode("posts");
+    auto u = new const TableNode("users");
+    auto p = new const TableNode("posts");
 
     auto b1 = new SelectBuilder;
     auto b2 = new SelectBuilder;
 
-    b1.project(p["user_id"])
-      .from(p)
-      .where(p["reported"].eq(true));
-
     b2.project(u["*"])
       .from(u)
-      .where(u["id"] in b1.build)
+      .where(u["id"] in
+          b1.project(p["user_id"])
+            .from(p)
+            .where(p["reported"].eq(true))
+            .build)
       .limit(10)
       .build
       .accept(v);

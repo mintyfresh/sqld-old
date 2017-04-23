@@ -12,20 +12,20 @@ private:
     string _sql;
 
 public:
-    this(string sql)
+    this(string sql) const
     {
         _sql = sql;
     }
 
     @property
-    string sql()
+    string sql() const
     {
         return _sql;
     }
 }
 
 @property
-SQLNode sql(string sql)
+const(SQLNode) sql(string sql)
 {
-    return new SQLNode(sql);
+    return new const SQLNode(sql);
 }

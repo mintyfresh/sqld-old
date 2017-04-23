@@ -14,18 +14,18 @@ private:
     ExpressionListNode _directions;
 
 public:
-    this(ExpressionNode directions)
+    this(const(ExpressionNode) directions) const
     {
-        _directions = new ExpressionListNode([directions]);
+        _directions = new const ExpressionListNode([directions]);
     }
 
-    this(ExpressionListNode directions)
+    this(const(ExpressionListNode) directions) const
     {
         _directions = directions;
     }
 
     @property
-    ExpressionListNode directions()
+    const(ExpressionListNode) directions() const
     {
         return _directions;
     }

@@ -30,7 +30,7 @@ private:
     ExpressionNode _right;
 
 public:
-    this(ExpressionNode left, BinaryOperator operator, ExpressionNode right)
+    this(const(ExpressionNode) left, BinaryOperator operator, const(ExpressionNode) right) const
     {
         _left     = left;
         _operator = operator;
@@ -38,40 +38,40 @@ public:
     }
 
     @property
-    ExpressionNode left()
+    const(ExpressionNode) left() const
     {
         return _left;
     }
 
     @property
-    BinaryOperator operator()
+    BinaryOperator operator() const
     {
         return _operator;
     }
 
     @property
-    ExpressionNode right()
+    const(ExpressionNode) right() const
     {
         return _right;
     }
 }
 
-BinaryNode and(ExpressionNode left, ExpressionNode right)
+const(BinaryNode) and(const(ExpressionNode) left, const(ExpressionNode) right)
 {
-    return new BinaryNode(left, BinaryOperator.and, right);
+    return new const BinaryNode(left, BinaryOperator.and, right);
 }
 
-BinaryNode or(ExpressionNode left, ExpressionNode right)
+const(BinaryNode) or(const(ExpressionNode) left, const(ExpressionNode) right)
 {
-    return new BinaryNode(left, BinaryOperator.or, right);
+    return new const BinaryNode(left, BinaryOperator.or, right);
 }
 
-BinaryNode eq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
+const(BinaryNode) eq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new BinaryNode(expression(left), BinaryOperator.equal, expression(right));
+    return new const BinaryNode(expression(left), BinaryOperator.equal, expression(right));
 }
 
-BinaryNode notEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
+const(BinaryNode) notEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new BinaryNode(expression(left), BinaryOperator.equal, expression(right));
+    return new const BinaryNode(expression(left), BinaryOperator.equal, expression(right));
 }

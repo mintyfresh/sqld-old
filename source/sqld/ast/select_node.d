@@ -33,8 +33,9 @@ private:
 public:
     alias toSubquery this;
 
-    this(ProjectionNode projection, FromNode from, JoinNode[] joins,  WhereNode where,
-         GroupByNode groupBy, HavingNode having, OrderByNode orderBy, LimitNode limit, OffsetNode offset)
+    this(const(ProjectionNode) projection, const(FromNode) from, const(JoinNode)[] joins,
+         const(WhereNode) where, const(GroupByNode) groupBy, const(HavingNode) having,
+         const(OrderByNode) orderBy, const(LimitNode) limit, const(OffsetNode) offset) const
     {
         foreach(name; AliasSeq!("projection", "from", "joins", "where",
                                 "groupBy", "having", "orderBy", "limit", "offset"))
@@ -44,55 +45,55 @@ public:
     }
 
     @property
-    ProjectionNode projection()
+    const(ProjectionNode) projection() const
     {
         return _projection;
     }
 
     @property
-    FromNode from()
+    const(FromNode) from() const
     {
         return _from;
     }
 
     @property
-    JoinNode[] joins()
+    const(JoinNode)[] joins() const
     {
         return _joins;
     }
 
     @property
-    WhereNode where()
+    const(WhereNode) where() const
     {
         return _where;
     }
 
     @property
-    GroupByNode groupBy()
+    const(GroupByNode) groupBy() const
     {
         return _groupBy;
     }
 
     @property
-    HavingNode having()
+    const(HavingNode) having() const
     {
         return _having;
     }
 
     @property
-    OrderByNode orderBy()
+    const(OrderByNode) orderBy() const
     {
         return _orderBy;
     }
 
     @property
-    LimitNode limit()
+    const(LimitNode) limit() const
     {
         return _limit;
     }
 
     @property
-    OffsetNode offset()
+    const(OffsetNode) offset() const
     {
         return _offset;
     }

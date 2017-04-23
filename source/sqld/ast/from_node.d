@@ -14,18 +14,18 @@ private:
     ExpressionListNode _sources;
 
 public:
-    this(ExpressionNode source)
+    this(const(ExpressionNode) source) const
     {
-        this(new ExpressionListNode([source]));
+        this(new const ExpressionListNode([source]));
     }
 
-    this(ExpressionListNode sources)
+    this(const(ExpressionListNode) sources) const
     {
         _sources = sources;
     }
 
     @property
-    ExpressionListNode sources()
+    const(ExpressionListNode) sources() const
     {
         return _sources;
     }

@@ -14,25 +14,25 @@ private:
     string    _name;
 
 public:
-    this(string name)
+    this(string name) const
     {
         this(null, name);
     }
 
-    this(TableNode table, string name)
+    this(const(TableNode) table, string name) const
     {
         _table = table;
         _name  = name;
     }
 
     @property
-    TableNode table()
+    const(TableNode) table() const
     {
         return _table;
     }
 
     @property
-    string name()
+    string name() const
     {
         return _name;
     }

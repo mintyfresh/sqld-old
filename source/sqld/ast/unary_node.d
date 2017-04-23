@@ -18,26 +18,26 @@ private:
     ExpressionNode _operand;
 
 public:
-    this(UnaryOperator operator, ExpressionNode operand)
+    this(UnaryOperator operator, const(ExpressionNode) operand) const
     {
         _operator = operator;
         _operand  = operand;
     }
 
     @property
-    UnaryOperator operator()
+    UnaryOperator operator() const
     {
         return _operator;
     }
 
     @property
-    ExpressionNode operand()
+    const(ExpressionNode) operand() const
     {
         return _operand;
     }
 }
 
-UnaryNode not(ExpressionNode operand)
+const(UnaryNode) not(const(ExpressionNode) operand)
 {
-    return new UnaryNode(UnaryOperator.not, operand);
+    return new const UnaryNode(UnaryOperator.not, operand);
 }

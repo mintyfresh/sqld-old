@@ -14,18 +14,18 @@ private:
     ExpressionListNode _groupings;
 
 public:
-    this(ExpressionNode groupings)
+    this(const(ExpressionNode) groupings) const
     {
-        _groupings = new ExpressionListNode([groupings]);
+        _groupings = new const ExpressionListNode([groupings]);
     }
 
-    this(ExpressionListNode groupings)
+    this(const(ExpressionListNode) groupings) const
     {
         _groupings = groupings;
     }
 
     @property
-    ExpressionListNode groupings()
+    const(ExpressionListNode) groupings() const
     {
         return _groupings;
     }
