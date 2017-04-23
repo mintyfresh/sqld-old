@@ -27,6 +27,8 @@ interface Visitor
 
     void visit(LimitNode node);
 
+    void visit(LiteralNode node);
+
     void visit(Node node);
 
     void visit(OffsetNode node);

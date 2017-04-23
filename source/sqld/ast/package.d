@@ -12,6 +12,7 @@ public import sqld.ast.group_by_node;
 public import sqld.ast.having_node;
 public import sqld.ast.join_node;
 public import sqld.ast.limit_node;
+public import sqld.ast.literal_node;
 public import sqld.ast.node;
 public import sqld.ast.offset_node;
 public import sqld.ast.order_by_node;

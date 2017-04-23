@@ -104,6 +104,11 @@ override:
         _buffer ~= " LIMIT " ~ node.limit.to!(string);
     }
 
+    void visit(LiteralNode node)
+    {
+        _buffer ~= node.value.coerce!(string);
+    }
+
     void visit(Node node)
     {
         assert(0, node.classinfo.name);
