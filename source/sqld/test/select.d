@@ -10,6 +10,34 @@ import sqld.test.test_visitor;
     auto v = new TestVisitor;
     auto b = SelectBuilder.init;
     auto u = TableNode("users");
+
+    b.project(u["id"])
+     .from(u)
+     .where(u["posts_count"].gt(5))
+     .where(u["active"].eq(false))
+     .where(u["bans_count"].lteq(3))
+     .build
+     .accept(v);
+
+    assert(v.sql == q{
+        SELECT
+          users.id
+        FROM
+          users
+        WHERE
+          users.posts_count > 5
+        AND
+          users.active = false
+        AND
+          users.bans_count <= 3
+    }.squish);
+}
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto b = SelectBuilder.init;
+    auto u = TableNode("users");
     auto p = TableNode("posts");
 
     b.project(u["*"])
