@@ -15,7 +15,7 @@ import sqld.test.test_visitor;
     b.project(u["*"])
      .from(u)
      .join(p, p["user_id"].eq(u["id"]))
-     .where(u["active"])
+     .where(u["active"].eq(true))
      .limit(10)
      .build
      .accept(v);
@@ -30,7 +30,7 @@ import sqld.test.test_visitor;
         ON
           posts.user_id = users.id
         WHERE
-          users.active
+          users.active = true
         LIMIT
           10
     }.squish);

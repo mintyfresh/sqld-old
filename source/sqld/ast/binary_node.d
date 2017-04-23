@@ -66,12 +66,12 @@ BinaryNode or(ExpressionNode left, ExpressionNode right)
     return new BinaryNode(left, BinaryOperator.or, right);
 }
 
-BinaryNode eq(ExpressionNode left, ExpressionNode right)
+BinaryNode eq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new BinaryNode(left, BinaryOperator.equal, right);
+    return new BinaryNode(expression(left), BinaryOperator.equal, expression(right));
 }
 
-BinaryNode notEq(ExpressionNode left, ExpressionNode right)
+BinaryNode notEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new BinaryNode(left, BinaryOperator.equal, right);
+    return new BinaryNode(expression(left), BinaryOperator.equal, expression(right));
 }

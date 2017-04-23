@@ -34,8 +34,13 @@ public:
     }
 }
 
+template isLiteralType(T)
+{
+    enum isLiteralType = staticIndexOf!(T, LiteralTypes) != -1;
+}
+
 @property
-LiteralNode literal(T)(T value)
+LiteralNode literal(T)(T value) if(isLiteralType!(T))
 {
     return new LiteralNode(Algebraic!(LiteralTypes)(value));
 }
