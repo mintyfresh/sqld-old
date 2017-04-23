@@ -1,6 +1,7 @@
 
 module sqld.ast.from_node;
 
+import sqld.ast.expression_list_node;
 import sqld.ast.expression_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
@@ -10,17 +11,22 @@ class FromNode : Node
     mixin Visitable;
 
 private:
-    ExpressionNode _source;
+    ExpressionListNode _sources;
 
 public:
     this(ExpressionNode source)
     {
-        _source = source;
+        this(new ExpressionListNode([source]));
+    }
+
+    this(ExpressionListNode sources)
+    {
+        _sources = sources;
     }
 
     @property
-    ExpressionNode source()
+    ExpressionListNode sources()
     {
-        return _source;
+        return _sources;
     }
 }

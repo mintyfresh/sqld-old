@@ -1,6 +1,7 @@
 
 module sqld.ast.projection_node;
 
+import sqld.ast.expression_list_node;
 import sqld.ast.expression_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
@@ -10,17 +11,22 @@ class ProjectionNode : Node
     mixin Visitable;
 
 private:
-    ExpressionNode _projection;
+    ExpressionListNode _projections;
 
 public:
     this(ExpressionNode projection)
     {
-        _projection = projection;
+        this(new ExpressionListNode([projection]));
+    }
+
+    this(ExpressionListNode projections)
+    {
+        _projections = projections;
     }
 
     @property
-    ExpressionNode projection()
+    ExpressionListNode projections()
     {
-        return _projection;
+        return _projections;
     }
 }
