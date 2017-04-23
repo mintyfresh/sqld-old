@@ -31,6 +31,8 @@ private:
     OffsetNode     _offset;
 
 public:
+    alias toSubquery this;
+
     this(ProjectionNode projection, FromNode from, JoinNode[] joins,  WhereNode where,
          GroupByNode groupBy, HavingNode having, OrderByNode orderBy, LimitNode limit, OffsetNode offset)
     {
