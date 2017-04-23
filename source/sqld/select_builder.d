@@ -22,9 +22,7 @@ public:
 
     SelectBuilder on(ExpressionNode condition)
     {
-        _builder._joins ~= new JoinNode(_joinType, _source, condition);
-
-        return _builder;
+        return _builder.join(_joinType, _source, condition);
     }
 }
 
