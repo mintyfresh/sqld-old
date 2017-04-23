@@ -52,7 +52,7 @@ public:
     immutable(SelectNode) build()
     {
         return new immutable SelectNode(_projection, _from, _joins, _where, _groupBy,
-                                    _having, _orderBy, _limit, _offset);
+                                        _having, _orderBy, _limit, _offset);
     }
 
     /+ - Projection - +/
