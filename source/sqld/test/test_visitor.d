@@ -27,6 +27,21 @@ override:
         _buffer ~= " AS " ~ node.name;
     }
 
+    void visit(immutable(AssignmentNode) node)
+    {
+        node.left.accept(this);
+        _buffer ~= " = ";
+        
+        if(node.right !is null)
+        {
+            node.right.accept(this);
+        }
+        else
+        {
+            _buffer ~= "DEFAULT";
+        }
+    }
+
     void visit(immutable(BinaryNode) node)
     {
         node.left.accept(this);
@@ -200,6 +215,21 @@ override:
                 {
                     __traits(getMember, node, field).accept(this);
                 }
+            }
+        }
+    }
+
+    void visit(immutable(SetNode) node)
+    {
+        _buffer ~= " SET ";
+
+        foreach(index, assignment; node.assignments)
+        {
+            assignment.accept(this);
+
+            if(index + 1 < node.assignments.length)
+            {
+                _buffer ~= ", ";
             }
         }
     }

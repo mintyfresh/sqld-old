@@ -7,6 +7,8 @@ interface Visitor
 {
     void visit(immutable(AsNode) node);
 
+    void visit(immutable(AssignmentNode) node);
+
     void visit(immutable(BinaryNode) node);
 
     void visit(immutable(ColumnNode) node);
@@ -50,6 +52,8 @@ interface Visitor
     void visit(immutable(QueryNode) node);
 
     void visit(immutable(SelectNode) node);
+
+    void visit(immutable(SetNode) node);
 
     void visit(immutable(SubqueryNode) node);
 

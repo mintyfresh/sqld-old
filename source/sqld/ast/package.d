@@ -2,6 +2,7 @@
 module sqld.ast;
 
 public import sqld.ast.as_node;
+public import sqld.ast.assignment_node;
 public import sqld.ast.binary_node;
 public import sqld.ast.column_node;
 public import sqld.ast.direction_node;
@@ -24,6 +25,7 @@ public import sqld.ast.partition_by_node;
 public import sqld.ast.projection_node;
 public import sqld.ast.query_node;
 public import sqld.ast.select_node;
+public import sqld.ast.set_node;
 public import sqld.ast.sql_node;
 public import sqld.ast.subquery_node;
 public import sqld.ast.table_node;
