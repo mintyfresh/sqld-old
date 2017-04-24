@@ -33,6 +33,7 @@ public import sqld.ast.table_node;
 public import sqld.ast.ternary_node;
 public import sqld.ast.unary_node;
 public import sqld.ast.update_node;
+public import sqld.ast.using_node;
 public import sqld.ast.visitor;
 public import sqld.ast.where_node;
 public import sqld.ast.window_definition_node;

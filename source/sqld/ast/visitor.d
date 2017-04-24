@@ -69,6 +69,8 @@ interface Visitor
 
     void visit(immutable(UpdateNode) node);
 
+    void visit(immutable(UsingNode) node);
+
     void visit(immutable(WhereNode) node);
 
     void visit(immutable(WindowDefinitionNode) node);

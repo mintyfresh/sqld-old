@@ -288,6 +288,12 @@ override:
         }
     }
 
+    void visit(immutable(UsingNode) node)
+    {
+        _buffer ~= " USING ";
+        node.sources.accept(this);
+    }
+
     void visit(immutable(WhereNode) node)
     {
         _buffer ~= " WHERE ";
