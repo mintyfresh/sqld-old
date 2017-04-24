@@ -3,6 +3,7 @@ module sqld.select_builder;
 
 import sqld.ast;
 import sqld.builder;
+import sqld.partials;
 import sqld.window_builder;
 
 struct JoinBuilder
@@ -36,14 +37,14 @@ public:
 struct SelectBuilder
 {
     mixin Builder;
+    mixin FromPartial;
+    mixin WherePartial;
 
 private:
     immutable
     {
         ProjectionNode _projection;
-        FromNode       _from;
         JoinNode[]     _joins;
-        WhereNode      _where;
         GroupByNode    _groupBy;
         HavingNode     _having;
         WindowNode     _window;
@@ -96,40 +97,6 @@ public:
         return projection(null);
     }
 
-    /+ - From - +/
-
-    SelectBuilder from(immutable(FromNode) from)
-    {
-        return next!("from")(from);
-    }
-
-    SelectBuilder from(immutable(ExpressionNode)[] sources...)
-    {
-        if(_from is null)
-        {
-            return from(new immutable FromNode(sources));
-        }
-        else
-        {
-            return from(new immutable FromNode(_from.sources ~ sources));
-        }
-    }
-
-    SelectBuilder from(immutable(ExpressionNode) source, string name)
-    {
-        return from(source.as(name));
-    }
-
-    SelectBuilder refrom(TList...)(TList args)
-    {
-        return unfrom.from(args);
-    }
-
-    SelectBuilder unfrom()
-    {
-        return from(cast(FromNode) null);
-    }
-
     /+ - Join - +/
 
     SelectBuilder join(immutable(JoinNode) join)
@@ -165,35 +132,6 @@ public:
     SelectBuilder unjoin()
     {
         return next!("joins")(cast(immutable(JoinNode)[]) []);
-    }
-
-    /+ - Where - +/
-
-    SelectBuilder where(immutable(WhereNode) where)
-    {
-        return next!("where")(where);
-    }
-
-    SelectBuilder where(immutable(ExpressionNode) condition)
-    {
-        if(_where is null)
-        {
-            return where(new immutable WhereNode(condition));
-        }
-        else
-        {
-            return where(new immutable WhereNode(_where.clause.and(condition)));
-        }
-    }
-
-    SelectBuilder rewhere(immutable(ExpressionNode) condition)
-    {
-        return unwhere.where(condition);
-    }
-
-    SelectBuilder unwhere()
-    {
-        return where(cast(WhereNode) null);
     }
 
     /+ - Group By - +/
