@@ -153,11 +153,6 @@ public:
         return group(new immutable ExpressionListNode(groupings));
     }
 
-    SelectBuilder group(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
-    {
-        return group(expressionList(args));
-    }
-
     SelectBuilder regroup(TList...)(TList args)
     {
         return ungroup.group(groupings);
