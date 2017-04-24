@@ -16,6 +16,8 @@ private:
     }
 
 public:
+    alias build this;
+
     @property
     immutable(UpdateNode) build()
     {

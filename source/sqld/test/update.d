@@ -16,7 +16,6 @@ import sqld.update_builder;
      .set("banned", true)
      .set("active", false)
      .where(u["warnings_count"].gtEq(10))
-     .build
      .accept(v);
 
     assert(v.sql == q{
@@ -44,7 +43,6 @@ import sqld.update_builder;
      .where(p["user_id"].eq(u["id"]))
      .where(p["inappropriate"].eq(true))
      .returning(u["id"], u["email"])
-     .build
      .accept(v);
 
     assert(v.sql == q{
@@ -79,10 +77,8 @@ import sqld.update_builder;
       .from(b2.project(p["user_id"], p["*"].count)
               .from(p)
               .group(p["user_id"])
-              .build
               .as(p))
       .where(p["user_id"].eq(u["id"]))
-      .build
       .accept(v);
 
     assert(v.sql == q{

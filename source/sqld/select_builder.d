@@ -12,7 +12,7 @@ private:
     immutable(ExpressionNode) _source;
 
 public:
-    alias builder this;
+    alias build this;
 
     this(SelectBuilder builder, JoinType joinType, immutable(ExpressionNode) source)
     {
@@ -21,7 +21,7 @@ public:
         _source   = source;
     }
 
-    SelectBuilder builder()
+    SelectBuilder build()
     {
         return _builder.join(_joinType, _source);
     }
@@ -50,6 +50,8 @@ private:
     }
 
 public:
+    alias build this;
+
     @property
     immutable(SelectNode) build()
     {

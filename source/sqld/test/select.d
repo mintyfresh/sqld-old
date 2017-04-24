@@ -16,7 +16,6 @@ import sqld.test.test_visitor;
      .where(u["posts_count"].gt(5))
      .where(u["active"].eq(false))
      .where(u["bans_count"].ltEq(3))
-     .build
      .accept(v);
 
     assert(v.sql == q{
@@ -45,7 +44,6 @@ import sqld.test.test_visitor;
      .join(p, p["user_id"].eq(u["id"]))
      .where(u["active"].eq(true))
      .limit(10)
-     .build
      .accept(v);
     
     assert(v.sql == q{
@@ -81,10 +79,8 @@ import sqld.test.test_visitor;
             .where(p["reported"].eq(true))
             .group(p["user_id"])
             .having(p["*"].count.gtEq(3))
-            .order(p["*"].count.desc)
-            .build)
+            .order(p["*"].count.desc))
       .limit(10)
-      .build
       .accept(v);
 
     assert(v.sql == q{
@@ -120,7 +116,6 @@ import sqld.test.test_visitor;
 
     b.project(u["posts_count"].sum.over(w => w.partition(u["status"])))
      .from(u)
-     .build
      .accept(v);
 
     assert(v.sql == q{
@@ -142,7 +137,6 @@ import sqld.test.test_visitor;
     b.project(u["posts_count"].sum.over("statuses"))
      .from(u)
      .window("statuses", w => w.partition(u["status"]))
-     .build
      .accept(v);
 
     assert(v.sql == q{

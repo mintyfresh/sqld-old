@@ -14,6 +14,8 @@ private:
     }
 
 public:
+    alias build this;
+
     @property
     immutable(WindowDefinitionNode) build()
     {
