@@ -10,6 +10,8 @@ import sqld.ast.visitor;
 
 class InsertNode : QueryNode
 {
+    mixin Visitable;
+
 private:
     IntoNode      _into;
     ValuesNode    _values;

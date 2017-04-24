@@ -3,10 +3,13 @@ module sqld.ast.into_node;
 
 import sqld.ast.expression_list_node;
 import sqld.ast.node;
+import sqld.ast.visitor;
 import sqld.ast.table_node;
 
 class IntoNode : Node
 {
+    mixin Visitable;
+
 private:
     TableNode          _table;
     ExpressionListNode _columns;
