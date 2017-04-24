@@ -27,6 +27,8 @@ interface Visitor
 
     void visit(immutable(HavingNode) node);
 
+    void visit(immutable(IntoNode) node);
+
     void visit(immutable(InvocationNode) node);
 
     void visit(immutable(JoinNode) node);

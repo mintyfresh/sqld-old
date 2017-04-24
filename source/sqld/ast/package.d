@@ -13,6 +13,7 @@ public import sqld.ast.from_node;
 public import sqld.ast.function_node;
 public import sqld.ast.group_by_node;
 public import sqld.ast.having_node;
+public import sqld.ast.into_node;
 public import sqld.ast.invocation_node;
 public import sqld.ast.join_node;
 public import sqld.ast.limit_node;

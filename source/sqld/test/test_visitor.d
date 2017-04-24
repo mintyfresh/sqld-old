@@ -115,6 +115,19 @@ override:
         node.clause.accept(this);
     }
 
+    void visit(immutable(IntoNode) node)
+    {
+        _buffer ~= " INTO ";
+        node.table.accept(this);
+
+        if(node.columns !is null)
+        {
+            _buffer ~= "(";
+            node.columns.accept(this);
+            _buffer ~= ")";
+        }
+    }
+
     void visit(immutable(InvocationNode) node)
     {
         node.callable.accept(this);
