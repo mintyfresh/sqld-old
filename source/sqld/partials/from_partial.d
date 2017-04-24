@@ -14,26 +14,19 @@ public:
         return next!("from")(from);
     }
 
+    typeof(this) from(immutable(ExpressionListNode) sources)
+    {
+        return from(new immutable FromNode(sources));
+    }
+
     typeof(this) from(immutable(ExpressionNode)[] sources...)
     {
-        if(_from is null)
-        {
-            return from(new immutable FromNode(sources));
-        }
-        else
-        {
-            return from(new immutable FromNode(_from.sources ~ sources));
-        }
+        return from(new immutable ExpressionListNode(sources));
     }
 
     typeof(this) from(immutable(ExpressionNode) source, string name)
     {
         return from(source.as(name));
-    }
-
-    typeof(this) refrom(TList...)(TList args)
-    {
-        return unfrom.from(args);
     }
 
     typeof(this) unfrom()

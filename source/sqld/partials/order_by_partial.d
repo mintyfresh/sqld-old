@@ -32,11 +32,6 @@ public:
         return order(new immutable ExpressionListNode(directions));
     }
 
-    typeof(this) order(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
-    {
-        return order(expressionList(args));
-    }
-
     typeof(this) reorder(TList...)(TList args)
     {
         return unorder.order(args);

@@ -32,26 +32,19 @@ public:
         return next!("using")(using);
     }
 
+    typeof(this) using(immutable(ExpressionListNode) sources)
+    {
+        return using(new immutable UsingNode(sources));
+    }
+
     typeof(this) using(immutable(ExpressionNode)[] sources...)
     {
-        if(_using is null)
-        {
-            return using(new immutable UsingNode(sources));
-        }
-        else
-        {
-            return using(new immutable UsingNode(_using.sources ~ sources));
-        }
+        return using(new immutable ExpressionListNode(sources));
     }
 
     typeof(this) using(immutable(ExpressionNode) source, string name)
     {
         return using(source.as(name));
-    }
-
-    typeof(this) reusing(TList...)(TList args)
-    {
-        return unusing.using(args);
     }
 
     typeof(this) unusing()

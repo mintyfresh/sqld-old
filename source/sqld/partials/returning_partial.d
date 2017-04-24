@@ -4,6 +4,7 @@ module sqld.partials.returning_partial;
 mixin template ReturningPartial()
 {
     import sqld.ast;
+    import std.meta : allSatisfy;
 
 private:
     immutable(ReturningNode) _returning;
@@ -14,21 +15,19 @@ public:
         return next!("returning")(returning);
     }
 
-    typeof(this) returning(immutable(ExpressionNode)[] outputs...)
+    typeof(this) returning(immutable(ExpressionListNode) outputs)
     {
-        if(_returning is null)
-        {
-            return returning(new immutable ReturningNode(outputs));
-        }
-        else
-        {
-            return returning(new immutable ReturningNode(_returning.outputs ~ outputs));
-        }
+        return returning(new immutable ReturningNode(outputs));
     }
 
-    typeof(this) rereturning(immutable(ExpressionNode) outputs)
+    typeof(this) returning(immutable(ExpressionNode)[] outputs...)
     {
-        return unreturning.returning(outputs);
+        return returning(new immutable ExpressionListNode(outputs));
+    }
+
+    typeof(this) returning(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
+    {
+        return returning(expressionList(args));
     }
 
     typeof(this) unreturning()
