@@ -2,6 +2,7 @@
 module sqld.ast.update_node;
 
 import sqld.ast.from_node;
+import sqld.ast.limit_node;
 import sqld.ast.query_node;
 import sqld.ast.returning_node;
 import sqld.ast.set_node;
@@ -20,13 +21,14 @@ private:
     SetNode       _set;
     FromNode      _from;
     WhereNode     _where;
+    LimitNode     _limit;
     ReturningNode _returning;
 
 public:
     this(immutable(TableNode) table, immutable(SetNode) set, immutable(FromNode) from,
-         immutable(WhereNode) where, immutable(ReturningNode) returning) immutable
+         immutable(WhereNode) where, immutable(LimitNode) limit, immutable(ReturningNode) returning) immutable
     {
-        foreach(name; AliasSeq!("table", "set", "from", "where", "returning"))
+        foreach(name; AliasSeq!("table", "set", "from", "where", "limit", "returning"))
         {
             mixin("_" ~ name ~ " = " ~ name ~ ";");
         }
@@ -54,6 +56,12 @@ public:
     immutable(WhereNode) where() immutable
     {
         return _where;
+    }
+
+    @property
+    immutable(LimitNode) limit() immutable
+    {
+        return _limit;
     }
 
     @property

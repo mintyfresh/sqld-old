@@ -10,6 +10,7 @@ struct DeleteBuilder
     mixin Builder;
     mixin FromPartial;
     mixin WherePartial;
+    mixin LimitPartial;
     mixin ReturningPartial;
 
 private:
@@ -21,7 +22,7 @@ public:
     @property
     immutable(DeleteNode) build()
     {
-        return new immutable DeleteNode(_from, _using, _where, _returning);
+        return new immutable DeleteNode(_from, _using, _where, _limit, _returning);
     }
 
     /+ - Using - +/

@@ -10,6 +10,7 @@ struct UpdateBuilder
     mixin Builder;
     mixin FromPartial;
     mixin WherePartial;
+    mixin LimitPartial;
     mixin ReturningPartial;
 
 private:
@@ -25,7 +26,7 @@ public:
     @property
     immutable(UpdateNode) build()
     {
-        return new immutable UpdateNode(_table, _set, _from, _where, _returning);
+        return new immutable UpdateNode(_table, _set, _from, _where, _limit, _returning);
     }
 
     /+ - Table - +/
