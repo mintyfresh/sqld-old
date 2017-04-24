@@ -4,6 +4,7 @@ module sqld.ast.as_node;
 import sqld.ast.binary_node;
 import sqld.ast.expression_node;
 import sqld.ast.visitor;
+import sqld.ast.table_node;
 
 class AsNode : ExpressionNode
 {
@@ -36,4 +37,9 @@ public:
 immutable(AsNode) as(immutable(ExpressionNode) node, string name)
 {
     return new immutable AsNode(node, name);
+}
+
+immutable(AsNode) as(immutable(ExpressionNode) node, immutable(TableNode) table)
+{
+    return as(node, table.name);
 }

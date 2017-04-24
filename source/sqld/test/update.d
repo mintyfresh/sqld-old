@@ -80,7 +80,7 @@ import sqld.update_builder;
               .from(p)
               .group(p["user_id"])
               .build
-              .as(p.name))
+              .as(p))
       .where(p["user_id"].eq(u["id"]))
       .build
       .accept(v);
