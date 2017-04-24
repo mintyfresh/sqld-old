@@ -115,6 +115,19 @@ override:
         node.clause.accept(this);
     }
 
+    void visit(immutable(InsertNode) node)
+    {
+        _buffer ~= "INSERT ";
+        
+        foreach(field; AliasSeq!("into", "values", "select", "returning"))
+        {
+            if(__traits(getMember, node, field) !is null)
+            {
+                __traits(getMember, node, field).accept(this);
+            }
+        }
+    }
+
     void visit(immutable(IntoNode) node)
     {
         _buffer ~= " INTO ";
