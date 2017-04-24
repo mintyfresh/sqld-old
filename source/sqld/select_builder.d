@@ -39,6 +39,7 @@ struct SelectBuilder
     mixin Builder;
     mixin FromPartial;
     mixin WherePartial;
+    mixin LimitPartial;
 
 private:
     immutable
@@ -49,7 +50,6 @@ private:
         HavingNode     _having;
         WindowNode     _window;
         OrderByNode    _orderBy;
-        LimitNode      _limit;
         OffsetNode     _offset;
     }
 
@@ -263,23 +263,6 @@ public:
     SelectBuilder unorder()
     {
         return orderBy(null);
-    }
-
-    /+ - Limit - +/
-
-    SelectBuilder limit(immutable(LimitNode) limit)
-    {
-        return next!("limit")(limit);
-    }
-
-    SelectBuilder limit(ulong value)
-    {
-        return limit(new immutable LimitNode(value));
-    }
-
-    SelectBuilder unlimit()
-    {
-        return limit(null);
     }
 
     /+ - Offset - +/
