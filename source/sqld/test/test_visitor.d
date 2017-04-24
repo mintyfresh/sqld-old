@@ -275,6 +275,19 @@ override:
         node.operand.accept(this);
     }
 
+    void visit(immutable(UpdateNode) node)
+    {
+        _buffer ~= "UPDATE ";
+        
+        foreach(field; AliasSeq!("table", "set", "from", "where", "returning"))
+        {
+            if(__traits(getMember, node, field) !is null)
+            {
+                __traits(getMember, node, field).accept(this);
+            }
+        }
+    }
+
     void visit(immutable(WhereNode) node)
     {
         _buffer ~= " WHERE ";
