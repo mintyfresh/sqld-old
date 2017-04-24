@@ -5,6 +5,7 @@ public import sqld.ast.as_node;
 public import sqld.ast.assignment_node;
 public import sqld.ast.binary_node;
 public import sqld.ast.column_node;
+public import sqld.ast.delete_node;
 public import sqld.ast.direction_node;
 public import sqld.ast.expression_list_node;
 public import sqld.ast.expression_node;

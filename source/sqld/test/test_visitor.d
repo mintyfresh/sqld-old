@@ -60,6 +60,19 @@ override:
         _buffer ~= node.name;
     }
 
+    void visit(immutable(DeleteNode) node)
+    {
+        _buffer ~= "DELETE ";
+        
+        foreach(field; AliasSeq!("from", "using", "where", "returning"))
+        {
+            if(__traits(getMember, node, field) !is null)
+            {
+                __traits(getMember, node, field).accept(this);
+            }
+        }
+    }
+
     void visit(immutable(DirectionNode) node)
     {
         node.node.accept(this);

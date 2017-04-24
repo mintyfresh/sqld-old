@@ -13,6 +13,8 @@ interface Visitor
 
     void visit(immutable(ColumnNode) node);
 
+    void visit(immutable(DeleteNode) node);
+
     void visit(immutable(DirectionNode) node);
 
     void visit(immutable(ExpressionListNode) node);
