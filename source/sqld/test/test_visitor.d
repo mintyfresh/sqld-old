@@ -249,9 +249,9 @@ override:
     {
         _buffer ~= "(";
         
-        if(node.existingWindow !is null)
+        if(node.reference !is null)
         {
-            _buffer ~= node.existingWindow;
+            _buffer ~= node.reference;
         }
         if(node.partitionBy !is null)
         {

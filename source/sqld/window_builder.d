@@ -8,7 +8,7 @@ struct WindowBuilder
 private:
     immutable
     {
-        string          _references;
+        string          _reference;
         PartitionByNode _partitionBy;
         OrderByNode     _orderBy;
     }
@@ -17,14 +17,14 @@ public:
     @property
     immutable(WindowDefinitionNode) build()
     {
-        return new immutable WindowDefinitionNode(_references, _partitionBy, _orderBy);
+        return new immutable WindowDefinitionNode(_reference, _partitionBy, _orderBy);
     }
 
     /+ - Existing Window - +/
 
-    WindowBuilder reference(string existingWindow)
+    WindowBuilder reference(string reference)
     {
-        return WindowBuilder(existingWindow, _partitionBy, _orderBy);
+        return WindowBuilder(reference, _partitionBy, _orderBy);
     }
 
     WindowBuilder unreference()
@@ -36,7 +36,7 @@ public:
 
     WindowBuilder partitionBy(immutable(PartitionByNode) partitionBy)
     {
-        return WindowBuilder(_references, partitionBy, _orderBy);
+        return WindowBuilder(_reference, partitionBy, _orderBy);
     }
 
     WindowBuilder partition(T : immutable(ExpressionNode))(T partitions)
@@ -65,7 +65,7 @@ public:
 
     WindowBuilder orderBy(immutable(OrderByNode) orderBy)
     {
-        return WindowBuilder(_references, _partitionBy, orderBy);
+        return WindowBuilder(_reference, _partitionBy, orderBy);
     }
 
     WindowBuilder order(T : immutable(ExpressionNode))(T directions)

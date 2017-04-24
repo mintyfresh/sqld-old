@@ -11,22 +11,22 @@ class WindowDefinitionNode : ExpressionNode
     mixin Visitable;
 
 private:
-    string          _existingWindow;
+    string          _reference;
     PartitionByNode _partitionBy;
     OrderByNode     _orderBy;
 
 public:
-    this(string existingWindow, immutable(PartitionByNode) partitionBy, immutable(OrderByNode) orderBy) immutable
+    this(string reference, immutable(PartitionByNode) partitionBy, immutable(OrderByNode) orderBy) immutable
     {
-        _existingWindow = existingWindow;
-        _partitionBy    = partitionBy;
-        _orderBy        = orderBy;
+        _reference   = reference;
+        _partitionBy = partitionBy;
+        _orderBy     = orderBy;
     }
 
     @property
-    string existingWindow() immutable
+    string reference() immutable
     {
-        return _existingWindow;
+        return _reference;
     }
 
     @property
