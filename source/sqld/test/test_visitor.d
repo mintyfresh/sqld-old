@@ -123,6 +123,7 @@ override:
         {
             if(__traits(getMember, node, field) !is null)
             {
+                static if(field == "select") _buffer ~= " ";
                 __traits(getMember, node, field).accept(this);
             }
         }
