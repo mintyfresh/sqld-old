@@ -51,6 +51,8 @@ interface Visitor
 
     void visit(immutable(QueryNode) node);
 
+    void visit(immutable(ReturningNode) node);
+
     void visit(immutable(SelectNode) node);
 
     void visit(immutable(SetNode) node);

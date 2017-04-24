@@ -195,6 +195,12 @@ override:
         assert(0, node.classinfo.name);
     }
 
+    void visit(immutable(ReturningNode) node)
+    {
+        _buffer ~= " RETURNING ";
+        node.outputs.accept(this);
+    }
+
     void visit(immutable(SelectNode) node)
     {
         _buffer ~= "SELECT ";

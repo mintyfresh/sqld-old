@@ -24,6 +24,7 @@ public import sqld.ast.over_node;
 public import sqld.ast.partition_by_node;
 public import sqld.ast.projection_node;
 public import sqld.ast.query_node;
+public import sqld.ast.returning_node;
 public import sqld.ast.select_node;
 public import sqld.ast.set_node;
 public import sqld.ast.sql_node;
