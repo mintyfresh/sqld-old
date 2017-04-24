@@ -6,6 +6,8 @@ import sqld.builder;
 import sqld.partials;
 import sqld.window_builder;
 
+import std.meta : allSatisfy;
+
 struct JoinBuilder
 {
 private:
@@ -39,6 +41,7 @@ struct SelectBuilder
     mixin Builder;
     mixin FromPartial;
     mixin WherePartial;
+    mixin OrderByPartial;
     mixin LimitPartial;
 
 private:
@@ -49,7 +52,6 @@ private:
         GroupByNode    _groupBy;
         HavingNode     _having;
         WindowNode     _window;
-        OrderByNode    _orderBy;
         OffsetNode     _offset;
     }
 
@@ -70,26 +72,19 @@ public:
         return next!("projection")(projection);
     }
 
+    SelectBuilder select(immutable(ExpressionListNode) projections)
+    {
+        return projection(new immutable ProjectionNode(projections));
+    }
+
     SelectBuilder select(immutable(ExpressionNode)[] projection...)
     {
         return select(new immutable ExpressionListNode(projection));
     }
 
-    SelectBuilder select(immutable(ExpressionListNode) projections)
+    SelectBuilder select(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
     {
-        if(_projection is null)
-        {
-            return projection(new immutable ProjectionNode(projections));
-        }
-        else
-        {
-            return projection(new immutable ProjectionNode(_projection.projections ~ projections));
-        }
-    }
-
-    SelectBuilder reselect(TList...)(TList args)
-    {
-        return unselect.select(args);
+        return select(expressionList(args)); 
     }
 
     SelectBuilder unselect()
@@ -141,7 +136,7 @@ public:
         return next!("groupBy")(groupBy);
     }
 
-    SelectBuilder group(immutable(ExpressionNode)[] groupings...)
+    SelectBuilder group(immutable(ExpressionListNode) groupings)
     {
         if(_groupBy is null)
         {
@@ -153,7 +148,17 @@ public:
         }
     }
 
-    SelectBuilder regroup(immutable(ExpressionNode)[] groupings...)
+    SelectBuilder group(immutable(ExpressionNode)[] groupings)
+    {
+        return group(new immutable ExpressionListNode(groupings));
+    }
+
+    SelectBuilder group(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
+    {
+        return group(expressionList(args));
+    }
+
+    SelectBuilder regroup(TList...)(TList args)
     {
         return ungroup.group(groupings);
     }
@@ -234,35 +239,6 @@ public:
     SelectBuilder unwindow()
     {
         return window(cast(WindowNode) null);
-    }
-
-    /+ - Order By - +/
-
-    SelectBuilder orderBy(immutable(OrderByNode) orderBy)
-    {
-        return next!("orderBy")(orderBy);
-    }
-
-    SelectBuilder order(immutable(ExpressionNode)[] directions...)
-    {
-        if(_orderBy is null)
-        {
-            return orderBy(new immutable OrderByNode(directions));
-        }
-        else
-        {
-            return orderBy(new immutable OrderByNode(_orderBy.directions ~ directions));
-        }
-    }
-
-    SelectBuilder reorder(immutable(ExpressionNode)[] directions...)
-    {
-        return unorder.order(directions);
-    }
-
-    SelectBuilder unorder()
-    {
-        return orderBy(null);
     }
 
     /+ - Offset - +/

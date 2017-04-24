@@ -3,17 +3,18 @@ module sqld.window_builder;
 
 import sqld.ast;
 import sqld.builder;
+import sqld.partials;
 
 struct WindowBuilder
 {
     mixin Builder;
+    mixin OrderByPartial;
 
 private:
     immutable
     {
         string          _reference;
         PartitionByNode _partitionBy;
-        OrderByNode     _orderBy;
     }
 
 public:
@@ -64,34 +65,5 @@ public:
     WindowBuilder unpartition()
     {
         return partitionBy(null);
-    }
-
-    /+ - Order By - +/
-
-    WindowBuilder orderBy(immutable(OrderByNode) orderBy)
-    {
-        return next!("orderBy")(orderBy);
-    }
-
-    WindowBuilder order(T : immutable(ExpressionNode))(T directions)
-    {
-        if(_orderBy is null)
-        {
-            return orderBy(new immutable OrderByNode(directions));
-        }
-        else
-        {
-            return orderBy(new immutable OrderByNode(_orderBy.directions ~ directions));
-        }
-    }
-
-    WindowBuilder reorder(T : immutable(ExpressionNode))(T directions)
-    {
-        return unorder.order(directions);
-    }
-
-    WindowBuilder unorder()
-    {
-        return orderBy(null);
     }
 }
