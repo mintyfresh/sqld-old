@@ -79,11 +79,6 @@ override:
         }
     }
 
-    void visit(immutable(ExpressionNode) node)
-    {
-        assert(0, node.classinfo.name);
-    }
-
     void visit(immutable(FromNode) node)
     {
         _buffer ~= " FROM ";
@@ -148,11 +143,6 @@ override:
         node.definition.accept(this); 
     }
 
-    void visit(immutable(Node) node)
-    {
-        assert(0, node.classinfo.name);
-    }
-
     void visit(immutable(OffsetNode) node)
     {
         _buffer ~= " OFFSET " ~ node.offset.to!(string);
@@ -188,11 +178,6 @@ override:
     void visit(immutable(ProjectionNode) node)
     {
         node.projections.accept(this);
-    }
-
-    void visit(immutable(QueryNode) node)
-    {
-        assert(0, node.classinfo.name);
     }
 
     void visit(immutable(ReturningNode) node)

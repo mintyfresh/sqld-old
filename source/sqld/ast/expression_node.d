@@ -6,12 +6,9 @@ import sqld.ast.expression_list_node;
 import sqld.ast.invocation_node;
 import sqld.ast.literal_node;
 import sqld.ast.node;
-import sqld.ast.visitor;
 
 abstract class ExpressionNode : Node
 {
-    mixin Visitable;
-
     immutable(BinaryNode) opBinary(string op : "in")(immutable(ExpressionNode) node) immutable
     {
         return new immutable BinaryNode(this, BinaryOperator.in_, node);

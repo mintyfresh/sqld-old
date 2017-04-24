@@ -5,8 +5,8 @@ import sqld.ast.visitor;
 
 abstract class Node
 {
-    void accept(Visitor visitor) immutable
+    void accept(Visitor) immutable
     {
-        visitor.visit(this);
+        assert(0, "Attempt to visit Node.");
     }
 }

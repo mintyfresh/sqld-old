@@ -17,8 +17,6 @@ interface Visitor
 
     void visit(immutable(ExpressionListNode) node);
 
-    void visit(immutable(ExpressionNode) node);
-
     void visit(immutable(FromNode) node);
 
     void visit(immutable(FunctionNode) node);
@@ -37,8 +35,6 @@ interface Visitor
 
     void visit(immutable(NamedWindowNode) node);
 
-    void visit(immutable(Node) node);
-
     void visit(immutable(OffsetNode) node);
 
     void visit(immutable(OrderByNode) node);
@@ -48,8 +44,6 @@ interface Visitor
     void visit(immutable(PartitionByNode) node);
 
     void visit(immutable(ProjectionNode) node);
-
-    void visit(immutable(QueryNode) node);
 
     void visit(immutable(ReturningNode) node);
 
