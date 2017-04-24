@@ -1,34 +1,31 @@
 
 module sqld.ast.window_node;
 
+import sqld.ast.named_window_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
-import sqld.ast.window_definition_node;
 
 class WindowNode : Node
 {
     mixin Visitable;
 
 private:
-    string               _name;
-    WindowDefinitionNode _definition;
+    NamedWindowNode[] _windows;
 
 public:
-    this(string name, immutable(WindowDefinitionNode) definition) immutable
+    this(immutable(NamedWindowNode) window) immutable
     {
-        _name       = name;
-        _definition = definition;
+        this([window]);
+    }
+
+    this(immutable(NamedWindowNode)[] windows) immutable
+    {
+        _windows = windows;
     }
 
     @property
-    string name() immutable
+    immutable(NamedWindowNode)[] windows() immutable
     {
-        return _name;
-    }
-
-    @property
-    immutable(WindowDefinitionNode) definition() immutable
-    {
-        return _definition;
+        return _windows;
     }
 }

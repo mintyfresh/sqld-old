@@ -127,6 +127,12 @@ override:
         _buffer ~= node.value.coerce!(string);
     }
 
+    void visit(immutable(NamedWindowNode) node)
+    {
+        _buffer ~= node.name ~ " AS ";
+        node.definition.accept(this); 
+    }
+
     void visit(immutable(Node) node)
     {
         assert(0, node.classinfo.name);
@@ -146,6 +152,7 @@ override:
     void visit(immutable(OverNode) node)
     {
         node.subject.accept(this);
+        _buffer ~= " OVER ";
 
         if(node.window !is null)
         {
@@ -178,7 +185,7 @@ override:
         _buffer ~= "SELECT ";
         
         foreach(field; AliasSeq!("projection", "from", "joins", "where", "groupBy",
-                                 "having", "orderBy", "limit", "offset"))
+                                 "having", "window", "orderBy", "limit", "offset"))
         {
             static if(isArray!(typeof(__traits(getMember, node, field))))
             {
@@ -255,13 +262,22 @@ override:
             node.orderBy.accept(this);
         }
 
-        _buffer ~= ")";
+        _buffer ~= " )";
     }
 
     void visit(immutable(WindowNode) node)
     {
-        _buffer ~= " WINDOW " ~ node.name ~ " AS ";
-        node.definition.accept(this);
+        _buffer ~= " WINDOW ";
+
+        foreach(index, window; node.windows)
+        {
+            window.accept(this);
+
+            if(index + 1 < node.windows.length)
+            {
+                _buffer ~= ", ";
+            }
+        }
     }
 }
 

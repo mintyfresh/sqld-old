@@ -11,6 +11,7 @@ import sqld.ast.order_by_node;
 import sqld.ast.projection_node;
 import sqld.ast.query_node;
 import sqld.ast.visitor;
+import sqld.ast.window_node;
 import sqld.ast.where_node;
 
 import std.meta;
@@ -26,6 +27,7 @@ private:
     WhereNode      _where;
     GroupByNode    _groupBy;
     HavingNode     _having;
+    WindowNode     _window;
     OrderByNode    _orderBy;
     LimitNode      _limit;
     OffsetNode     _offset;
@@ -35,10 +37,11 @@ public:
 
     this(immutable(ProjectionNode) projection, immutable(FromNode) from, immutable(JoinNode)[] joins,
          immutable(WhereNode) where, immutable(GroupByNode) groupBy, immutable(HavingNode) having,
-         immutable(OrderByNode) orderBy, immutable(LimitNode) limit, immutable(OffsetNode) offset) immutable
+         immutable(WindowNode) window, immutable(OrderByNode) orderBy, immutable(LimitNode) limit,
+         immutable(OffsetNode) offset) immutable
     {
-        foreach(name; AliasSeq!("projection", "from", "joins", "where",
-                                "groupBy", "having", "orderBy", "limit", "offset"))
+        foreach(name; AliasSeq!("projection", "from", "joins", "where", "groupBy", "having",
+                                "window", "orderBy", "limit", "offset"))
         {
             mixin("_" ~ name ~ " = " ~ name ~ ";");
         }
@@ -78,6 +81,12 @@ public:
     immutable(HavingNode) having() immutable
     {
         return _having;
+    }
+
+    @property
+    immutable(WindowNode) window() immutable
+    {
+        return _window;
     }
 
     @property

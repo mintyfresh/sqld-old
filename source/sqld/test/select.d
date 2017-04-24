@@ -111,3 +111,48 @@ import sqld.test.test_visitor;
           10
     }.squish);
 }
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto u = TableNode("users");
+    auto b = SelectBuilder.init;
+
+    b.project(u["posts_count"].sum.over(w => w.partition(u["status"])))
+     .from(u)
+     .build
+     .accept(v);
+
+    assert(v.sql == q{
+        SELECT
+          SUM(users.posts_count) OVER (
+            PARTITION BY users.status
+          )
+        FROM
+          users
+    }.squish);
+}
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto u = TableNode("users");
+    auto b = SelectBuilder.init;
+
+    b.project(u["posts_count"].sum.over("statuses"))
+     .from(u)
+     .window("statuses", w => w.partition(u["status"]))
+     .build
+     .accept(v);
+
+    assert(v.sql == q{
+        SELECT
+          SUM(users.posts_count) OVER statuses
+        FROM
+          users
+        WINDOW
+          statuses AS (
+            PARTITION BY users.status
+          )
+    }.squish);
+}

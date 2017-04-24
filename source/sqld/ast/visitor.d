@@ -33,6 +33,8 @@ interface Visitor
 
     void visit(immutable(LiteralNode) node);
 
+    void visit(immutable(NamedWindowNode) node);
+
     void visit(immutable(Node) node);
 
     void visit(immutable(OffsetNode) node);

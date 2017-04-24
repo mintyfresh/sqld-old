@@ -2,6 +2,7 @@
 module sqld.select_builder;
 
 import sqld.ast;
+import sqld.window_builder;
 
 struct JoinBuilder
 {
@@ -42,6 +43,7 @@ private:
         WhereNode      _where;
         GroupByNode    _groupBy;
         HavingNode     _having;
+        WindowNode     _window;
         OrderByNode    _orderBy;
         LimitNode      _limit;
         OffsetNode     _offset;
@@ -52,14 +54,15 @@ public:
     immutable(SelectNode) build()
     {
         return new immutable SelectNode(_projection, _from, _joins, _where, _groupBy,
-                                        _having, _orderBy, _limit, _offset);
+                                        _having, _window, _orderBy, _limit, _offset);
     }
 
     /+ - Projection - +/
 
     SelectBuilder projection(immutable(ProjectionNode) projection)
     {
-        return SelectBuilder(projection, _from, _joins, _where, _groupBy, _having, _orderBy, _limit, _offset);
+        return SelectBuilder(projection, _from, _joins, _where, _groupBy, _having,
+                             _window, _orderBy, _limit, _offset);
     }
 
     SelectBuilder project(immutable(ExpressionNode)[] projection...)
@@ -93,7 +96,8 @@ public:
 
     SelectBuilder from(immutable(FromNode) from)
     {
-        return SelectBuilder(_projection, from, _joins, _where, _groupBy, _having, _orderBy, _limit, _offset);
+        return SelectBuilder(_projection, from, _joins, _where, _groupBy, _having,
+                             _window, _orderBy, _limit, _offset);
     }
 
     SelectBuilder from(immutable(ExpressionNode) source, string name = null)
@@ -124,7 +128,8 @@ public:
 
     SelectBuilder join(immutable(JoinNode) join)
     {
-        return SelectBuilder(_projection, _from, _joins ~ join, _where, _groupBy, _having, _orderBy, _limit, _offset);
+        return SelectBuilder(_projection, _from, _joins ~ join, _where, _groupBy, _having,
+                             _window, _orderBy, _limit, _offset);
     }
 
     SelectBuilder join(JoinType joinType, immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
@@ -154,14 +159,16 @@ public:
 
     SelectBuilder unjoin()
     {
-        return SelectBuilder(_projection, _from, [], _where, _groupBy, _having, _orderBy, _limit, _offset);
+        return SelectBuilder(_projection, _from, [], _where, _groupBy, _having,
+                             _window, _orderBy, _limit, _offset);
     }
 
     /+ - Where - +/
 
     SelectBuilder where(immutable(WhereNode) where)
     {
-        return SelectBuilder(_projection, _from, _joins, where, _groupBy, _having, _orderBy, _limit, _offset);
+        return SelectBuilder(_projection, _from, _joins, where, _groupBy, _having,
+                             _window, _orderBy, _limit, _offset);
     }
 
     SelectBuilder where(immutable(ExpressionNode) condition)
@@ -190,7 +197,8 @@ public:
 
     SelectBuilder groupBy(immutable(GroupByNode) groupBy)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, groupBy, _having, _orderBy, _limit, _offset);
+        return SelectBuilder(_projection, _from, _joins, _where, groupBy, _having,
+                             _window, _orderBy, _limit, _offset);
     }
 
     SelectBuilder group(T : immutable(ExpressionNode))(T groupings)
@@ -219,7 +227,8 @@ public:
 
     SelectBuilder having(immutable(HavingNode) having)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, having, _orderBy, _limit, _offset);
+        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, having,
+                             _window, _orderBy, _limit, _offset);
     }
 
     SelectBuilder having(immutable(ExpressionNode) condition)
@@ -244,11 +253,57 @@ public:
         return having(cast(HavingNode) null);
     }
 
+    /+ - Window - +/
+
+    SelectBuilder window(immutable(WindowNode) window)
+    {
+        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
+                             window, _orderBy, _limit, _offset);
+    }
+
+    SelectBuilder window(immutable(NamedWindowNode) namedWindow)
+    {
+        if(_window is null)
+        {
+            return window(new immutable WindowNode(namedWindow));
+        }
+        else
+        {
+            return window(new immutable WindowNode(_window.windows ~ namedWindow));
+        }
+    }
+
+    SelectBuilder window(string name, immutable(WindowDefinitionNode) definition)
+    {
+        return window(new immutable NamedWindowNode(name, definition));
+    }
+
+    SelectBuilder window(string name, WindowBuilder delegate(WindowBuilder) callback)
+    {
+        return window(name, callback(WindowBuilder.init).build);
+    }
+
+    SelectBuilder rewindow(TList...)(TList args)
+    {
+        return unwindow.window(args);
+    }
+
+    SelectBuilder rewindow(alias callback)(string name)
+    {
+        return unwindow.window!(callback)(name);
+    }
+
+    SelectBuilder unwindow()
+    {
+        return window(cast(WindowNode) null);
+    }
+
     /+ - Order By - +/
 
     SelectBuilder orderBy(immutable(OrderByNode) orderBy)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having, orderBy, _limit, _offset);
+        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
+                             _window, orderBy, _limit, _offset);
     }
 
     SelectBuilder order(T : immutable(ExpressionNode))(T directions)
@@ -277,7 +332,8 @@ public:
 
     SelectBuilder limit(immutable(LimitNode) value)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having, _orderBy, value, _offset);
+        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
+                             _window, _orderBy, value, _offset);
     }
 
     SelectBuilder limit(ulong value)
@@ -294,7 +350,8 @@ public:
 
     SelectBuilder offset(immutable(OffsetNode) value)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having, _orderBy, _limit, value);
+        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
+                             _window, _orderBy, _limit, value);
     }
 
     SelectBuilder offset(ulong value)
