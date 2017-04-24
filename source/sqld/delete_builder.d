@@ -4,6 +4,7 @@ module sqld.delete_builder;
 import sqld.ast;
 import sqld.builder;
 import sqld.partials;
+import sqld.select_builder;
 
 struct DeleteBuilder
 {
@@ -45,6 +46,11 @@ public:
     typeof(this) using(immutable(ExpressionNode) source, string name)
     {
         return using(source.as(name));
+    }
+
+    typeof(this) using(SelectBuilder delegate(SelectBuilder) callback, string name = "subquery")
+    {
+        return using(callback(SelectBuilder.init).as(name));
     }
 
     typeof(this) unusing()

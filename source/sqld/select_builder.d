@@ -148,7 +148,7 @@ public:
         }
     }
 
-    SelectBuilder group(immutable(ExpressionNode)[] groupings)
+    SelectBuilder group(immutable(ExpressionNode)[] groupings...)
     {
         return group(new immutable ExpressionListNode(groupings));
     }
