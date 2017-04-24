@@ -42,7 +42,7 @@ import sqld.update_builder;
      .from(p)
      .where(p["user_id"].eq(u["id"]))
      .where(p["inappropriate"].eq(true))
-     .returning(u["id"])
+     .returning(u["id"], u["email"])
      .build
      .accept(v);
 
@@ -59,6 +59,7 @@ import sqld.update_builder;
         AND
           posts.inappropriate = true
         RETURNING
-          users.id
+          users.id,
+          users.email
     }.squish);
 }

@@ -100,23 +100,26 @@ public:
                              _window, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder from(immutable(ExpressionNode) source, string name = null)
+    SelectBuilder from(immutable(ExpressionNode)[] sources...)
     {
-        auto value = name ? new immutable AsNode(source, name) : source;
-
         if(_from is null)
         {
-            return from(new immutable FromNode(value));
+            return from(new immutable FromNode(sources));
         }
         else
         {
-            return from(new immutable FromNode(_from.sources ~ value));
+            return from(new immutable FromNode(_from.sources ~ sources));
         }
     }
 
-    SelectBuilder refrom(immutable(ExpressionNode) node, string name = null)
+    SelectBuilder from(immutable(ExpressionNode) source, string name)
     {
-        return unfrom.from(node, name);
+        return from(source.as(name));
+    }
+
+    SelectBuilder refrom(TList...)(TList args)
+    {
+        return unfrom.from(args);
     }
 
     SelectBuilder unfrom()
@@ -201,7 +204,7 @@ public:
                              _window, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder group(T : immutable(ExpressionNode))(T groupings)
+    SelectBuilder group(immutable(ExpressionNode)[] groupings...)
     {
         if(_groupBy is null)
         {
@@ -213,7 +216,7 @@ public:
         }
     }
 
-    SelectBuilder regroup(T : immutable(ExpressionNode))(T groupings)
+    SelectBuilder regroup(immutable(ExpressionNode)[] groupings...)
     {
         return ungroup.group(groupings);
     }
@@ -306,7 +309,7 @@ public:
                              _window, orderBy, _limit, _offset);
     }
 
-    SelectBuilder order(T : immutable(ExpressionNode))(T directions)
+    SelectBuilder order(immutable(ExpressionNode)[] directions...)
     {
         if(_orderBy is null)
         {
@@ -318,7 +321,7 @@ public:
         }
     }
 
-    SelectBuilder reorder(T : immutable(ExpressionNode))(T directions)
+    SelectBuilder reorder(immutable(ExpressionNode)[] directions...)
     {
         return unorder.order(directions);
     }

@@ -14,9 +14,14 @@ private:
     ExpressionListNode _directions;
 
 public:
-    this(immutable(ExpressionNode) directions) immutable
+    this(immutable(ExpressionNode) direction) immutable
     {
-        _directions = new immutable ExpressionListNode([directions]);
+        this([direction]);
+    }
+
+    this(immutable(ExpressionNode)[] directions...) immutable
+    {
+        this(new immutable ExpressionListNode(directions));
     }
 
     this(immutable(ExpressionListNode) directions) immutable

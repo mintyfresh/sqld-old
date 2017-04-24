@@ -31,6 +31,11 @@ public:
         return new immutable ExpressionListNode(nodes ~ node);
     }
 
+    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionNode)[] nodes) immutable
+    {
+        return new immutable ExpressionListNode(nodes ~ nodes);
+    }
+
     immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionListNode) node) immutable
     {
         return new immutable ExpressionListNode(nodes ~ node.nodes);

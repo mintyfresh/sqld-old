@@ -80,23 +80,26 @@ public:
         return UpdateBuilder(_table, _set, from, _where, _returning);
     }
 
-    UpdateBuilder from(immutable(ExpressionNode) source, string name = null)
+    UpdateBuilder from(immutable(ExpressionNode)[] sources...)
     {
-        auto value = name ? new immutable AsNode(source, name) : source;
-
         if(_from is null)
         {
-            return from(new immutable FromNode(value));
+            return from(new immutable FromNode(sources));
         }
         else
         {
-            return from(new immutable FromNode(_from.sources ~ value));
+            return from(new immutable FromNode(_from.sources ~ sources));
         }
     }
 
-    UpdateBuilder refrom(immutable(ExpressionNode) node, string name = null)
+    UpdateBuilder from(immutable(ExpressionNode) source, string name)
     {
-        return unfrom.from(node, name);
+        return from(source.as(name));
+    }
+
+    UpdateBuilder refrom(TList...)(TList args)
+    {
+        return unfrom.from(args);
     }
 
     UpdateBuilder unfrom()
@@ -140,7 +143,7 @@ public:
         return UpdateBuilder(_table, _set, _from, _where, returning);
     }
 
-    UpdateBuilder returning(immutable(ExpressionNode) outputs)
+    UpdateBuilder returning(immutable(ExpressionNode)[] outputs...)
     {
         if(_returning is null)
         {

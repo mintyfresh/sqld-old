@@ -16,7 +16,12 @@ private:
 public:
     this(immutable(ExpressionNode) source) immutable
     {
-        this(new immutable ExpressionListNode([source]));
+        this([source]);
+    }
+
+    this(immutable(ExpressionNode)[] sources) immutable
+    {
+        this(new immutable ExpressionListNode(sources));
     }
 
     this(immutable(ExpressionListNode) sources) immutable

@@ -14,9 +14,14 @@ private:
     ExpressionListNode _groupings;
 
 public:
-    this(immutable(ExpressionNode) groupings) immutable
+    this(immutable(ExpressionNode) grouping) immutable
     {
-        _groupings = new immutable ExpressionListNode([groupings]);
+        this([grouping]);
+    }
+
+    this(immutable(ExpressionNode)[] groupings...) immutable
+    {
+        this(new immutable ExpressionListNode(groupings));
     }
 
     this(immutable(ExpressionListNode) groupings) immutable

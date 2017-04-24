@@ -32,3 +32,8 @@ public:
         return _name;
     }
 }
+
+immutable(AsNode) as(immutable(ExpressionNode) node, string name)
+{
+    return new immutable AsNode(node, name);
+}
