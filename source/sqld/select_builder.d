@@ -2,6 +2,7 @@
 module sqld.select_builder;
 
 import sqld.ast;
+import sqld.builder;
 import sqld.window_builder;
 
 struct JoinBuilder
@@ -34,6 +35,8 @@ public:
 
 struct SelectBuilder
 {
+    mixin Builder;
+
 private:
     immutable
     {
@@ -63,8 +66,7 @@ public:
 
     SelectBuilder projection(immutable(ProjectionNode) projection)
     {
-        return SelectBuilder(projection, _from, _joins, _where, _groupBy, _having,
-                             _window, _orderBy, _limit, _offset);
+        return next!("projection")(projection);
     }
 
     SelectBuilder select(immutable(ExpressionNode)[] projection...)
@@ -98,8 +100,7 @@ public:
 
     SelectBuilder from(immutable(FromNode) from)
     {
-        return SelectBuilder(_projection, from, _joins, _where, _groupBy, _having,
-                             _window, _orderBy, _limit, _offset);
+        return next!("from")(from);
     }
 
     SelectBuilder from(immutable(ExpressionNode)[] sources...)
@@ -133,8 +134,7 @@ public:
 
     SelectBuilder join(immutable(JoinNode) join)
     {
-        return SelectBuilder(_projection, _from, _joins ~ join, _where, _groupBy, _having,
-                             _window, _orderBy, _limit, _offset);
+        return next!("joins")(_joins ~ join);
     }
 
     SelectBuilder join(JoinType joinType, immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
@@ -164,16 +164,14 @@ public:
 
     SelectBuilder unjoin()
     {
-        return SelectBuilder(_projection, _from, [], _where, _groupBy, _having,
-                             _window, _orderBy, _limit, _offset);
+        return next!("joins")(cast(immutable(JoinNode)[]) []);
     }
 
     /+ - Where - +/
 
     SelectBuilder where(immutable(WhereNode) where)
     {
-        return SelectBuilder(_projection, _from, _joins, where, _groupBy, _having,
-                             _window, _orderBy, _limit, _offset);
+        return next!("where")(where);
     }
 
     SelectBuilder where(immutable(ExpressionNode) condition)
@@ -202,8 +200,7 @@ public:
 
     SelectBuilder groupBy(immutable(GroupByNode) groupBy)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, groupBy, _having,
-                             _window, _orderBy, _limit, _offset);
+        return next!("groupBy")(groupBy);
     }
 
     SelectBuilder group(immutable(ExpressionNode)[] groupings...)
@@ -232,8 +229,7 @@ public:
 
     SelectBuilder having(immutable(HavingNode) having)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, having,
-                             _window, _orderBy, _limit, _offset);
+        return next!("having")(having);
     }
 
     SelectBuilder having(immutable(ExpressionNode) condition)
@@ -262,8 +258,7 @@ public:
 
     SelectBuilder window(immutable(WindowNode) window)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
-                             window, _orderBy, _limit, _offset);
+        return next!("window")(window);
     }
 
     SelectBuilder window(immutable(NamedWindowNode) namedWindow)
@@ -307,8 +302,7 @@ public:
 
     SelectBuilder orderBy(immutable(OrderByNode) orderBy)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
-                             _window, orderBy, _limit, _offset);
+        return next!("orderBy")(orderBy);
     }
 
     SelectBuilder order(immutable(ExpressionNode)[] directions...)
@@ -335,10 +329,9 @@ public:
 
     /+ - Limit - +/
 
-    SelectBuilder limit(immutable(LimitNode) value)
+    SelectBuilder limit(immutable(LimitNode) limit)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
-                             _window, _orderBy, value, _offset);
+        return next!("limit")(limit);
     }
 
     SelectBuilder limit(ulong value)
@@ -353,10 +346,9 @@ public:
 
     /+ - Offset - +/
 
-    SelectBuilder offset(immutable(OffsetNode) value)
+    SelectBuilder offset(immutable(OffsetNode) offset)
     {
-        return SelectBuilder(_projection, _from, _joins, _where, _groupBy, _having,
-                             _window, _orderBy, _limit, value);
+        return next!("offset")(offset);
     }
 
     SelectBuilder offset(ulong value)

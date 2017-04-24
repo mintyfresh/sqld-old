@@ -2,9 +2,12 @@
 module sqld.update_builder;
 
 import sqld.ast;
+import sqld.builder;
 
 struct UpdateBuilder
 {
+    mixin Builder;
+
 private:
     immutable
     {
@@ -28,7 +31,7 @@ public:
 
     UpdateBuilder update(immutable(TableNode) table)
     {
-        return UpdateBuilder(table, _set, _from, _where, _returning);
+        return next!("table")(table);
     }
 
     UpdateBuilder update(string name)
@@ -40,7 +43,7 @@ public:
 
     UpdateBuilder set(immutable(SetNode) set)
     {
-        return UpdateBuilder(_table, set, _from, _where, _returning);
+        return next!("set")(set);
     }
 
     UpdateBuilder set(immutable(AssignmentNode) assignment)
@@ -79,7 +82,7 @@ public:
 
     UpdateBuilder from(immutable(FromNode) from)
     {
-        return UpdateBuilder(_table, _set, from, _where, _returning);
+        return next!("from")(from);
     }
 
     UpdateBuilder from(immutable(ExpressionNode)[] sources...)
@@ -113,7 +116,7 @@ public:
 
     UpdateBuilder where(immutable(WhereNode) where)
     {
-        return UpdateBuilder(_table, _set, _from, where, _returning);
+        return next!("where")(where);
     }
 
     UpdateBuilder where(immutable(ExpressionNode) condition)
@@ -142,7 +145,7 @@ public:
 
     UpdateBuilder returning(immutable(ReturningNode) returning)
     {
-        return UpdateBuilder(_table, _set, _from, _where, returning);
+        return next!("returning")(returning);
     }
 
     UpdateBuilder returning(immutable(ExpressionNode)[] outputs...)

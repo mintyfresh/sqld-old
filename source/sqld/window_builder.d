@@ -2,9 +2,12 @@
 module sqld.window_builder;
 
 import sqld.ast;
+import sqld.builder;
 
 struct WindowBuilder
 {
+    mixin Builder;
+
 private:
     immutable
     {
@@ -26,7 +29,7 @@ public:
 
     WindowBuilder reference(string reference)
     {
-        return WindowBuilder(reference, _partitionBy, _orderBy);
+        return next!("reference")(reference);
     }
 
     WindowBuilder unreference()
@@ -38,7 +41,7 @@ public:
 
     WindowBuilder partitionBy(immutable(PartitionByNode) partitionBy)
     {
-        return WindowBuilder(_reference, partitionBy, _orderBy);
+        return next!("partitionBy")(partitionBy);
     }
 
     WindowBuilder partition(T : immutable(ExpressionNode))(T partitions)
@@ -67,7 +70,7 @@ public:
 
     WindowBuilder orderBy(immutable(OrderByNode) orderBy)
     {
-        return WindowBuilder(_reference, _partitionBy, orderBy);
+        return next!("orderBy")(orderBy);
     }
 
     WindowBuilder order(T : immutable(ExpressionNode))(T directions)
