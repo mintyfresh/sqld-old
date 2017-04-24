@@ -292,6 +292,23 @@ override:
         node.sources.accept(this);
     }
 
+    void visit(immutable(ValuesNode) node)
+    {
+        _buffer ~= " VALUES ";
+        
+        foreach(index, values; node.values)
+        {
+            _buffer ~= "(";
+            values.accept(this);
+            _buffer ~= ")";
+
+            if(index + 1 < node.values.length)
+            {
+                _buffer ~= ", ";
+            }
+        }
+    }
+
     void visit(immutable(WhereNode) node)
     {
         _buffer ~= " WHERE ";
