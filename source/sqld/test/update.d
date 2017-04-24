@@ -2,6 +2,7 @@
 module sqld.test.update;
 
 import sqld.ast;
+import sqld.select_builder;
 import sqld.test.test_visitor;
 import sqld.update_builder;
 
@@ -61,5 +62,44 @@ import sqld.update_builder;
         RETURNING
           users.id,
           users.email
+    }.squish);
+}
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto u = TableNode("users");
+    auto p = TableNode("posts");
+
+    auto b1 = UpdateBuilder.init;
+    auto b2 = SelectBuilder.init;
+
+    b1.table(u)
+      .set("posts_count", p["count"])
+      .from(b2.project(p["user_id"], p["*"].count)
+              .from(p)
+              .group(p["user_id"])
+              .build
+              .as(p.name))
+      .where(p["user_id"].eq(u["id"]))
+      .build
+      .accept(v);
+
+    assert(v.sql == q{
+        UPDATE
+          users
+        SET
+          posts_count = posts.count
+        FROM (
+          SELECT
+            posts.user_id,
+            COUNT(posts.*)
+          FROM
+            posts
+          GROUP BY
+            posts.user_id
+        ) AS posts
+        WHERE
+          posts.user_id = users.id
     }.squish);
 }
