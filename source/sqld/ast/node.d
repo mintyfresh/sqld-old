@@ -7,6 +7,6 @@ abstract class Node
 {
     void accept(Visitor) immutable
     {
-        assert(0, "Attempt to visit Node.");
+        assert(0, "Attempt to visit Node. (" ~ this.classinfo.name ~ ")");
     }
 }
