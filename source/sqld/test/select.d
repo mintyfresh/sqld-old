@@ -15,7 +15,7 @@ import sqld.test.test_visitor;
      .from(u)
      .where(u["posts_count"].gt(5))
      .where(u["active"].eq(false))
-     .where(u["bans_count"].lteq(3))
+     .where(u["bans_count"].ltEq(3))
      .build
      .accept(v);
 
@@ -80,7 +80,7 @@ import sqld.test.test_visitor;
             .from(p)
             .where(p["reported"].eq(true))
             .group(p["user_id"])
-            .having(p["*"].count.eq(3))
+            .having(p["*"].count.gtEq(3))
             .order(p["*"].count.desc)
             .build)
       .limit(10)
@@ -103,7 +103,7 @@ import sqld.test.test_visitor;
             GROUP BY
               posts.user_id
             HAVING
-              COUNT(posts.*) = 3
+              COUNT(posts.*) >= 3
             ORDER BY
               COUNT(posts.*) DESC
           )
