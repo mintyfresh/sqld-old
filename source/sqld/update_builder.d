@@ -26,14 +26,14 @@ public:
 
     /+ - Table - +/
 
-    UpdateBuilder table(immutable(TableNode) table)
+    UpdateBuilder update(immutable(TableNode) table)
     {
         return UpdateBuilder(table, _set, _from, _where, _returning);
     }
 
-    UpdateBuilder table(string name)
+    UpdateBuilder update(string name)
     {
-        return table(TableNode(name));
+        return update(TableNode(name));
     }
 
     /+ - Set - +/

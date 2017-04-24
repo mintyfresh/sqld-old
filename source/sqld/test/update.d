@@ -12,7 +12,7 @@ import sqld.update_builder;
     auto u = TableNode("users");
     auto b = UpdateBuilder.init;
 
-    b.table(u)
+    b.update(u)
      .set("banned", true)
      .set("active", false)
      .where(u["warnings_count"].gtEq(10))
@@ -36,7 +36,7 @@ import sqld.update_builder;
     auto p = TableNode("posts");
     auto b = UpdateBuilder.init;
 
-    b.table(u)
+    b.update(u)
      .set("banned", true)
      .set("active", false)
      .from(p)
@@ -72,9 +72,9 @@ import sqld.update_builder;
     auto b1 = UpdateBuilder.init;
     auto b2 = SelectBuilder.init;
 
-    b1.table(u)
+    b1.update(u)
       .set("posts_count", p["count"])
-      .from(b2.project(p["user_id"], p["*"].count)
+      .from(b2.select(p["user_id"], p["*"].count)
               .from(p)
               .group(p["user_id"])
               .as(p))

@@ -11,7 +11,7 @@ import sqld.test.test_visitor;
     auto b = SelectBuilder.init;
     auto u = TableNode("users");
 
-    b.project(u["id"])
+    b.select(u["id"])
      .from(u)
      .where(u["posts_count"].gt(5))
      .where(u["active"].eq(false))
@@ -39,7 +39,7 @@ import sqld.test.test_visitor;
     auto u = TableNode("users");
     auto p = TableNode("posts");
 
-    b.project(u["*"])
+    b.select(u["*"])
      .from(u)
      .join(p, p["user_id"].eq(u["id"]))
      .where(u["active"].eq(true))
@@ -71,10 +71,10 @@ import sqld.test.test_visitor;
     auto b1 = SelectBuilder.init;
     auto b2 = SelectBuilder.init;
 
-    b2.project(u["*"])
+    b2.select(u["*"])
       .from(u)
       .where(u["id"] in
-          b1.project(p["user_id"])
+          b1.select(p["user_id"])
             .from(p)
             .where(p["reported"].eq(true))
             .group(p["user_id"])
@@ -114,7 +114,7 @@ import sqld.test.test_visitor;
     auto u = TableNode("users");
     auto b = SelectBuilder.init;
 
-    b.project(u["posts_count"].sum.over(w => w.partition(u["status"])))
+    b.select(u["posts_count"].sum.over(w => w.partition(u["status"])))
      .from(u)
      .accept(v);
 
@@ -132,21 +132,29 @@ import sqld.test.test_visitor;
 {
     auto v = new TestVisitor;
     auto u = TableNode("users");
+    auto p = TableNode("posts");
     auto b = SelectBuilder.init;
 
-    b.project(u["posts_count"].sum.over("statuses"))
+    b.select(u["*"],
+             p["id"].count.over("user_window").as("posts_count"))
      .from(u)
-     .window("statuses", w => w.partition(u["status"]))
+     .join(JoinType.left, p, p["user_id"].eq(u["id"]))
+     .window("user_window", w => w.partition(u["id"]))
      .accept(v);
 
     assert(v.sql == q{
         SELECT
-          SUM(users.posts_count) OVER statuses
+          users.*,
+          COUNT(posts.id) OVER user_window AS posts_count
         FROM
           users
+        LEFT OUTER JOIN
+          posts
+        ON
+          posts.user_id = users.id
         WINDOW
-          statuses AS (
-            PARTITION BY users.status
+          user_window AS (
+            PARTITION BY users.id
           )
     }.squish);
 }

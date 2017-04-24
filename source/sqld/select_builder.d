@@ -67,12 +67,12 @@ public:
                              _window, _orderBy, _limit, _offset);
     }
 
-    SelectBuilder project(immutable(ExpressionNode)[] projection...)
+    SelectBuilder select(immutable(ExpressionNode)[] projection...)
     {
-        return project(new immutable ExpressionListNode(projection));
+        return select(new immutable ExpressionListNode(projection));
     }
 
-    SelectBuilder project(immutable(ExpressionListNode) projections)
+    SelectBuilder select(immutable(ExpressionListNode) projections)
     {
         if(_projection is null)
         {
@@ -84,12 +84,12 @@ public:
         }
     }
 
-    SelectBuilder reproject(TList...)(TList args)
+    SelectBuilder reselect(TList...)(TList args)
     {
-        return unproject.project(args);
+        return unselect.select(args);
     }
 
-    SelectBuilder unproject()
+    SelectBuilder unselect()
     {
         return projection(null);
     }
