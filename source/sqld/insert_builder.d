@@ -4,6 +4,7 @@ module sqld.insert_builder;
 import sqld.ast;
 import sqld.builder;
 import sqld.partials;
+import sqld.select_builder;
 
 import std.algorithm;
 import std.array;
@@ -90,5 +91,22 @@ public:
     InsertBuilder unvalues()
     {
         return values(cast(ValuesNode) null);
+    }
+
+    /+ - Select - +/
+
+    InsertBuilder select(immutable(SelectNode) select)
+    {
+        return next!("select")(select);
+    }
+
+    InsertBuilder select(SelectBuilder delegate(SelectBuilder) callback)
+    {
+        return select(callback(SelectBuilder.init).build);
+    }
+
+    InsertBuilder unselect()
+    {
+        return select(cast(SelectNode) null);
     }
 }
