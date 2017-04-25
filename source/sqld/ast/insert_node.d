@@ -7,25 +7,29 @@ import sqld.ast.returning_node;
 import sqld.ast.select_node;
 import sqld.ast.values_node;
 import sqld.ast.visitor;
+import sqld.ast.with_node;
+
+import std.meta;
 
 class InsertNode : QueryNode
 {
     mixin Visitable;
 
 private:
+    WithNode      _with_;
     IntoNode      _into;
     ValuesNode    _values;
     SelectNode    _select;
     ReturningNode _returning;
 
 public:
-    this(immutable(IntoNode) into, immutable(ValuesNode) values, immutable(SelectNode) select,
-         immutable(ReturningNode) returning) immutable
+    this(immutable(WithNode) with_, immutable(IntoNode) into, immutable(ValuesNode) values,
+         immutable(SelectNode) select, immutable(ReturningNode) returning) immutable
     {
-        _into      = into;
-        _values    = values;
-        _select    = select;
-        _returning = returning;
+        foreach(name; AliasSeq!("with_", "into", "values", "select", "returning"))
+        {
+            mixin("_" ~ name ~ " = " ~ name ~ ";");
+        }
     }
 
     @property

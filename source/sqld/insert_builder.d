@@ -13,6 +13,7 @@ import std.meta;
 struct InsertBuilder
 {
     mixin Builder;
+    mixin WithPartial;
     mixin ReturningPartial;
 
 private:
@@ -29,7 +30,7 @@ public:
     @property
     immutable(InsertNode) build()
     {
-        return new immutable InsertNode(_into, _values, _select, _returning);
+        return new immutable InsertNode(_with_, _into, _values, _select, _returning);
     }
 
     /+ - Into - +/
