@@ -39,6 +39,7 @@ public:
 struct SelectBuilder
 {
     mixin Builder;
+    mixin WithPartial;
     mixin FromPartial;
     mixin WherePartial;
     mixin OrderByPartial;
@@ -61,7 +62,7 @@ public:
     @property
     immutable(SelectNode) build()
     {
-        return new immutable SelectNode(_projection, _from, _joins, _where, _groupBy,
+        return new immutable SelectNode(_with_, _projection, _from, _joins, _where, _groupBy,
                                         _having, _window, _orderBy, _limit, _offset);
     }
 

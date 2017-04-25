@@ -217,6 +217,7 @@ override:
 
     void visit(immutable(ProjectionNode) node)
     {
+        _buffer ~= "SELECT ";
         node.projections.accept(this);
     }
 
@@ -228,9 +229,7 @@ override:
 
     void visit(immutable(SelectNode) node)
     {
-        _buffer ~= "SELECT ";
-        
-        foreach(field; AliasSeq!("projection", "from", "joins", "where", "groupBy",
+        foreach(field; AliasSeq!("with_", "projection", "from", "joins", "where", "groupBy",
                                  "having", "window", "orderBy", "limit", "offset"))
         {
             static if(isArray!(typeof(__traits(getMember, node, field))))
@@ -386,9 +385,9 @@ override:
         }
 
         node.table.accept(this);
-        _buffer ~= "AS ( ";
+        _buffer ~= " AS ( ";
         node.select.accept(this);
-        _buffer ~= " )";
+        _buffer ~= " ) ";
     }
 }
 

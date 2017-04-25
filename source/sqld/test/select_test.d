@@ -158,3 +158,36 @@ import sqld.test.test_visitor;
           )
     }.squish);
 }
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto u = TableNode("users");
+    auto c = TableNode("common");
+    auto b = SelectBuilder.init;
+
+    b.cte(c, s => s.select(u["*"])
+                   .from(u)
+                   .where(u["active"].eq(true)))
+     .select(c["id"])
+     .from(c)
+     .limit(10)
+     .accept(v);
+
+    assert(v.sql.squish == q{
+        WITH common AS (
+          SELECT
+            users.*
+          FROM
+            users
+          WHERE
+            users.active = true
+        )
+        SELECT
+          common.id
+        FROM
+          common
+        LIMIT
+          10
+    }.squish);
+}

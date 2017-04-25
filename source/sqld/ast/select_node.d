@@ -11,8 +11,9 @@ import sqld.ast.order_by_node;
 import sqld.ast.projection_node;
 import sqld.ast.query_node;
 import sqld.ast.visitor;
-import sqld.ast.window_node;
 import sqld.ast.where_node;
+import sqld.ast.window_node;
+import sqld.ast.with_node;
 
 import std.meta;
 
@@ -21,6 +22,7 @@ class SelectNode : QueryNode
     mixin Visitable;
 
 private:
+    WithNode       _with_;
     ProjectionNode _projection;
     FromNode       _from;
     JoinNode[]     _joins;
@@ -35,16 +37,22 @@ private:
 public:
     alias toSubquery this;
 
-    this(immutable(ProjectionNode) projection, immutable(FromNode) from, immutable(JoinNode)[] joins,
-         immutable(WhereNode) where, immutable(GroupByNode) groupBy, immutable(HavingNode) having,
-         immutable(WindowNode) window, immutable(OrderByNode) orderBy, immutable(LimitNode) limit,
-         immutable(OffsetNode) offset) immutable
+    this(immutable(WithNode) with_, immutable(ProjectionNode) projection, immutable(FromNode) from,
+         immutable(JoinNode)[] joins, immutable(WhereNode) where, immutable(GroupByNode) groupBy,
+         immutable(HavingNode) having, immutable(WindowNode) window, immutable(OrderByNode) orderBy,
+         immutable(LimitNode) limit, immutable(OffsetNode) offset) immutable
     {
-        foreach(name; AliasSeq!("projection", "from", "joins", "where", "groupBy", "having",
+        foreach(name; AliasSeq!("with_", "projection", "from", "joins", "where", "groupBy", "having",
                                 "window", "orderBy", "limit", "offset"))
         {
             mixin("_" ~ name ~ " = " ~ name ~ ";");
         }
+    }
+
+    @property
+    immutable(WithNode) with_() immutable
+    {
+        return _with_;
     }
 
     @property
