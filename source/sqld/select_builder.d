@@ -100,9 +100,20 @@ public:
         return next!("joins")(_joins ~ join);
     }
 
+    SelectBuilder join(JoinType joinType, SelectBuilder delegate(SelectBuilder) callback,
+                       immutable(ExpressionNode) condition)
+    {
+        return join(new immutable JoinNode(joinType, callback(SelectBuilder.init).build, condition));
+    }
+
     SelectBuilder join(JoinType joinType, immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
     {
         return join(new immutable JoinNode(joinType, source, condition));
+    }
+
+    JoinBuilder join(JoinType joinType, SelectBuilder delegate(SelectBuilder) callback)
+    {
+        return JoinBuilder(this, joinType, callback(SelectBuilder.init).build);
     }
 
     JoinBuilder join(JoinType joinType, immutable(ExpressionNode) source)
@@ -110,9 +121,19 @@ public:
         return JoinBuilder(this, joinType, source);
     }
 
+    SelectBuilder join(SelectBuilder delegate(SelectBuilder) callback, immutable(ExpressionNode) condition)
+    {
+        return join(JoinType.inner, callback(SelectBuilder.init).build, condition);
+    }
+
     SelectBuilder join(immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
     {
         return join(JoinType.inner, source, condition);
+    }
+
+    JoinBuilder join(SelectBuilder delegate(SelectBuilder) callback)
+    {
+        return JoinBuilder(this, JoinType.inner, callback(SelectBuilder.init).build);
     }
 
     JoinBuilder join(immutable(ExpressionNode) source)
