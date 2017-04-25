@@ -27,7 +27,7 @@ public:
 
     typeof(this) returning(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
     {
-        return returning(expressionList(args));
+        return returning(toExpressionList(args));
     }
 
     typeof(this) unreturning()

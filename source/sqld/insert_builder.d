@@ -81,7 +81,7 @@ public:
 
     InsertBuilder values(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
     {
-        return values([args].map!(expression).array);
+        return values([args].map!(toExpression).array);
     }
 
     InsertBuilder revalues(TList...)(TList args)

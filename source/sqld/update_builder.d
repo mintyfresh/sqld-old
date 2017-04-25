@@ -62,7 +62,7 @@ public:
 
     UpdateBuilder set(T)(immutable(ExpressionNode) left, T right) if(isExpressionType!(T))
     {
-        return set(new immutable AssignmentNode(left, expression(right)));
+        return set(new immutable AssignmentNode(left, toExpression(right)));
     }
 
     UpdateBuilder set(T)(string left, T right) if(isExpressionType!(T))

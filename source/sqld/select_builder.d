@@ -85,7 +85,7 @@ public:
 
     SelectBuilder select(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
     {
-        return select(expressionList(args)); 
+        return select(toExpressionList(args)); 
     }
 
     SelectBuilder unselect()

@@ -49,12 +49,12 @@ immutable(ExpressionNode)[] flattenExpressionList(immutable(ExpressionNode) node
     return list ? list.nodes : [node];
 }
 
-immutable(ExpressionListNode) expressionList(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
+immutable(ExpressionListNode) toExpressionList(TList...)(TList args) if(allSatisfy!(isExpressionType, TList))
 {
     return new immutable ExpressionListNode(mixin("[" ~ [staticMap!(wrapExpression, args)].join(", ") ~ "]"));
 }
 
 private template wrapExpression(alias expression)
 {
-    enum wrapExpression = "expression(" ~ __traits(identifier, expression) ~ ")";
+    enum wrapExpression = "toExpression(" ~ __traits(identifier, expression) ~ ")";
 }

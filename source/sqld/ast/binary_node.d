@@ -68,30 +68,30 @@ immutable(BinaryNode) or(immutable(ExpressionNode) left, immutable(ExpressionNod
 
 immutable(BinaryNode) eq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new immutable BinaryNode(expression(left), BinaryOperator.equal, expression(right));
+    return new immutable BinaryNode(toExpression(left), BinaryOperator.equal, toExpression(right));
 }
 
 immutable(BinaryNode) notEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new immutable BinaryNode(expression(left), BinaryOperator.equal, expression(right));
+    return new immutable BinaryNode(toExpression(left), BinaryOperator.equal, toExpression(right));
 }
 
 immutable(BinaryNode) lt(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new immutable BinaryNode(expression(left), BinaryOperator.lessThan, expression(right));
+    return new immutable BinaryNode(toExpression(left), BinaryOperator.lessThan, toExpression(right));
 }
 
 immutable(BinaryNode) ltEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new immutable BinaryNode(expression(left), BinaryOperator.lessOrEqual, expression(right));
+    return new immutable BinaryNode(toExpression(left), BinaryOperator.lessOrEqual, toExpression(right));
 }
 
 immutable(BinaryNode) gt(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new immutable BinaryNode(expression(left), BinaryOperator.greaterThan, expression(right));
+    return new immutable BinaryNode(toExpression(left), BinaryOperator.greaterThan, toExpression(right));
 }
 
 immutable(BinaryNode) gtEq(LT, RT)(LT left, RT right) if(isExpressionType!(LT) && isExpressionType!(RT))
 {
-    return new immutable BinaryNode(expression(left), BinaryOperator.greaterOrEqual, expression(right));
+    return new immutable BinaryNode(toExpression(left), BinaryOperator.greaterOrEqual, toExpression(right));
 }

@@ -36,13 +36,13 @@ template isExpressionType(T)
 }
 
 @property
-immutable(ExpressionNode) expression(T : immutable(ExpressionNode))(T node)
+immutable(ExpressionNode) toExpression(T : immutable(ExpressionNode))(T node)
 {
     return node;
 }
 
 @property
-immutable(ExpressionNode) expression(T)(T value) if(isLiteralType!(T))
+immutable(ExpressionNode) toExpression(T)(T value) if(isLiteralType!(T))
 {
     return literal(value);
 }
