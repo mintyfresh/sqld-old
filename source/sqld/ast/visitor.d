@@ -78,6 +78,8 @@ interface Visitor
     void visit(immutable(WindowDefinitionNode) node);
 
     void visit(immutable(WindowNode) node);
+
+    void visit(immutable(WithNode) node);
 }
 
 mixin template Visitable()

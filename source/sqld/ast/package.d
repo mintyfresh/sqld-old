@@ -42,3 +42,4 @@ public import sqld.ast.visitor;
 public import sqld.ast.where_node;
 public import sqld.ast.window_definition_node;
 public import sqld.ast.window_node;
+public import sqld.ast.with_node;

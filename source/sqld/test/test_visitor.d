@@ -376,6 +376,20 @@ override:
             }
         }
     }
+
+    void visit(immutable(WithNode) node)
+    {
+        _buffer ~= "WITH ";
+        if(node.recursive)
+        {
+            _buffer ~= "RECURSIVE ";
+        }
+
+        node.table.accept(this);
+        _buffer ~= "AS ( ";
+        node.select.accept(this);
+        _buffer ~= " )";
+    }
 }
 
 @property
