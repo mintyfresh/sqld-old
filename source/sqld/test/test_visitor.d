@@ -130,7 +130,7 @@ override:
     {
         _buffer ~= "INSERT ";
         
-        foreach(field; AliasSeq!("into", "values", "select", "returning"))
+        foreach(field; AliasSeq!("with_", "into", "values", "select", "returning"))
         {
             if(__traits(getMember, node, field) !is null)
             {

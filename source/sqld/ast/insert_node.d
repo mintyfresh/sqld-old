@@ -33,6 +33,12 @@ public:
     }
 
     @property
+    immutable(WithNode) with_()
+    {
+        return _with_;
+    }
+
+    @property
     immutable(IntoNode) into()
     {
         return _into;
