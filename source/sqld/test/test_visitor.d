@@ -8,6 +8,8 @@ import std.conv;
 import std.meta;
 import std.traits;
 
+version(unittest):
+
 class TestVisitor : Visitor
 {
 private:
