@@ -8,39 +8,12 @@ import sqld.window_builder;
 
 import std.meta : allSatisfy;
 
-struct JoinBuilder
-{
-private:
-    SelectBuilder             _builder;
-    JoinType                  _joinType;
-    immutable(ExpressionNode) _source;
-
-public:
-    alias build this;
-
-    this(SelectBuilder builder, JoinType joinType, immutable(ExpressionNode) source)
-    {
-        _builder  = builder;
-        _joinType = joinType;
-        _source   = source;
-    }
-
-    SelectBuilder build()
-    {
-        return _builder.join(_joinType, _source);
-    }
-
-    SelectBuilder on(immutable(ExpressionNode) condition)
-    {
-        return _builder.join(_joinType, _source, condition);
-    }
-}
-
 struct SelectBuilder
 {
     mixin Builder;
     mixin WithPartial;
     mixin FromPartial;
+    mixin JoinsPartial;
     mixin WherePartial;
     mixin OrderByPartial;
     mixin LimitPartial;
@@ -49,7 +22,6 @@ private:
     immutable
     {
         ProjectionNode _projection;
-        JoinNode[]     _joins;
         GroupByNode    _groupBy;
         HavingNode     _having;
         WindowNode     _window;
@@ -75,7 +47,14 @@ public:
 
     SelectBuilder select(immutable(ExpressionListNode) projections)
     {
-        return projection(new immutable ProjectionNode(projections));
+        if(_projection is null)
+        {
+            return projection(new immutable ProjectionNode(projections));
+        }
+        else
+        {
+            return projection(new immutable ProjectionNode(_projection.projections ~ projections));
+        }
     }
 
     SelectBuilder select(immutable(ExpressionNode)[] projection...)
@@ -88,67 +67,14 @@ public:
         return select(toExpressionList(args)); 
     }
 
+    SelectBuilder reselect(TList...)(TList args)
+    {
+        return unselect.select(args);
+    }
+
     SelectBuilder unselect()
     {
         return projection(null);
-    }
-
-    /+ - Join - +/
-
-    SelectBuilder join(immutable(JoinNode) join)
-    {
-        return next!("joins")(_joins ~ join);
-    }
-
-    SelectBuilder join(JoinType joinType, SelectBuilder delegate(SelectBuilder) callback,
-                       immutable(ExpressionNode) condition)
-    {
-        return join(new immutable JoinNode(joinType, callback(SelectBuilder.init).build, condition));
-    }
-
-    SelectBuilder join(JoinType joinType, immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
-    {
-        return join(new immutable JoinNode(joinType, source, condition));
-    }
-
-    JoinBuilder join(JoinType joinType, SelectBuilder delegate(SelectBuilder) callback)
-    {
-        return JoinBuilder(this, joinType, callback(SelectBuilder.init).build);
-    }
-
-    JoinBuilder join(JoinType joinType, immutable(ExpressionNode) source)
-    {
-        return JoinBuilder(this, joinType, source);
-    }
-
-    SelectBuilder join(SelectBuilder delegate(SelectBuilder) callback, immutable(ExpressionNode) condition)
-    {
-        return join(JoinType.inner, callback(SelectBuilder.init).build, condition);
-    }
-
-    SelectBuilder join(immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
-    {
-        return join(JoinType.inner, source, condition);
-    }
-
-    JoinBuilder join(SelectBuilder delegate(SelectBuilder) callback)
-    {
-        return JoinBuilder(this, JoinType.inner, callback(SelectBuilder.init).build);
-    }
-
-    JoinBuilder join(immutable(ExpressionNode) source)
-    {
-        return JoinBuilder(this, JoinType.inner, source);
-    }
-
-    auto rejoin(TList...)(TList args)
-    {
-        return unjoin.join(args);
-    }
-
-    SelectBuilder unjoin()
-    {
-        return next!("joins")(cast(immutable(JoinNode)[]) []);
     }
 
     /+ - Group By - +/
@@ -246,11 +172,6 @@ public:
     SelectBuilder rewindow(TList...)(TList args)
     {
         return unwindow.window(args);
-    }
-
-    SelectBuilder rewindow(alias callback)(string name)
-    {
-        return unwindow.window!(callback)(name);
     }
 
     SelectBuilder unwindow()
