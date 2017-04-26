@@ -101,9 +101,9 @@ public:
         return next!("select")(select);
     }
 
-    InsertBuilder select(SelectBuilder delegate(SelectBuilder) callback)
+    InsertBuilder select(SelectDelegate callback)
     {
-        return select(callback(SelectBuilder.init).build);
+        return select(toSelect(callback));
     }
 
     InsertBuilder unselect()

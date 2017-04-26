@@ -4,7 +4,9 @@ module sqld.partials.joins_partial;
 mixin template JoinsPartial()
 {
     import sqld.ast;
-    import std.meta;
+    import sqld.select_builder;
+
+    import std.meta : Alias;
 
 private:
     immutable(JoinNode)[] _joins;
@@ -50,10 +52,9 @@ public:
         return joins(_joins ~ join);
     }
 
-    typeof(this) join(JoinType joinType, typeof(this) delegate(typeof(this)) callback,
-                       immutable(ExpressionNode) condition)
+    typeof(this) join(JoinType joinType, SelectDelegate callback, immutable(ExpressionNode) condition)
     {
-        return join(new immutable JoinNode(joinType, callback(typeof(this).init).build, condition));
+        return join(new immutable JoinNode(joinType, toSelect(callback), condition));
     }
 
     typeof(this) join(JoinType joinType, immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
@@ -61,9 +62,9 @@ public:
         return join(new immutable JoinNode(joinType, source, condition));
     }
 
-    JoinBuilder join(JoinType joinType, typeof(this) delegate(typeof(this)) callback)
+    JoinBuilder join(JoinType joinType, SelectDelegate callback)
     {
-        return JoinBuilder(this, joinType, callback(typeof(this).init).build);
+        return JoinBuilder(this, joinType, toSelect(callback));
     }
 
     JoinBuilder join(JoinType joinType, immutable(ExpressionNode) source)
@@ -71,9 +72,9 @@ public:
         return JoinBuilder(this, joinType, source);
     }
 
-    typeof(this) join(typeof(this) delegate(typeof(this)) callback, immutable(ExpressionNode) condition)
+    typeof(this) join(SelectDelegate callback, immutable(ExpressionNode) condition)
     {
-        return join(JoinType.inner, callback(typeof(this).init).build, condition);
+        return join(JoinType.inner, toSelect(callback), condition);
     }
 
     typeof(this) join(immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
@@ -81,9 +82,9 @@ public:
         return join(JoinType.inner, source, condition);
     }
 
-    JoinBuilder join(typeof(this) delegate(typeof(this)) callback)
+    JoinBuilder join(SelectDelegate callback)
     {
-        return JoinBuilder(this, JoinType.inner, callback(typeof(this).init).build);
+        return JoinBuilder(this, JoinType.inner, toSelect(callback));
     }
 
     JoinBuilder join(immutable(ExpressionNode) source)

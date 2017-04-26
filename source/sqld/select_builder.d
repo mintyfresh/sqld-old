@@ -196,3 +196,10 @@ public:
         return offset(null);
     }
 }
+
+alias SelectDelegate = SelectBuilder delegate(SelectBuilder);
+
+immutable(SelectNode) toSelect(SelectDelegate callback)
+{
+    return callback(SelectBuilder.init).build;
+}

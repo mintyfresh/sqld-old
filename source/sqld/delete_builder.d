@@ -48,9 +48,9 @@ public:
         return using(source.as(name));
     }
 
-    typeof(this) using(SelectBuilder delegate(SelectBuilder) callback, string name = "subquery")
+    typeof(this) using(SelectDelegate callback, string name = "subquery")
     {
-        return using(callback(SelectBuilder.init).as(name));
+        return using(toSelect(callback).as(name));
     }
 
     typeof(this) unusing()

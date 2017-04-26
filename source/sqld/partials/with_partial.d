@@ -25,14 +25,14 @@ public:
         return cte(false, table, select);
     }
 
-    typeof(this) cte(bool recursive, immutable(TableNode) table, SelectBuilder delegate(SelectBuilder) callback)
+    typeof(this) cte(bool recursive, immutable(TableNode) table, SelectDelegate callback)
     {
-        return cte(recursive, table, callback(SelectBuilder.init).build);
+        return cte(recursive, table, toSelect(callback));
     }
 
-    typeof(this) cte(immutable(TableNode) table, SelectBuilder delegate(SelectBuilder) callback)
+    typeof(this) cte(immutable(TableNode) table, SelectDelegate callback)
     {
-        return cte(table, callback(SelectBuilder.init).build);
+        return cte(table, toSelect(callback));
     }
 
     typeof(this) uncte()

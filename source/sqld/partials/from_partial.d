@@ -30,9 +30,9 @@ public:
         return from(source.as(name));
     }
 
-    typeof(this) from(SelectBuilder delegate(SelectBuilder) callback, string name = "subquery")
+    typeof(this) from(SelectDelegate callback, string name = "subquery")
     {
-        return from(callback(SelectBuilder.init).as(name));
+        return from(toSelect(callback).as(name));
     }
 
     typeof(this) unfrom()
