@@ -68,3 +68,15 @@ immutable(InvocationNode) sum(immutable(ExpressionNode) node)
 {
     return new immutable FunctionNode(FunctionName.sum).opCall([node]);
 }
+
+@system unittest
+{
+    import sqld.ast;
+    import sqld.test.test_visitor;
+
+    auto v = new TestVisitor;
+    auto n = sum(new immutable ColumnNode("test"));
+
+    n.accept(v);
+    assert(v.sql == "SUM(test)");
+}

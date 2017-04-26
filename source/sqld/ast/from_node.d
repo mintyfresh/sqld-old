@@ -35,3 +35,28 @@ public:
         return _sources;
     }
 }
+
+version(unittest)
+{
+    import sqld.ast;
+    import sqld.test.test_visitor;
+}
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto n = new immutable FromNode(TableNode("foo"));
+
+    n.accept(v);
+    assert(v.sql.squish == "FROM foo");
+}
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto n = new immutable FromNode([TableNode("foo"), TableNode("bar"), TableNode("foobar")]);
+
+    n.accept(v);
+    assert(v.sql.squish == "FROM foo, bar, foobar");
+}
+
