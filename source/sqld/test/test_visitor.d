@@ -44,6 +44,15 @@ override:
         }
     }
 
+    void visit(immutable(BetweenNode) node)
+    {
+        node.first.accept(this);
+        _buffer ~= " BETWEEN ";
+        node.second.accept(this);
+        _buffer ~= " AND ";
+        node.third.accept(this);
+    }
+
     void visit(immutable(BinaryNode) node)
     {
         node.left.accept(this);
@@ -286,13 +295,6 @@ override:
         }
 
         _buffer ~= node.name;
-    }
-
-    void visit(immutable(TernaryNode) node)
-    {
-        node.first.accept(this);
-        node.second.accept(this);
-        node.third.accept(this);
     }
 
     void visit(immutable(UnaryNode) node)

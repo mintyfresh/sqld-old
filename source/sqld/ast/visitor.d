@@ -9,6 +9,8 @@ interface Visitor
 
     void visit(immutable(AssignmentNode) node);
 
+    void visit(immutable(BetweenNode) node);
+
     void visit(immutable(BinaryNode) node);
 
     void visit(immutable(ColumnNode) node);
@@ -62,8 +64,6 @@ interface Visitor
     void visit(immutable(SQLNode) node);
 
     void visit(immutable(TableNode) node);
-
-    void visit(immutable(TernaryNode) node);
 
     void visit(immutable(UnaryNode) node);
 

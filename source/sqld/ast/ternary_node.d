@@ -2,12 +2,9 @@
 module sqld.ast.ternary_node;
 
 import sqld.ast.expression_node;
-import sqld.ast.visitor;
 
-immutable class TernaryNode : ExpressionNode
+immutable abstract class TernaryNode : ExpressionNode
 {
-    mixin Visitable;
-
 private:
     ExpressionNode _first;
     ExpressionNode _second;
