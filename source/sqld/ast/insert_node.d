@@ -11,7 +11,7 @@ import sqld.ast.with_node;
 
 import std.meta;
 
-class InsertNode : QueryNode
+immutable class InsertNode : QueryNode
 {
     mixin Visitable;
 
@@ -24,7 +24,7 @@ private:
 
 public:
     this(immutable(WithNode) with_, immutable(IntoNode) into, immutable(ValuesNode) values,
-         immutable(SelectNode) select, immutable(ReturningNode) returning) immutable
+         immutable(SelectNode) select, immutable(ReturningNode) returning)
     {
         foreach(name; AliasSeq!("with_", "into", "values", "select", "returning"))
         {
@@ -33,25 +33,25 @@ public:
     }
 
     @property
-    immutable(IntoNode) into() immutable
+    immutable(IntoNode) into()
     {
         return _into;
     }
 
     @property
-    immutable(ValuesNode) values() immutable
+    immutable(ValuesNode) values()
     {
         return _values;
     }
 
     @property
-    immutable(SelectNode) select() immutable
+    immutable(SelectNode) select()
     {
         return _select;
     }
 
     @property
-    immutable(ReturningNode) returning() immutable
+    immutable(ReturningNode) returning()
     {
         return _returning;
     }

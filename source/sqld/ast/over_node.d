@@ -7,7 +7,7 @@ import sqld.ast.visitor;
 import sqld.ast.window_definition_node;
 import sqld.window_builder;
 
-class OverNode : ExpressionNode
+immutable class OverNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -16,20 +16,20 @@ private:
     ExpressionNode _window;
 
 public:
-    this(immutable(ExpressionNode) subject, immutable(ExpressionNode) window = null) immutable
+    this(immutable(ExpressionNode) subject, immutable(ExpressionNode) window = null)
     {
         _subject = subject;
         _window  = window;
     }
 
     @property
-    immutable(ExpressionNode) subject() immutable
+    immutable(ExpressionNode) subject()
     {
         return _subject;
     }
 
     @property
-    immutable(ExpressionNode) window() immutable
+    immutable(ExpressionNode) window()
     {
         return _window;
     }

@@ -5,9 +5,9 @@ import sqld.ast.expression_node;
 import sqld.ast.node;
 import sqld.ast.subquery_node;
 
-abstract class QueryNode : Node
+immutable abstract class QueryNode : Node
 {
-    immutable(ExpressionNode) toSubquery() immutable
+    immutable(ExpressionNode) toSubquery()
     {
         return new immutable SubqueryNode(this);
     }

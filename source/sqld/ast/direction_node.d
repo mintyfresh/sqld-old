@@ -10,7 +10,7 @@ enum Direction : string
     desc = "DESC"
 }
 
-class DirectionNode : ExpressionNode
+immutable class DirectionNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -19,20 +19,20 @@ private:
     Direction      _direction;
 
 public:
-    this(immutable(ExpressionNode) node, Direction direction) immutable
+    this(immutable(ExpressionNode) node, Direction direction)
     {
         _node      = node;
         _direction = direction;
     }
 
     @property
-    immutable(ExpressionNode) node() immutable
+    immutable(ExpressionNode) node()
     {
         return _node;
     }
 
     @property
-    Direction direction() immutable
+    Direction direction()
     {
         return _direction;
     }

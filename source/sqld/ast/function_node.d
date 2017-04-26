@@ -13,7 +13,7 @@ enum FunctionName : string
     sum   = "SUM"
 }
 
-class FunctionNode : ExpressionNode
+immutable class FunctionNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -21,13 +21,13 @@ private:
     string _name;
 
 public:
-    this(string name) immutable
+    this(string name)
     {
         _name = name;
     }
 
     @property
-    string name() immutable
+    string name()
     {
         return _name;
     }

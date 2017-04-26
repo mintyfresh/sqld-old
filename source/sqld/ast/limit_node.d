@@ -4,7 +4,7 @@ module sqld.ast.limit_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
 
-class LimitNode : Node
+immutable class LimitNode : Node
 {
     mixin Visitable;
 
@@ -12,13 +12,13 @@ private:
     ulong _limit;
 
 public:
-    this(ulong limit) immutable
+    this(ulong limit)
     {
         _limit = limit;
     }
 
     @property
-    ulong limit() immutable
+    ulong limit()
     {
         return _limit;
     }

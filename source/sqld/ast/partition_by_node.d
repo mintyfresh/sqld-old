@@ -6,7 +6,7 @@ import sqld.ast.expression_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
 
-class PartitionByNode : Node
+immutable class PartitionByNode : Node
 {
     mixin Visitable;
 
@@ -14,18 +14,18 @@ private:
     ExpressionListNode _partitions;
 
 public:
-    this(immutable(ExpressionNode) partitions) immutable
+    this(immutable(ExpressionNode) partitions)
     {
         _partitions = new immutable ExpressionListNode([partitions]);
     }
 
-    this(immutable(ExpressionListNode) partitions) immutable
+    this(immutable(ExpressionListNode) partitions)
     {
         _partitions = partitions;
     }
 
     @property
-    immutable(ExpressionListNode) partitions() immutable
+    immutable(ExpressionListNode) partitions()
     {
         return _partitions;
     }

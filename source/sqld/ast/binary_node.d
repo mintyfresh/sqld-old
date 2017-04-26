@@ -20,7 +20,7 @@ enum BinaryOperator : string
     isNotDistinctFrom = "IS NOT DISTINCT FROM"
 }
 
-class BinaryNode : ExpressionNode
+immutable class BinaryNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -30,7 +30,7 @@ private:
     ExpressionNode _right;
 
 public:
-    this(immutable(ExpressionNode) left, BinaryOperator operator, immutable(ExpressionNode) right) immutable
+    this(immutable(ExpressionNode) left, BinaryOperator operator, immutable(ExpressionNode) right)
     {
         _left     = left;
         _operator = operator;
@@ -38,19 +38,19 @@ public:
     }
 
     @property
-    immutable(ExpressionNode) left() immutable
+    immutable(ExpressionNode) left()
     {
         return _left;
     }
 
     @property
-    BinaryOperator operator() immutable
+    BinaryOperator operator()
     {
         return _operator;
     }
 
     @property
-    immutable(ExpressionNode) right() immutable
+    immutable(ExpressionNode) right()
     {
         return _right;
     }

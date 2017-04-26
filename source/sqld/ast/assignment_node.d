@@ -5,12 +5,12 @@ import sqld.ast.binary_node;
 import sqld.ast.expression_node;
 import sqld.ast.visitor;
 
-class AssignmentNode : BinaryNode
+immutable class AssignmentNode : BinaryNode
 {
     mixin Visitable;
 
 public:
-    this(immutable(ExpressionNode) left, immutable(ExpressionNode) right) immutable
+    this(immutable(ExpressionNode) left, immutable(ExpressionNode) right)
     {
         super(left, BinaryOperator.equal, right);
     }

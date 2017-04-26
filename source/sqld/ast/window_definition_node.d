@@ -6,7 +6,7 @@ import sqld.ast.order_by_node;
 import sqld.ast.partition_by_node;
 import sqld.ast.visitor;
 
-class WindowDefinitionNode : ExpressionNode
+immutable class WindowDefinitionNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -16,7 +16,7 @@ private:
     OrderByNode     _orderBy;
 
 public:
-    this(string reference, immutable(PartitionByNode) partitionBy, immutable(OrderByNode) orderBy) immutable
+    this(string reference, immutable(PartitionByNode) partitionBy, immutable(OrderByNode) orderBy)
     {
         _reference   = reference;
         _partitionBy = partitionBy;
@@ -24,19 +24,19 @@ public:
     }
 
     @property
-    string reference() immutable
+    string reference()
     {
         return _reference;
     }
 
     @property
-    immutable(PartitionByNode) partitionBy() immutable
+    immutable(PartitionByNode) partitionBy()
     {
         return _partitionBy;
     }
 
     @property
-    immutable(OrderByNode) orderBy() immutable
+    immutable(OrderByNode) orderBy()
     {
         return _orderBy;
     }

@@ -9,7 +9,7 @@ enum UnaryOperator : string
     not = "NOT"
 }
 
-class UnaryNode : ExpressionNode
+immutable class UnaryNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -18,20 +18,20 @@ private:
     ExpressionNode _operand;
 
 public:
-    this(UnaryOperator operator, immutable(ExpressionNode) operand) immutable
+    this(UnaryOperator operator, immutable(ExpressionNode) operand)
     {
         _operator = operator;
         _operand  = operand;
     }
 
     @property
-    UnaryOperator operator() immutable
+    UnaryOperator operator()
     {
         return _operator;
     }
 
     @property
-    immutable(ExpressionNode) operand() immutable
+    immutable(ExpressionNode) operand()
     {
         return _operand;
     }

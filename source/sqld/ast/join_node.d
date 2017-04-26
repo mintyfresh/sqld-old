@@ -14,7 +14,7 @@ enum JoinType : string
     cross = "CROSS JOIN"
 }
 
-class JoinNode : Node
+immutable class JoinNode : Node
 {
     mixin Visitable;
 
@@ -24,7 +24,7 @@ private:
     ExpressionNode _condition;
 
 public:
-    this(JoinType type, immutable(ExpressionNode) source, immutable(ExpressionNode) condition) immutable
+    this(JoinType type, immutable(ExpressionNode) source, immutable(ExpressionNode) condition)
     {
         _type      = type;
         _source    = source;
@@ -32,19 +32,19 @@ public:
     }
 
     @property
-    JoinType type() immutable
+    JoinType type()
     {
         return _type;
     }
 
     @property
-    immutable(ExpressionNode) source() immutable
+    immutable(ExpressionNode) source()
     {
         return _source;
     }
 
     @property
-    immutable(ExpressionNode) condition() immutable
+    immutable(ExpressionNode) condition()
     {
         return _condition;
     }

@@ -5,7 +5,7 @@ import sqld.ast.node;
 import sqld.ast.window_definition_node;
 import sqld.ast.visitor;
 
-class NamedWindowNode : Node
+immutable class NamedWindowNode : Node
 {
     mixin Visitable;
 
@@ -14,20 +14,20 @@ private:
     WindowDefinitionNode _definition;
 
 public:
-    this(string name, immutable(WindowDefinitionNode) definition) immutable
+    this(string name, immutable(WindowDefinitionNode) definition)
     {
         _name       = name;
         _definition = definition;
     }
 
     @property
-    string name() immutable
+    string name()
     {
         return _name;
     }
 
     @property
-    immutable(WindowDefinitionNode) definition() immutable
+    immutable(WindowDefinitionNode) definition()
     {
         return _definition;
     }

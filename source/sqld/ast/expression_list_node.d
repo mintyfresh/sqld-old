@@ -8,7 +8,7 @@ import std.algorithm;
 import std.array;
 import std.meta;
 
-class ExpressionListNode : ExpressionNode
+immutable class ExpressionListNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -16,28 +16,28 @@ private:
     ExpressionNode[] _nodes;
 
 public:
-    this(immutable(ExpressionNode)[] nodes) immutable
+    this(immutable(ExpressionNode)[] nodes)
     {
         _nodes = nodes.map!(flattenExpressionList).joiner.array;
     }
 
     @property
-    immutable(ExpressionNode)[] nodes() immutable
+    immutable(ExpressionNode)[] nodes()
     {
         return _nodes;
     }
 
-    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionNode) node) immutable
+    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionNode) node)
     {
         return new immutable ExpressionListNode(nodes ~ node);
     }
 
-    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionNode)[] nodes) immutable
+    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionNode)[] nodes)
     {
         return new immutable ExpressionListNode(nodes ~ nodes);
     }
 
-    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionListNode) node) immutable
+    immutable(ExpressionListNode) opBinary(string op : "~")(immutable(ExpressionListNode) node)
     {
         return new immutable ExpressionListNode(nodes ~ node.nodes);
     }

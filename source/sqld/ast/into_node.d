@@ -6,7 +6,7 @@ import sqld.ast.node;
 import sqld.ast.visitor;
 import sqld.ast.table_node;
 
-class IntoNode : Node
+immutable class IntoNode : Node
 {
     mixin Visitable;
 
@@ -15,20 +15,20 @@ private:
     ExpressionListNode _columns;
 
 public:
-    this(immutable(TableNode) table, immutable(ExpressionListNode) columns) immutable
+    this(immutable(TableNode) table, immutable(ExpressionListNode) columns)
     {
         _table   = table;
         _columns = columns;
     }
 
     @property
-    immutable(TableNode) table() immutable
+    immutable(TableNode) table()
     {
         return _table;
     }
 
     @property
-    immutable(ExpressionListNode) columns() immutable
+    immutable(ExpressionListNode) columns()
     {
         return _columns;
     }

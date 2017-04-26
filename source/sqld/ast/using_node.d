@@ -6,21 +6,21 @@ import sqld.ast.expression_node;
 import sqld.ast.from_node;
 import sqld.ast.visitor;
 
-class UsingNode : FromNode
+immutable class UsingNode : FromNode
 {
     mixin Visitable;
 
-    this(immutable(ExpressionNode) source) immutable
+    this(immutable(ExpressionNode) source)
     {
         super(source);
     }
 
-    this(immutable(ExpressionNode)[] sources) immutable
+    this(immutable(ExpressionNode)[] sources)
     {
         super(sources);
     }
 
-    this(immutable(ExpressionListNode) sources) immutable
+    this(immutable(ExpressionListNode) sources)
     {
         super(sources);
     }

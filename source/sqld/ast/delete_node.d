@@ -11,7 +11,7 @@ import sqld.ast.where_node;
 
 import std.meta : AliasSeq;
 
-class DeleteNode : QueryNode
+immutable class DeleteNode : QueryNode
 {
     mixin Visitable;
 
@@ -24,7 +24,7 @@ private:
 
 public:
     this(immutable(FromNode) from, immutable(UsingNode) using, immutable(WhereNode) where,
-         immutable(LimitNode) limit, immutable(ReturningNode) returning) immutable
+         immutable(LimitNode) limit, immutable(ReturningNode) returning)
     {
         foreach(name; AliasSeq!("from", "using", "where", "limit", "returning"))
         {
@@ -33,31 +33,31 @@ public:
     }
 
     @property
-    immutable(FromNode) from() immutable
+    immutable(FromNode) from()
     {
         return _from;
     }
 
     @property
-    immutable(UsingNode) using() immutable
+    immutable(UsingNode) using()
     {
         return _using;
     }
 
     @property
-    immutable(WhereNode) where() immutable
+    immutable(WhereNode) where()
     {
         return _where;
     }
 
     @property
-    immutable(LimitNode) limit() immutable
+    immutable(LimitNode) limit()
     {
         return _limit;
     }
 
     @property
-    immutable(ReturningNode) returning() immutable
+    immutable(ReturningNode) returning()
     {
         return _returning;
     }

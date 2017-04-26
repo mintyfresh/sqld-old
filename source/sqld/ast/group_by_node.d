@@ -6,7 +6,7 @@ import sqld.ast.expression_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
 
-class GroupByNode : Node
+immutable class GroupByNode : Node
 {
     mixin Visitable;
 
@@ -14,23 +14,23 @@ private:
     ExpressionListNode _groupings;
 
 public:
-    this(immutable(ExpressionNode) grouping) immutable
+    this(immutable(ExpressionNode) grouping)
     {
         this([grouping]);
     }
 
-    this(immutable(ExpressionNode)[] groupings...) immutable
+    this(immutable(ExpressionNode)[] groupings...)
     {
         this(new immutable ExpressionListNode(groupings));
     }
 
-    this(immutable(ExpressionListNode) groupings) immutable
+    this(immutable(ExpressionListNode) groupings)
     {
         _groupings = groupings;
     }
 
     @property
-    immutable(ExpressionListNode) groupings() immutable
+    immutable(ExpressionListNode) groupings()
     {
         return _groupings;
     }

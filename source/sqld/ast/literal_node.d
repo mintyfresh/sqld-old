@@ -19,7 +19,7 @@ alias LiteralTypes = staticMap!(TypeAndTypeArray, AliasSeq!(
     size_t, ptrdiff_t, hash_t
 ));
 
-class LiteralNode : ExpressionNode
+immutable class LiteralNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -27,13 +27,13 @@ private:
     Algebraic!(LiteralTypes) _value;
 
 public:
-    this(Algebraic!(LiteralTypes) value) immutable
+    this(Algebraic!(LiteralTypes) value)
     {
         _value = value;
     }
 
     @property
-    Algebraic!(LiteralTypes) value() immutable
+    Algebraic!(LiteralTypes) value()
     {
         return _value;
     }

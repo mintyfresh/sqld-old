@@ -7,24 +7,24 @@ import sqld.ast.invocation_node;
 import sqld.ast.literal_node;
 import sqld.ast.node;
 
-abstract class ExpressionNode : Node
+immutable abstract class ExpressionNode : Node
 {
-    immutable(BinaryNode) opBinary(string op : "in")(immutable(ExpressionNode) node) immutable
+    immutable(BinaryNode) opBinary(string op : "in")(immutable(ExpressionNode) node)
     {
         return new immutable BinaryNode(this, BinaryOperator.in_, node);
     }
 
-    immutable(BinaryNode) opBinary(string op : "!in")(immutable(ExpressionNode) node) immutable
+    immutable(BinaryNode) opBinary(string op : "!in")(immutable(ExpressionNode) node)
     {
         return new immutable BinaryNode(this, BinaryOperator.notIn, node);
     }
 
-    immutable(InvocationNode) opCall(immutable(ExpressionNode)[] arguments) immutable
+    immutable(InvocationNode) opCall(immutable(ExpressionNode)[] arguments)
     {
         return new immutable InvocationNode(this, arguments);
     }
 
-    immutable(InvocationNode) opCall(immutable(ExpressionListNode) arguments) immutable
+    immutable(InvocationNode) opCall(immutable(ExpressionListNode) arguments)
     {
         return new immutable InvocationNode(this, arguments);
     }

@@ -17,7 +17,7 @@ import sqld.ast.with_node;
 
 import std.meta;
 
-class SelectNode : QueryNode
+immutable class SelectNode : QueryNode
 {
     mixin Visitable;
 
@@ -40,7 +40,7 @@ public:
     this(immutable(WithNode) with_, immutable(ProjectionNode) projection, immutable(FromNode) from,
          immutable(JoinNode)[] joins, immutable(WhereNode) where, immutable(GroupByNode) groupBy,
          immutable(HavingNode) having, immutable(WindowNode) window, immutable(OrderByNode) orderBy,
-         immutable(LimitNode) limit, immutable(OffsetNode) offset) immutable
+         immutable(LimitNode) limit, immutable(OffsetNode) offset)
     {
         foreach(name; AliasSeq!("with_", "projection", "from", "joins", "where", "groupBy", "having",
                                 "window", "orderBy", "limit", "offset"))
@@ -50,67 +50,67 @@ public:
     }
 
     @property
-    immutable(WithNode) with_() immutable
+    immutable(WithNode) with_()
     {
         return _with_;
     }
 
     @property
-    immutable(ProjectionNode) projection() immutable
+    immutable(ProjectionNode) projection()
     {
         return _projection;
     }
 
     @property
-    immutable(FromNode) from() immutable
+    immutable(FromNode) from()
     {
         return _from;
     }
 
     @property
-    immutable(JoinNode)[] joins() immutable
+    immutable(JoinNode)[] joins()
     {
         return _joins;
     }
 
     @property
-    immutable(WhereNode) where() immutable
+    immutable(WhereNode) where()
     {
         return _where;
     }
 
     @property
-    immutable(GroupByNode) groupBy() immutable
+    immutable(GroupByNode) groupBy()
     {
         return _groupBy;
     }
 
     @property
-    immutable(HavingNode) having() immutable
+    immutable(HavingNode) having()
     {
         return _having;
     }
 
     @property
-    immutable(WindowNode) window() immutable
+    immutable(WindowNode) window()
     {
         return _window;
     }
 
     @property
-    immutable(OrderByNode) orderBy() immutable
+    immutable(OrderByNode) orderBy()
     {
         return _orderBy;
     }
 
     @property
-    immutable(LimitNode) limit() immutable
+    immutable(LimitNode) limit()
     {
         return _limit;
     }
 
     @property
-    immutable(OffsetNode) offset() immutable
+    immutable(OffsetNode) offset()
     {
         return _offset;
     }

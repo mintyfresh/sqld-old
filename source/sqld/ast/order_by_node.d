@@ -6,7 +6,7 @@ import sqld.ast.expression_node;
 import sqld.ast.node;
 import sqld.ast.visitor;
 
-class OrderByNode : Node
+immutable class OrderByNode : Node
 {
     mixin Visitable;
 
@@ -14,23 +14,23 @@ private:
     ExpressionListNode _directions;
 
 public:
-    this(immutable(ExpressionNode) direction) immutable
+    this(immutable(ExpressionNode) direction)
     {
         this([direction]);
     }
 
-    this(immutable(ExpressionNode)[] directions...) immutable
+    this(immutable(ExpressionNode)[] directions...)
     {
         this(new immutable ExpressionListNode(directions));
     }
 
-    this(immutable(ExpressionListNode) directions) immutable
+    this(immutable(ExpressionListNode) directions)
     {
         _directions = directions;
     }
 
     @property
-    immutable(ExpressionListNode) directions() immutable
+    immutable(ExpressionListNode) directions()
     {
         return _directions;
     }

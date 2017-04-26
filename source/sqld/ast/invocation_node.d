@@ -6,7 +6,7 @@ import sqld.ast.expression_node;
 import sqld.ast.function_node;
 import sqld.ast.visitor;
 
-class InvocationNode : ExpressionNode
+immutable class InvocationNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -15,25 +15,25 @@ private:
     ExpressionListNode _arguments;
 
 public:
-    this(immutable(ExpressionNode) callable, immutable(ExpressionNode)[] arguments) immutable
+    this(immutable(ExpressionNode) callable, immutable(ExpressionNode)[] arguments)
     {
         this(callable, new immutable ExpressionListNode(arguments));
     }
 
-    this(immutable(ExpressionNode) callable, immutable(ExpressionListNode) arguments = null) immutable
+    this(immutable(ExpressionNode) callable, immutable(ExpressionListNode) arguments = null)
     {
         _callable  = callable;
         _arguments = arguments;
     }
 
     @property
-    immutable(ExpressionNode) callable() immutable
+    immutable(ExpressionNode) callable()
     {
         return _callable;
     }
 
     @property
-    immutable(ExpressionListNode) arguments() immutable
+    immutable(ExpressionListNode) arguments()
     {
         return _arguments;
     }

@@ -4,7 +4,7 @@ module sqld.ast.ternary_node;
 import sqld.ast.expression_node;
 import sqld.ast.visitor;
 
-class TernaryNode : ExpressionNode
+immutable class TernaryNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -14,7 +14,7 @@ private:
     ExpressionNode _third;
 
 public:
-    this(immutable(ExpressionNode) first, immutable(ExpressionNode) second, immutable(ExpressionNode) third) immutable
+    this(immutable(ExpressionNode) first, immutable(ExpressionNode) second, immutable(ExpressionNode) third)
     {
         _first  = first;
         _second = second;
@@ -22,19 +22,19 @@ public:
     }
 
     @property
-    immutable(ExpressionNode) first() immutable
+    immutable(ExpressionNode) first()
     {
         return _first;
     }
 
     @property
-    immutable(ExpressionNode) second() immutable
+    immutable(ExpressionNode) second()
     {
         return _second;
     }
 
     @property
-    immutable(ExpressionNode) third() immutable
+    immutable(ExpressionNode) third()
     {
         return _third;
     }

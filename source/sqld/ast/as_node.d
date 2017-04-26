@@ -6,7 +6,7 @@ import sqld.ast.expression_node;
 import sqld.ast.visitor;
 import sqld.ast.table_node;
 
-class AsNode : ExpressionNode
+immutable class AsNode : ExpressionNode
 {
     mixin Visitable;
 
@@ -15,20 +15,20 @@ private:
     string         _name;
 
 public:
-    this(immutable(ExpressionNode) node, string name) immutable
+    this(immutable(ExpressionNode) node, string name)
     {
         _node = node;
         _name = name;
     }
 
     @property
-    immutable(ExpressionNode) node() immutable
+    immutable(ExpressionNode) node()
     {
         return _node;
     }
 
     @property
-    string name() immutable
+    string name()
     {
         return _name;
     }
