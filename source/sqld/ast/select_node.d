@@ -10,6 +10,7 @@ import sqld.ast.offset_node;
 import sqld.ast.order_by_node;
 import sqld.ast.projection_node;
 import sqld.ast.query_node;
+import sqld.ast.union_node;
 import sqld.ast.visitor;
 import sqld.ast.where_node;
 import sqld.ast.window_node;
@@ -30,6 +31,7 @@ private:
     GroupByNode    _groupBy;
     HavingNode     _having;
     WindowNode     _window;
+    UnionNode      _union_;
     OrderByNode    _orderBy;
     LimitNode      _limit;
     OffsetNode     _offset;
@@ -39,11 +41,11 @@ public:
 
     this(immutable(WithNode) with_, immutable(ProjectionNode) projection, immutable(FromNode) from,
          immutable(JoinNode)[] joins, immutable(WhereNode) where, immutable(GroupByNode) groupBy,
-         immutable(HavingNode) having, immutable(WindowNode) window, immutable(OrderByNode) orderBy,
-         immutable(LimitNode) limit, immutable(OffsetNode) offset)
+         immutable(HavingNode) having, immutable(WindowNode) window, immutable(UnionNode) union_,
+         immutable(OrderByNode) orderBy, immutable(LimitNode) limit, immutable(OffsetNode) offset)
     {
         foreach(name; AliasSeq!("with_", "projection", "from", "joins", "where", "groupBy", "having",
-                                "window", "orderBy", "limit", "offset"))
+                                "window", "union_", "orderBy", "limit", "offset"))
         {
             mixin("_" ~ name ~ " = " ~ name ~ ";");
         }
@@ -95,6 +97,12 @@ public:
     immutable(WindowNode) window()
     {
         return _window;
+    }
+
+    @property
+    immutable(UnionNode) union_()
+    {
+        return _union_;
     }
 
     @property

@@ -25,6 +25,7 @@ private:
         GroupByNode    _groupBy;
         HavingNode     _having;
         WindowNode     _window;
+        UnionNode      _union_;
         OffsetNode     _offset;
     }
 
@@ -35,7 +36,7 @@ public:
     immutable(SelectNode) build()
     {
         return new immutable SelectNode(_with_, _projection, _from, _joins, _where, _groupBy,
-                                        _having, _window, _orderBy, _limit, _offset);
+                                        _having, _window, _union_, _orderBy, _limit, _offset);
     }
 
     /+ - Projection - +/
@@ -177,6 +178,38 @@ public:
     SelectBuilder unwindow()
     {
         return window(cast(WindowNode) null);
+    }
+
+    /+ - Union - +/
+
+    SelectBuilder union_(immutable(UnionNode) union_)
+    {
+        return next!("union_")(union_);
+    }
+
+    SelectBuilder union_(UnionType type, immutable(SelectNode) select)
+    {
+        return union_(new immutable UnionNode(type, select));
+    }
+
+    SelectBuilder union_(UnionType type, SelectDelegate callback)
+    {
+        return union_(type, toSelect(callback));
+    }
+
+    SelectBuilder union_(immutable(SelectNode) select)
+    {
+        return union_(new immutable UnionNode(select));
+    }
+
+    SelectBuilder union_(SelectDelegate callback)
+    {
+        return union_(toSelect(callback));
+    }
+
+    SelectBuilder ununion()
+    {
+        return union_(cast(UnionNode) null);
     }
 
     /+ - Offset - +/

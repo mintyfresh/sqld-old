@@ -191,3 +191,45 @@ import sqld.test.test_visitor;
           10
     }.squish);
 }
+
+@system unittest
+{
+    auto v = new TestVisitor;
+    auto u = TableNode("users");
+    auto p = TableNode("posts");
+    auto b = SelectBuilder.init;
+
+    b.select(u["id"])
+     .from(u)
+     .where(u["active"].eq(false))
+     .union_(s => s.select(u["id"])
+                   .from(u)
+                   .join(p, p["user_id"].eq(u["id"]))
+                   .where(u["active"].eq(true))
+                   .group(u["id"])
+                   .having(p["*"].count.lt(5)))
+     .accept(v);
+
+    assert(v.sql.squish == q{
+        SELECT
+          users.id
+        FROM
+          users
+        WHERE
+          users.active = false
+        UNION SELECT
+          users.id
+        FROM
+          users
+        INNER JOIN
+          posts
+        ON
+          posts.user_id = users.id
+        WHERE
+          users.active = true
+        GROUP BY
+          users.id
+        HAVING
+          COUNT(posts.*) < 5
+    }.squish);
+}

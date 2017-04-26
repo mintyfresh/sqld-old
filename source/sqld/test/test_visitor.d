@@ -230,7 +230,7 @@ override:
     void visit(immutable(SelectNode) node)
     {
         foreach(field; AliasSeq!("with_", "projection", "from", "joins", "where", "groupBy",
-                                 "having", "window", "orderBy", "limit", "offset"))
+                                 "having", "window", "union_", "orderBy", "limit", "offset"))
         {
             static if(isArray!(typeof(__traits(getMember, node, field))))
             {
