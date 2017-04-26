@@ -67,6 +67,8 @@ interface Visitor
 
     void visit(immutable(UnaryNode) node);
 
+    void visit(immutable(UnionNode) node);
+
     void visit(immutable(UpdateNode) node);
 
     void visit(immutable(UsingNode) node);

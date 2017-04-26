@@ -299,6 +299,17 @@ override:
         node.operand.accept(this);
     }
 
+    void visit(immutable(UnionNode) node)
+    {
+        _buffer ~= " UNION ";
+        if(node.type != UnionType.distinct)
+        {
+            _buffer ~= node.type ~ " ";
+        }
+
+        node.select.accept(this);
+    }
+
     void visit(immutable(UpdateNode) node)
     {
         _buffer ~= "UPDATE ";

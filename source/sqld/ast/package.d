@@ -35,6 +35,7 @@ public import sqld.ast.subquery_node;
 public import sqld.ast.table_node;
 public import sqld.ast.ternary_node;
 public import sqld.ast.unary_node;
+public import sqld.ast.union_node;
 public import sqld.ast.update_node;
 public import sqld.ast.using_node;
 public import sqld.ast.values_node;
