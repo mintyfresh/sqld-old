@@ -32,3 +32,13 @@ immutable(PostfixNode) isNotNull(immutable(ExpressionNode) node)
 {
     return new immutable PostfixNode(PostfixOperator.isNotNull, node);
 }
+
+immutable(PostfixNode) eq(LT, RT)(LT left, RT) if(isExpressionType!(LT) && is(RT == typeof(null)))
+{
+    return left.isNull;
+}
+
+immutable(PostfixNode) notEq(LT, RT)(LT left, RT) if(isExpressionType!(LT) && is(RT == typeof(null)))
+{
+    return left.isNotNull;
+}
