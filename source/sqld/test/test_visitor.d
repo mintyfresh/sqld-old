@@ -23,12 +23,6 @@ public:
     }
 
 override:
-    void visit(immutable(AsNode) node)
-    {
-        node.node.accept(this);
-        _buffer ~= " AS " ~ node.name;
-    }
-
     void visit(immutable(AssignmentNode) node)
     {
         node.left.accept(this);
@@ -42,6 +36,12 @@ override:
         {
             _buffer ~= "DEFAULT";
         }
+    }
+
+    void visit(immutable(AsNode) node)
+    {
+        node.node.accept(this);
+        _buffer ~= " AS " ~ node.name;
     }
 
     void visit(immutable(BetweenNode) node)
@@ -226,6 +226,18 @@ override:
         node.partitions.accept(this);
     }
 
+    void visit(immutable(PostfixNode) node)
+    {
+        node.operand.accept(this);
+        _buffer ~= " " ~ node.operator;
+    }
+
+    void visit(immutable(PrefixNode) node)
+    {
+        _buffer ~= node.operator ~ " ";
+        node.operand.accept(this);
+    }
+
     void visit(immutable(ProjectionNode) node)
     {
         _buffer ~= "SELECT ";
@@ -295,12 +307,6 @@ override:
         }
 
         _buffer ~= node.name;
-    }
-
-    void visit(immutable(UnaryNode) node)
-    {
-        _buffer ~= node.operator ~ " ";
-        node.operand.accept(this);
     }
 
     void visit(immutable(UnionNode) node)

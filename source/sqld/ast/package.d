@@ -1,8 +1,8 @@
 
 module sqld.ast;
 
-public import sqld.ast.as_node;
 public import sqld.ast.assignment_node;
+public import sqld.ast.as_node;
 public import sqld.ast.between_node;
 public import sqld.ast.binary_node;
 public import sqld.ast.column_node;
@@ -26,6 +26,8 @@ public import sqld.ast.offset_node;
 public import sqld.ast.order_by_node;
 public import sqld.ast.over_node;
 public import sqld.ast.partition_by_node;
+public import sqld.ast.postfix_node;
+public import sqld.ast.prefix_node;
 public import sqld.ast.projection_node;
 public import sqld.ast.query_node;
 public import sqld.ast.returning_node;

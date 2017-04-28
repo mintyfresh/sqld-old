@@ -2,30 +2,22 @@
 module sqld.ast.unary_node;
 
 import sqld.ast.expression_node;
-import sqld.ast.visitor;
 
-enum UnaryOperator : string
+immutable abstract class UnaryNode(Operator : string) : ExpressionNode
 {
-    not = "NOT"
-}
-
-immutable class UnaryNode : ExpressionNode
-{
-    mixin Visitable;
-
 private:
-    UnaryOperator  _operator;
+    Operator       _operator;
     ExpressionNode _operand;
 
 public:
-    this(UnaryOperator operator, immutable(ExpressionNode) operand)
+    this(Operator operator, immutable(ExpressionNode) operand)
     {
         _operator = operator;
         _operand  = operand;
     }
 
     @property
-    UnaryOperator operator()
+    Operator operator()
     {
         return _operator;
     }
@@ -35,9 +27,4 @@ public:
     {
         return _operand;
     }
-}
-
-immutable(UnaryNode) not(immutable(ExpressionNode) operand)
-{
-    return new immutable UnaryNode(UnaryOperator.not, operand);
 }
