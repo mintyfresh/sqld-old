@@ -148,7 +148,17 @@ override:
         if(node.columns !is null)
         {
             _buffer ~= "(";
-            node.columns.accept(this);
+
+            foreach(index, column; node.columns)
+            {
+                column.accept(this);
+
+                if(index + 1 < node.columns.length)
+                {
+                    _buffer ~= ", ";
+                }
+            }
+
             _buffer ~= ")";
         }
     }

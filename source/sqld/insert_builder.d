@@ -40,19 +40,14 @@ public:
         return next!("into")(into);
     }
 
-    InsertBuilder into(immutable(TableNode) table, immutable(ExpressionListNode) columns = null)
+    InsertBuilder into(immutable(TableNode) table, immutable(ColumnNode)[] columns...)
     {
         return into(new immutable IntoNode(table, columns));
     }
-
-    InsertBuilder into(immutable(TableNode) table, immutable(ExpressionNode)[] columns = null)
-    {
-        return into(table, columns ? new immutable(ExpressionListNode)(columns) : null);
-    }
     
-    InsertBuilder into(immutable(TableNode) table, string[] columns = null)
+    InsertBuilder into(immutable(TableNode) table, string[] columns...)
     {
-        return into(table, columns ? columns.map!(c => new immutable ColumnNode(c)).array : null);
+        return into(table, columns ? columns.map!(c => column(c)).array : null);
     }
 
     /+ - Values - +/

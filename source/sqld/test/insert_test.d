@@ -33,7 +33,7 @@ import sqld.test.test_visitor;
     auto q = table("queues");
     auto b = InsertBuilder.init;
 
-    b.into(u, ["email", "active"])
+    b.into(u, [u["email"], u["active"]])
      .select(s => s.select(q["email"], true)
                    .from(q))
      .returning(u["id"])

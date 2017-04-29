@@ -37,3 +37,13 @@ public:
         return _name;
     }
 }
+
+immutable(ColumnNode) column(string name)
+{
+    return new immutable ColumnNode(name);
+}
+
+immutable(ColumnNode) column(immutable(TableNode) table, string name)
+{
+    return new immutable ColumnNode(table, name);
+}
