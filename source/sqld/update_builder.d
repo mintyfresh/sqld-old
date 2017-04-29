@@ -31,6 +31,8 @@ public:
 
     /+ - Table - +/
 
+    alias table = update;
+
     UpdateBuilder update(immutable(TableNode) table)
     {
         return next!("table")(table);
