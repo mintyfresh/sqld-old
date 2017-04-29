@@ -49,6 +49,8 @@ interface Visitor
 
     void visit(immutable(OverNode) node);
 
+    void visit(immutable(ParameterNode) node);
+
     void visit(immutable(PartitionByNode) node);
 
     void visit(immutable(PostfixNode) node);

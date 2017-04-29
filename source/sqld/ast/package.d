@@ -25,6 +25,7 @@ public import sqld.ast.node;
 public import sqld.ast.offset_node;
 public import sqld.ast.order_by_node;
 public import sqld.ast.over_node;
+public import sqld.ast.parameter_node;
 public import sqld.ast.partition_by_node;
 public import sqld.ast.postfix_node;
 public import sqld.ast.prefix_node;

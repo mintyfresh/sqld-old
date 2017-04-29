@@ -220,6 +220,12 @@ override:
         }
     }
 
+    void visit(immutable(ParameterNode) node)
+    {
+        // No special handling.
+        node.value.accept(this);
+    }
+
     void visit(immutable(PartitionByNode) node)
     {
         _buffer ~= " PARTITION BY ";
