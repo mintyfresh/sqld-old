@@ -17,7 +17,17 @@ enum BinaryOperator : string
     in_               = "IN",
     notIn             = "NOT IN",
     isDistinctFrom    = "IS DISTINCT FROM",
-    isNotDistinctFrom = "IS NOT DISTINCT FROM"
+    isNotDistinctFrom = "IS NOT DISTINCT FROM",
+    plus              = "+",
+    minus             = "-",
+    times             = "*",
+    divide            = "/",
+    modulo            = "%",
+    bitAnd            = "&",
+    bitOr             = "|",
+    bitXor            = "^",
+    shiftLeft         = "<<",
+    shiftRight        = ">>"
 }
 
 immutable class BinaryNode : ExpressionNode
