@@ -25,9 +25,19 @@ struct SQLD
         return SelectBuilder.init;
     }
 
+    static SelectBuilder select(TList...)(TList args) if(TList.length > 0)
+    {
+        return SelectBuilder.init.select(args);
+    }
+
     static UpdateBuilder update()
     {
         return UpdateBuilder.init;
+    }
+
+    static UpdateBuilder update(TList...)(TList args) if(TList.length > 0)
+    {
+        return UpdateBuilder.init.update(args);
     }
 
     static WindowBuilder window()
