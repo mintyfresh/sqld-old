@@ -9,7 +9,7 @@ import sqld.test.test_visitor;
 {
     auto v = new TestVisitor;
     auto b = SelectBuilder.init;
-    auto u = TableNode("users");
+    auto u = table("users");
 
     b.select(u["id"])
      .from(u)
@@ -36,8 +36,8 @@ import sqld.test.test_visitor;
 {
     auto v = new TestVisitor;
     auto b = SelectBuilder.init;
-    auto u = TableNode("users");
-    auto p = TableNode("posts");
+    auto u = table("users");
+    auto p = table("posts");
 
     b.select(u["*"])
      .from(u)
@@ -65,8 +65,8 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto p = TableNode("posts");
+    auto u = table("users");
+    auto p = table("posts");
 
     auto b1 = SelectBuilder.init;
     auto b2 = SelectBuilder.init;
@@ -111,7 +111,7 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
+    auto u = table("users");
     auto b = SelectBuilder.init;
 
     b.select(u["posts_count"].sum.over(w => w.partition(u["status"])))
@@ -131,8 +131,8 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto p = TableNode("posts");
+    auto u = table("users");
+    auto p = table("posts");
     auto b = SelectBuilder.init;
 
     b.select(u["*"],
@@ -162,8 +162,8 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto c = TableNode("common");
+    auto u = table("users");
+    auto c = table("common");
     auto b = SelectBuilder.init;
 
     b.cte(c, s => s.select(u["*"])
@@ -195,8 +195,8 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto p = TableNode("posts");
+    auto u = table("users");
+    auto p = table("posts");
     auto b = SelectBuilder.init;
 
     b.select(u["id"])

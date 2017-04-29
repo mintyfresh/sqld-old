@@ -9,7 +9,7 @@ import sqld.update_builder;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
+    auto u = table("users");
     auto b = UpdateBuilder.init;
 
     b.update(u)
@@ -32,8 +32,8 @@ import sqld.update_builder;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto p = TableNode("posts");
+    auto u = table("users");
+    auto p = table("posts");
     auto b = UpdateBuilder.init;
 
     b.update(u)
@@ -66,8 +66,8 @@ import sqld.update_builder;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto p = TableNode("posts");
+    auto u = table("users");
+    auto p = table("posts");
 
     auto b1 = UpdateBuilder.init;
     auto b2 = SelectBuilder.init;

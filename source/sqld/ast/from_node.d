@@ -45,7 +45,7 @@ version(unittest)
 @system unittest
 {
     auto v = new TestVisitor;
-    auto n = new immutable FromNode(TableNode("foo"));
+    auto n = new immutable FromNode(table("foo"));
 
     n.accept(v);
     assert(v.sql.squish == "FROM foo");
@@ -54,7 +54,7 @@ version(unittest)
 @system unittest
 {
     auto v = new TestVisitor;
-    auto n = new immutable FromNode([TableNode("foo"), TableNode("bar"), TableNode("foobar")]);
+    auto n = new immutable FromNode([table("foo"), table("bar"), table("foobar")]);
 
     n.accept(v);
     assert(v.sql.squish == "FROM foo, bar, foobar");

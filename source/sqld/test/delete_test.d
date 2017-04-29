@@ -8,7 +8,7 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
+    auto u = table("users");
     auto b = DeleteBuilder.init;
 
     b.from(u)
@@ -29,8 +29,8 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto q = TableNode("queues");
+    auto u = table("users");
+    auto q = table("queues");
     auto b = DeleteBuilder.init;
 
     b.from(q)
@@ -57,8 +57,8 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto w = TableNode("warnings");
+    auto u = table("users");
+    auto w = table("warnings");
     auto b = DeleteBuilder.init;
 
     b.from(u)

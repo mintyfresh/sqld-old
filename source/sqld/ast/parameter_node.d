@@ -32,3 +32,8 @@ public:
         return _name;
     }
 }
+
+immutable(ParameterNode) parameter(T)(T value, string name = null) if(isLiteralType!(T))
+{
+    return new immutable ParameterNode(literal(value), name);
+}

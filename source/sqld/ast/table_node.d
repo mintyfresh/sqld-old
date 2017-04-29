@@ -25,11 +25,6 @@ public:
         _name   = name;
     }
 
-    static immutable(TableNode) opCall(string name)
-    {
-        return new immutable TableNode(name);
-    }
-
     @property
     string schema()
     {
@@ -46,4 +41,14 @@ public:
     {
         return new immutable ColumnNode(this, name);
     }
+}
+
+immutable(TableNode) table(string name)
+{
+    return new immutable TableNode(name);
+}
+
+immutable(TableNode) table(string schema, string name)
+{
+    return new immutable TableNode(schema, name);
 }

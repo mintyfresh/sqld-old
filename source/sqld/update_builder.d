@@ -40,7 +40,12 @@ public:
 
     UpdateBuilder update(string name)
     {
-        return update(TableNode(name));
+        return update(new immutable TableNode(name));
+    }
+
+    UpdateBuilder update(string schema, string name)
+    {
+        return update(new immutable TableNode(schema, name));
     }
 
     /+ - Set - +/

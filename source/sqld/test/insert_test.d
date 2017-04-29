@@ -8,7 +8,7 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
+    auto u = table("users");
     auto b = InsertBuilder.init;
 
     b.into(u, ["active", "banned"])
@@ -29,8 +29,8 @@ import sqld.test.test_visitor;
 @system unittest
 {
     auto v = new TestVisitor;
-    auto u = TableNode("users");
-    auto q = TableNode("queues");
+    auto u = table("users");
+    auto q = table("queues");
     auto b = InsertBuilder.init;
 
     b.into(u, ["email", "active"])
