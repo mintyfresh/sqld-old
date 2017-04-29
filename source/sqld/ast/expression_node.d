@@ -10,15 +10,15 @@ import sqld.ast.node;
 immutable abstract class ExpressionNode : Node
 {
     immutable(BinaryNode) opBinary(string op, T)(T right)
-        if(op == "+" || op == "-" || op == "*" || op == "/" || op == "%" ||
-           op == "&" || op == "|" || op == "^" || op == "<<" || op == ">>")
+        if(isExpressionType!(T) && (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" ||
+                                    op == "&" || op == "|" || op == "^" || op == "<<" || op == ">>"))
     {
         return new immutable BinaryNode(this, cast(BinaryOperator) op, toExpression(right));
     }
 
     immutable(BinaryNode) opBinaryRight(string op, T)(T left)
-        if(op == "+" || op == "-" || op == "*" || op == "/" || op == "%" ||
-           op == "&" || op == "|" || op == "^" || op == "<<" || op == ">>")
+        if(isExpressionType!(T) && (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" ||
+                                    op == "&" || op == "|" || op == "^" || op == "<<" || op == ">>"))
     {
         return new immutable BinaryNode(toExpression(left), cast(BinaryOperator) op, this);
     }
