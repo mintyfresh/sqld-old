@@ -23,6 +23,13 @@ public:
     }
 
 override:
+    void visit(immutable(ArithmeticNode) node)
+    {
+        node.left.accept(this);
+        _buffer ~= " " ~ node.operator ~ " ";
+        node.right.accept(this);
+    }
+
     void visit(immutable(AssignmentNode) node)
     {
         node.left.accept(this);
@@ -51,13 +58,6 @@ override:
         node.second.accept(this);
         _buffer ~= " AND ";
         node.third.accept(this);
-    }
-
-    void visit(immutable(BinaryNode) node)
-    {
-        node.left.accept(this);
-        _buffer ~= " " ~ node.operator ~ " ";
-        node.right.accept(this);
     }
 
     void visit(immutable(ColumnNode) node)
@@ -198,6 +198,13 @@ override:
         _buffer ~= node.value.coerce!(string);
     }
 
+    void visit(immutable(LogicalNode) node)
+    {
+        node.left.accept(this);
+        _buffer ~= " " ~ node.operator ~ " ";
+        node.right.accept(this);
+    }
+
     void visit(immutable(NamedWindowNode) node)
     {
         _buffer ~= node.name ~ " AS ";
@@ -258,6 +265,13 @@ override:
     {
         _buffer ~= "SELECT ";
         node.projections.accept(this);
+    }
+
+    void visit(immutable(RelationalNode) node)
+    {
+        node.left.accept(this);
+        _buffer ~= " " ~ node.operator ~ " ";
+        node.right.accept(this);
     }
 
     void visit(immutable(ReturningNode) node)

@@ -1,6 +1,7 @@
 
 module sqld.ast;
 
+public import sqld.ast.arithmetic_node;
 public import sqld.ast.assignment_node;
 public import sqld.ast.as_node;
 public import sqld.ast.between_node;
@@ -20,6 +21,7 @@ public import sqld.ast.invocation_node;
 public import sqld.ast.join_node;
 public import sqld.ast.limit_node;
 public import sqld.ast.literal_node;
+public import sqld.ast.logical_node;
 public import sqld.ast.named_window_node;
 public import sqld.ast.node;
 public import sqld.ast.offset_node;
@@ -31,6 +33,7 @@ public import sqld.ast.postfix_node;
 public import sqld.ast.prefix_node;
 public import sqld.ast.projection_node;
 public import sqld.ast.query_node;
+public import sqld.ast.relational_node;
 public import sqld.ast.returning_node;
 public import sqld.ast.select_node;
 public import sqld.ast.set_node;

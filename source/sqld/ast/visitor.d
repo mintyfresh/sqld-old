@@ -5,13 +5,13 @@ import sqld.ast;
 
 interface Visitor
 {
+    void visit(immutable(ArithmeticNode) node);
+
     void visit(immutable(AssignmentNode) node);
 
     void visit(immutable(AsNode) node);
 
     void visit(immutable(BetweenNode) node);
-
-    void visit(immutable(BinaryNode) node);
 
     void visit(immutable(ColumnNode) node);
 
@@ -41,6 +41,8 @@ interface Visitor
 
     void visit(immutable(LiteralNode) node);
 
+    void visit(immutable(LogicalNode) node);
+
     void visit(immutable(NamedWindowNode) node);
 
     void visit(immutable(OffsetNode) node);
@@ -58,6 +60,8 @@ interface Visitor
     void visit(immutable(PrefixNode) node);
 
     void visit(immutable(ProjectionNode) node);
+
+    void visit(immutable(RelationalNode) node);
 
     void visit(immutable(ReturningNode) node);
 

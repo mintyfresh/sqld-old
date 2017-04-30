@@ -12,6 +12,6 @@ immutable class AssignmentNode : BinaryNode
 public:
     this(immutable(ExpressionNode) left, immutable(ExpressionNode) right)
     {
-        super(left, BinaryOperator.equal, right);
+        super(left, right);
     }
 }

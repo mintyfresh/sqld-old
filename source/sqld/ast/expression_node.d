@@ -1,36 +1,37 @@
 
 module sqld.ast.expression_node;
 
-import sqld.ast.binary_node;
+import sqld.ast.arithmetic_node;
 import sqld.ast.expression_list_node;
 import sqld.ast.invocation_node;
 import sqld.ast.literal_node;
 import sqld.ast.node;
+import sqld.ast.relational_node;
 
 immutable abstract class ExpressionNode : Node
 {
-    immutable(BinaryNode) opBinary(string op, T)(T right)
+    immutable(ArithmeticNode) opBinary(string op, T)(T right)
         if(isExpressionType!(T) && (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" ||
                                     op == "&" || op == "|" || op == "^" || op == "<<" || op == ">>"))
     {
-        return new immutable BinaryNode(this, cast(BinaryOperator) op, toExpression(right));
+        return new immutable ArithmeticNode(this, cast(ArithmeticOperator) op, toExpression(right));
     }
 
-    immutable(BinaryNode) opBinaryRight(string op, T)(T left)
+    immutable(ArithmeticNode) opBinaryRight(string op, T)(T left)
         if(isExpressionType!(T) && (op == "+" || op == "-" || op == "*" || op == "/" || op == "%" ||
                                     op == "&" || op == "|" || op == "^" || op == "<<" || op == ">>"))
     {
-        return new immutable BinaryNode(toExpression(left), cast(BinaryOperator) op, this);
+        return new immutable ArithmeticNode(toExpression(left), cast(ArithmeticOperator) op, this);
     }
 
-    immutable(BinaryNode) opBinary(string op : "in")(immutable(ExpressionNode) node)
+    immutable(RelationalNode) opBinary(string op : "in")(immutable(ExpressionNode) node)
     {
-        return new immutable BinaryNode(this, BinaryOperator.in_, node);
+        return new immutable RelationalNode(this, RelationalOperator.in_, node);
     }
 
-    immutable(BinaryNode) opBinary(string op : "!in")(immutable(ExpressionNode) node)
+    immutable(RelationalNode) opBinary(string op : "!in")(immutable(ExpressionNode) node)
     {
-        return new immutable BinaryNode(this, BinaryOperator.notIn, node);
+        return new immutable RelationalNode(this, RelationalOperator.notIn, node);
     }
 
     immutable(InvocationNode) opCall(immutable(ExpressionNode)[] arguments)
