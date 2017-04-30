@@ -17,8 +17,15 @@ alias LiteralTypes = staticMap!(TypeAndTypeArray, AliasSeq!(
     ubyte, byte, ushort, short, uint, int, ulong, long,
     float, double, real,
     size_t, ptrdiff_t, hash_t,
-    string, wstring, dstring
+    string, wstring, dstring,
+    LiteralType
 ));
+
+interface LiteralType
+{
+    @property
+    string sql();
+}
 
 immutable class LiteralNode : ExpressionNode
 {
