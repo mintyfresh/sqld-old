@@ -4,7 +4,10 @@ module sqld.ast.literal_node;
 import sqld.ast.expression_node;
 import sqld.ast.visitor;
 
+import std.algorithm;
+import std.array;
 import std.meta;
+import std.traits;
 import std.variant;
 
 private template TypeAndTypeArray(T)
@@ -49,11 +52,51 @@ public:
 
 template isLiteralType(T)
 {
-    enum isLiteralType = staticIndexOf!(T, LiteralTypes) != -1;
+    enum isLiteralType = staticIndexOf!(T, LiteralTypes) != -1 || is(T : LiteralType) ||
+                         (isArray!(T) && is(ForeachType!(T) : LiteralType));
 }
 
 @property
 immutable(LiteralNode) literal(T)(T value) if(isLiteralType!(T))
 {
-    return new immutable LiteralNode(Algebraic!(LiteralTypes)(value));
+    static if(is(T : LiteralType))
+    {
+        LiteralType stored = cast(LiteralType) value;
+    }
+    else static if(isArray!(T) && is(ForeachType!(T) : LiteralType))
+    {
+        LiteralType[] stored = value.map!(v => cast(LiteralType) v).array;
+    }
+    else
+    {
+        T stored = value;
+    }
+
+    return new immutable LiteralNode(Algebraic!(LiteralTypes)(stored));
+}
+
+@system unittest
+{
+    import sqld.test.test_visitor : TestVisitor;
+
+    static class TestType : LiteralType
+    {
+        @property
+        override string sql()
+        {
+            return "test";
+        }
+
+        @property
+        override string toString()
+        {
+            return "test";
+        }
+    }
+
+    auto v = new TestVisitor;
+    auto n = literal([new TestType, new TestType, new TestType]);
+
+    n.accept(v);
+    assert(v.sql == "[test, test, test]");
 }
