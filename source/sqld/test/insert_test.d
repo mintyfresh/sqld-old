@@ -41,7 +41,7 @@ import sqld.test.test_visitor;
 
     assert(v.sql.squish == q{
         INSERT INTO
-          users(email, active)
+          users(users.email, users.active)
         SELECT
           queues.email,
           true
