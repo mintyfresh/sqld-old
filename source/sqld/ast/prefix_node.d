@@ -10,13 +10,24 @@ enum PrefixOperator : string
     not = "NOT"
 }
 
-immutable class PrefixNode : UnaryNode!(PrefixOperator)
+immutable class PrefixNode : UnaryNode
 {
     mixin Visitable;
 
+private:
+    PrefixOperator _operator;
+
+public:
     this(PrefixOperator operator, immutable(ExpressionNode) operand)
     {
-        super(operator, operand);
+        super(operand);
+        _operator = operator;
+    }
+
+    @property
+    PrefixOperator operator()
+    {
+        return _operator;
     }
 }
 

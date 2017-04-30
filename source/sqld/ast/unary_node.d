@@ -3,23 +3,15 @@ module sqld.ast.unary_node;
 
 import sqld.ast.expression_node;
 
-immutable abstract class UnaryNode(Operator : string) : ExpressionNode
+immutable abstract class UnaryNode : ExpressionNode
 {
 private:
-    Operator       _operator;
     ExpressionNode _operand;
 
 public:
-    this(Operator operator, immutable(ExpressionNode) operand)
+    this(immutable(ExpressionNode) operand)
     {
-        _operator = operator;
         _operand  = operand;
-    }
-
-    @property
-    Operator operator()
-    {
-        return _operator;
     }
 
     @property

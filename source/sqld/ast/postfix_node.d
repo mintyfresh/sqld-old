@@ -11,13 +11,24 @@ enum PostfixOperator : string
     isNotNull = "IS NOT NULL"
 }
 
-immutable class PostfixNode : UnaryNode!(PostfixOperator)
+immutable class PostfixNode : UnaryNode
 {
     mixin Visitable;
 
+private:
+    PostfixOperator _operator;
+
+public:
     this(PostfixOperator operator, immutable(ExpressionNode) operand)
     {
-        super(operator, operand);
+        super(operand);
+        _operator = operator;
+    }
+
+    @property
+    PostfixOperator operator()
+    {
+        return _operator;
     }
 }
 
