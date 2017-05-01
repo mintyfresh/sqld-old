@@ -1,6 +1,8 @@
 
 module sqld.test.delete_test;
 
+version(unittest):
+
 import sqld.ast;
 import sqld.delete_builder;
 import sqld.test.test_visitor;

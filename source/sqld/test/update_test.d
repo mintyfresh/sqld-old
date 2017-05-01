@@ -1,6 +1,8 @@
 
 module sqld.test.update;
 
+version(unittest):
+
 import sqld.ast;
 import sqld.select_builder;
 import sqld.test.test_visitor;

@@ -1,14 +1,14 @@
 
 module sqld.test.test_visitor;
 
+version(unittest):
+
 import sqld.ast;
 
 import std.array;
 import std.conv;
 import std.meta;
 import std.traits;
-
-version(unittest):
 
 class TestVisitor : Visitor
 {
