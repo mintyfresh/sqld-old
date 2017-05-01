@@ -24,8 +24,18 @@ alias LiteralTypes = staticMap!(TypeAndTypeArray, AliasSeq!(
     LiteralType
 ));
 
+/++
+ + An abritrary Database specific literal type.
+ +/
 interface LiteralType
 {
+    /++
+     + Converts the literal type to its SQL representation.
+     + By nature of its design, the result is Database specific in most cases.
+     +
+     + Returns:
+     +   A SQL representation of this literal value. 
+     +/
     @property
     string sql();
 }
@@ -50,12 +60,27 @@ public:
     }
 }
 
+/++
+ + Tests if a type is (or is convertible to) a literal type.
+ +
+ + Params:
+ +   T - A type.
+ +/
 template isLiteralType(T)
 {
     enum isLiteralType = staticIndexOf!(T, LiteralTypes) != -1 || is(T : LiteralType) ||
                          (isArray!(T) && is(ForeachType!(T) : LiteralType));
 }
 
+/++
+ + Converts a literal value or type wrapper into an AST literal node.
+ +
+ + Params:
+ +   value - The value being converted.
+ +
+ + Returns:
+ +   An AST literal node.
+ +/
 @property
 immutable(LiteralNode) literal(T)(T value) if(isLiteralType!(T))
 {
