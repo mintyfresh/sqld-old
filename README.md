@@ -226,7 +226,7 @@ Below is a list of Generators, and the Database Systems they support:
  * [SQLD-Postgres](https://github.com/Mihail-K/sqld-postgres) - PostgreSQL
 
 ## Inspiration
-SQLD takes some queues from [Arel](https://github.com/rails/arel), a similar framework for Ruby and Rails. However, there are some key differences.
+SQLD takes some cues from [Arel](https://github.com/rails/arel), a similar framework for Ruby and Rails. However, there are some key differences.
 
 Notably, SQLD:
  * Doesn't rely on another library or framework.
