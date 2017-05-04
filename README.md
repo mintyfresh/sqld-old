@@ -185,7 +185,6 @@ SQLD.select(users["id"],
             func("first_value", posts["id"]).over("first_posts"),
             func("last_value", posts["id"]).over("first_posts"))
     .from(users)
-    .from(users)
     .join(posts, posts["user_id"].eq(users["id"]))
     .window("first_posts", w => w.partition(users["id"])
                                  .order(posts["created_at"].asc));
