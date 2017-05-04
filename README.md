@@ -62,6 +62,7 @@ SQLD supports inner joins, as well as left, right, and full outer joins.
 `CROSS JOIN` is also supported, but the join condition must be omitted.
 
 ### Subqueries
+SQLD queries can be combined and used as subqueries, much in the same way as would be done in SQL:
 ```d
 auto subquery = table("subquery");
 
@@ -75,6 +76,7 @@ SQLD.select(subquery["count"])
     .where(subquery["count"].gtEq(5));
 ```
 
+Which produces the expected SQL query:
 ```sql
 SELECT
     "subquery"."count"
@@ -94,7 +96,8 @@ WHERE
     "subquery"."count" >= 5
 ```
 
-Subqueries can also be written inline using a callback:
+Since the SQLD is immutable, it's safe to reuse queueries and partials in subqueries, without risk of accidentally modifying the original.
+For convenience, subqueries can also be written inline using a callback:
 ```d
 auto subquery = table("subquery");
 
@@ -149,6 +152,8 @@ FROM
 ```
 
 ### Window Functions
+SQLD supports window functions and the `OVER ( . . . )` syntax (the Database needs to support them as well).
+For example, given you wanted a list of IDs of the first post made by every use, you could use the following:
 ```d
 SQLD.select(users["id"]
             func("first_value", posts["id"]).over(w =>
@@ -158,6 +163,7 @@ SQLD.select(users["id"]
     .join(posts, posts["user_id"].eq(users["id"]));
 ```
 
+Which produces a window function call like so:
 ```sql
 SELECT
     "users"."id",
@@ -185,7 +191,7 @@ SQLD.select(users["id"],
                                  .order(posts["created_at"].asc));
 ```
 
-Which produces the following SQL output:
+Which produces two window function calls, which reference the query window:
 ```sql
 SELECT
     "users"."id",
